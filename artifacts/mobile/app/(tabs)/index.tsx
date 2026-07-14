@@ -165,14 +165,14 @@ export default function HomeScreen() {
               <Text style={styles.infoTitle}>Payment</Text>
               <Text style={styles.infoValue}>Add a Card</Text>
             </View>
-            <Ionicons name="card-outline" size={22} color="#00B14F" />
+            <Text style={styles.infoEmoji}>💳</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.infoCard} activeOpacity={0.8}>
             <View style={styles.infoTextBlock}>
               <Text style={styles.infoTitle}>Grab Rewards</Text>
               <Text style={styles.infoValue}>0</Text>
             </View>
-            <Ionicons name="gift-outline" size={22} color="#00B14F" />
+            <Text style={styles.infoEmoji}>🎁</Text>
           </TouchableOpacity>
         </View>
 
@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
   infoTextBlock: { gap: 2 },
   infoTitle: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
   infoValue: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  infoEmoji: { fontSize: 24 },
 
   // Section
   sectionRow: {

@@ -5,32 +5,27 @@ import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// Each tab: icon shown inside a rounded-square bordered container when inactive;
-// Home tab collapses into a green pill with label when active.
+// Tab definitions matching the Grab reference design
 const TAB_DEFS = [
   {
     name: 'index',
     label: 'Home',
-    active: 'home' as const,
-    inactive: 'home-outline' as const,
+    icon: 'home' as const,
   },
   {
     name: 'activity',
-    label: 'Transactions',
-    active: 'stats-chart' as const,
-    inactive: 'stats-chart-outline' as const,
+    label: 'Activity',
+    icon: 'trending-up' as const,
   },
   {
     name: 'orders',
     label: 'Payment',
-    active: 'wallet' as const,
-    inactive: 'wallet-outline' as const,
+    icon: 'wallet-outline' as const,
   },
   {
     name: 'chat',
     label: 'Chat',
-    active: 'chatbubble-ellipses' as const,
-    inactive: 'chatbubble-ellipses-outline' as const,
+    icon: 'chatbox-ellipses-outline' as const,
   },
 ];
 
@@ -54,15 +49,9 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
                 style={isHome && isActive ? styles.homePill : styles.iconBox}
               >
                 <Ionicons
-                  name={isActive ? tab.active : tab.inactive}
-                  size={21}
-                  color={
-                    isHome && isActive
-                      ? '#FFFFFF'
-                      : isActive
-                      ? '#00B14F'
-                      : '#8C8C8C'
-                  }
+                  name={tab.icon}
+                  size={22}
+                  color={isHome && isActive ? '#FFFFFF' : '#9E9E9E'}
                 />
                 {isHome && isActive && (
                   <Text style={styles.homeLabel}>Home</Text>
@@ -97,21 +86,21 @@ const styles = StyleSheet.create({
     right: 16,
   },
 
-  // The outer floating white bar
+  // Outer floating pill — light gray background matching the reference
   pillBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#EBEBEB',
     borderRadius: 50,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
     // iOS shadow
     shadowColor: '#000',
-    shadowOpacity: 0.13,
-    shadowRadius: 22,
-    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.10,
+    shadowRadius: 18,
+    shadowOffset: { width: 0, height: 6 },
     // Android
-    elevation: 18,
+    elevation: 12,
   },
 
   tabSlot: {
@@ -120,14 +109,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Inactive tab: rounded square with mint green border
+  // Inactive tab: soft gray rounded square — no border, matching reference
   iconBox: {
-    width: 48,
-    height: 48,
-    borderRadius: 14,
-    borderWidth: 1.5,
-    borderColor: '#C5EDDA',
-    backgroundColor: '#FFFFFF',
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#DCDCDC',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -138,14 +125,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 7,
     backgroundColor: '#00B14F',
-    paddingHorizontal: 18,
-    paddingVertical: 13,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
     borderRadius: 50,
   },
 
   homeLabel: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 15,
     fontFamily: 'Inter_600SemiBold',
     letterSpacing: 0.1,
   },
