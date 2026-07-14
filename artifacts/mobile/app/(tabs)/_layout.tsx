@@ -5,6 +5,8 @@ import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
+// Each tab: icon shown inside a rounded-square bordered container when inactive;
+// Home tab collapses into a green pill with label when active.
 const TAB_DEFS = [
   {
     name: 'index',
@@ -38,7 +40,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
 
   return (
     <View style={[styles.floatingWrapper, { bottom: bottomOffset }]}>
-      <View style={styles.pill}>
+      <View style={styles.pillBar}>
         {state.routes.map((route, index) => {
           const isActive = state.index === index;
           const tab = TAB_DEFS[index];
@@ -49,15 +51,18 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
               <TouchableOpacity
                 onPress={() => navigation.navigate(route.name)}
                 activeOpacity={0.75}
-                style={[
-                  styles.tabBtn,
-                  isHome && isActive && styles.homePill,
-                ]}
+                style={isHome && isActive ? styles.homePill : styles.iconBox}
               >
                 <Ionicons
                   name={isActive ? tab.active : tab.inactive}
-                  size={22}
-                  color={isHome && isActive ? '#FFFFFF' : isActive ? '#00B14F' : '#9A9A9A'}
+                  size={21}
+                  color={
+                    isHome && isActive
+                      ? '#FFFFFF'
+                      : isActive
+                      ? '#00B14F'
+                      : '#8C8C8C'
+                  }
                 />
                 {isHome && isActive && (
                   <Text style={styles.homeLabel}>Home</Text>
@@ -90,43 +95,54 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 16,
     right: 16,
-    alignItems: 'stretch',
   },
-  pill: {
+
+  // The outer floating white bar
+  pillBar: {
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 40,
-    paddingVertical: 10,
-    paddingHorizontal: 10,
     alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderRadius: 50,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     // iOS shadow
-    shadowColor: '#000000',
-    shadowOpacity: 0.14,
-    shadowRadius: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.13,
+    shadowRadius: 22,
     shadowOffset: { width: 0, height: 8 },
-    // Android shadow
-    elevation: 20,
+    // Android
+    elevation: 18,
   },
+
   tabSlot: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  tabBtn: {
+
+  // Inactive tab: rounded square with mint green border
+  iconBox: {
+    width: 48,
+    height: 48,
+    borderRadius: 14,
+    borderWidth: 1.5,
+    borderColor: '#C5EDDA',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 9,
-    paddingHorizontal: 12,
-    borderRadius: 30,
   },
+
+  // Active Home tab: green pill with icon + label
   homePill: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 7,
     backgroundColor: '#00B14F',
-    paddingHorizontal: 20,
-    paddingVertical: 11,
-    borderRadius: 30,
+    paddingHorizontal: 18,
+    paddingVertical: 13,
+    borderRadius: 50,
   },
+
   homeLabel: {
     color: '#FFFFFF',
     fontSize: 14,

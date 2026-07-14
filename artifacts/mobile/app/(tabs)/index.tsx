@@ -12,14 +12,14 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-// Emoji icons render as 3D illustrated images on iOS & Android
+// Generated 3D illustrated PNG icons — match the real Grab-style icons
 const SERVICES = [
-  { id: '1', label: 'Transport', emoji: '🚗', bg: '#E6F9EE' },
-  { id: '2', label: 'Food',      emoji: '🍔', bg: '#FFF0E8' },
-  { id: '3', label: 'Dine Out',  emoji: '🍽️', bg: '#E6F9EE' },
-  { id: '4', label: 'Mart',      emoji: '🧺', bg: '#E6F9EE' },
-  { id: '5', label: 'Shopping',  emoji: '🛍️', bg: '#FFF4E0' },
-  { id: '6', label: 'All',       emoji: '🟩', bg: '#E6F9EE', isAll: true },
+  { id: '1', label: 'Transport', img: require('../../assets/images/icon-transport.png'), bg: '#E6F9EE' },
+  { id: '2', label: 'Food',      img: require('../../assets/images/icon-food.png'),      bg: '#FFF0E8' },
+  { id: '3', label: 'Dine Out',  img: require('../../assets/images/icon-dineout.png'),   bg: '#E6F9EE' },
+  { id: '4', label: 'Mart',      img: require('../../assets/images/icon-mart.png'),      bg: '#E6F9EE' },
+  { id: '5', label: 'Shopping',  img: require('../../assets/images/icon-shopping.png'),  bg: '#FFF4E0' },
+  { id: '6', label: 'All',       img: null,                                              bg: '#E6F9EE', isAll: true },
 ];
 
 const FOOD_CARDS = [
@@ -146,7 +146,11 @@ export default function HomeScreen() {
                 {(svc as any).isAll ? (
                   <AllGrid />
                 ) : (
-                  <Text style={styles.serviceEmoji}>{svc.emoji}</Text>
+                  <Image
+                    source={(svc as any).img}
+                    style={styles.serviceImg}
+                    resizeMode="contain"
+                  />
                 )}
               </View>
               <Text style={styles.serviceLabel}>{svc.label}</Text>
@@ -239,7 +243,7 @@ const styles = StyleSheet.create({
     width: 58, height: 58, borderRadius: 18,
     alignItems: 'center', justifyContent: 'center',
   },
-  serviceEmoji: { fontSize: 28, lineHeight: 34 },
+  serviceImg: { width: 36, height: 36 },
   serviceLabel: { fontSize: 12, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
 
   // Info row
