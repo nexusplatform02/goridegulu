@@ -1,32 +1,41 @@
-# [Project name]
+# Grabby
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A mobile app (Expo/React Native) backed by an Express API server and PostgreSQL database.
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- **Mobile app**: workflow `artifacts/mobile: expo` — Expo dev server (scan QR or open web preview)
+- **API server**: workflow `artifacts/api-server: API Server` — `pnpm --filter @workspace/api-server run dev` (port assigned via `$PORT`)
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
 - `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
+- `pnpm --filter @workspace/db run push` — push DB schema changes to dev database (dev only)
+- Required env: `DATABASE_URL` — provisioned automatically by Replit (no manual setup needed)
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- **Mobile**: Expo ~54, React Native 0.81, expo-router, TanStack Query
+- **API**: Express 5, pino logging
+- **DB**: PostgreSQL + Drizzle ORM + drizzle-zod
+- **Validation**: Zod (`zod/v4`)
+- **API codegen**: Orval (from OpenAPI spec → `lib/api-spec`)
+- **Build**: esbuild (CJS bundle for API server)
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/api-server/` — Express API server
+- `artifacts/mobile/` — Expo mobile app
+- `lib/db/` — Drizzle schema and DB connection (`DATABASE_URL` required)
+- `lib/api-spec/` — OpenAPI spec (source of truth for API contract)
+- `lib/api-zod/` — generated Zod schemas from OpenAPI spec
+- `lib/api-client-react/` — generated TanStack Query hooks for mobile
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- API contract is code-generated from the OpenAPI spec in `lib/api-spec`; run codegen after changing the spec.
+- DB schema lives in `lib/db/src/schema/`; run `pnpm --filter @workspace/db run push` after adding tables.
+- API server bundles to a single ESM file via esbuild before running (`node ./dist/index.mjs`).
 
 ## Product
 
@@ -38,8 +47,10 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-_Populate as you build — sharp edges, "always run X before Y" rules._
+- `DATABASE_URL` is runtime-managed by Replit — never set it manually.
+- Always run codegen (`pnpm --filter @workspace/api-spec run codegen`) after changing the OpenAPI spec.
+- DB schema changes require `pnpm --filter @workspace/db run push` on dev; production schema is applied automatically on Publish.
 
 ## Pointers
 
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details
+- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
