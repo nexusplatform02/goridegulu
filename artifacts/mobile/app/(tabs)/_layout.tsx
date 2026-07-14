@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
+  Text,
   StyleSheet,
   Platform,
   Animated,
@@ -16,23 +16,26 @@ const TAB_DEFS: {
   name: string;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>['name'];
-  pillW: number;
+  pillW: number; // fill width when active
 }[] = [
-  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 118 },
-  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 130 },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 126 },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 108 },
+  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 114 },
+  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 126 },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 122 },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 104 },
 ];
 
-// Inner fill diameter (the gray/green circle content area)
-const INNER_W   = 52;
-// White ring border around each bubble — this IS the visible stroke at every junction
-const BORDER_W  = 3;
-// Full outer diameter including border
-const OUTER_W   = INNER_W + BORDER_W * 2;
-// How much each bubble slides behind its left neighbour.
-// At this value the two white rings meet cleanly, creating the bridge stroke.
-const OVERLAP   = 14;
+// ─── Geometry ────────────────────────────────────────────────────────────────
+const FILL  = 50;          // inner fill circle diameter
+const RING  = 3;           // white ring thickness
+const OUTER = FILL + RING * 2; // 56 — total outer (white shell) diameter at rest
+
+// Bridge connector between adjacent bubbles
+const BRW = 14;
+const BRH = 24;
+const BRR = 6;
+
+const INACTIVE_FILL = '#E6E6E6';
+// ─────────────────────────────────────────────────────────────────────────────
 
 function AnimatedIcon({
   name,
@@ -46,7 +49,7 @@ function AnimatedIcon({
     const id = animatedColor.addListener(({ value }) => setColor(value as string));
     return () => animatedColor.removeListener(id);
   }, [animatedColor]);
-  return <Ionicons name={name} size={22} color={color} />;
+  return <Ionicons name={name} size={21} color={color} />;
 }
 
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
@@ -61,92 +64,93 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
     Animated.parallel(
       anims.map((anim, i) =>
         Animated.spring(anim, {
-          toValue: i === state.index ? 1 : 0,
+          toValue        : i === state.index ? 1 : 0,
           useNativeDriver: false,
-          friction: 7,
-          tension: 60,
+          friction       : 7,
+          tension        : 60,
         })
       )
     ).start();
   }, [state.index]);
 
   return (
-    <View style={[styles.floatingWrapper, { bottom: bottomOffset }]}>
+    <View style={[styles.wrapper, { bottom: bottomOffset }]}>
       <View style={styles.row}>
         {state.routes.map((route, index) => {
-          const tab     = TAB_DEFS[index];
-          const anim    = anims[index];
+          const tab      = TAB_DEFS[index];
+          const anim     = anims[index];
           const isActive = state.index === index;
+          const isLast   = index === state.routes.length - 1;
 
-          // Inner fill width: INNER_W when resting, pill width when active
-          const innerWidth = anim.interpolate({
+          // Outer white shell: starts at OUTER (56), grows to pillW + ring×2
+          const shellWidth = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: [INNER_W, tab.pillW],
+            outputRange: [OUTER, tab.pillW + RING * 2],
           });
+
+          // Inner coloured fill: starts at FILL (50), grows to pillW
+          const fillWidth = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: [FILL, tab.pillW],
+          });
+
           const bgColor = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: ['#E8E8E8', '#00B14F'],
+            outputRange: [INACTIVE_FILL, '#00B14F'],
           });
           const iconColor = anim.interpolate({
             inputRange : [0, 1],
             outputRange: ['#9E9E9E', '#FFFFFF'],
           });
           const labelOpacity = anim.interpolate({
-            inputRange : [0, 0.5, 1],
+            inputRange : [0, 0.55, 1],
             outputRange: [0, 0, 1],
           });
-          const labelContainerW = anim.interpolate({
-            inputRange : [0, 0.4, 1],
-            outputRange: [0, 0, tab.pillW - INNER_W],
+          const labelSlotW = anim.interpolate({
+            inputRange : [0, 0.45, 1],
+            outputRange: [0, 0, tab.pillW - FILL - 4],
           });
 
           return (
-            <TouchableOpacity
-              key={route.key}
-              onPress={() => navigation.navigate(route.name)}
-              activeOpacity={0.85}
-              style={[
-                // Every tab after the first overlaps its left neighbour
-                index > 0 && { marginLeft: -OVERLAP },
-                // Active tab renders on top; others stack left-to-right
-                { zIndex: isActive ? 20 : TAB_DEFS.length - index },
-              ]}
-            >
-              {/*
-               * The white border ring is the visual "bridge stroke" you see at
-               * every junction. When the front bubble overlaps the back one, the
-               * front's white left border sits on top of the back's gray fill,
-               * creating the clean white connector visible in the reference image.
-               */}
-              <Animated.View
-                style={[
-                  styles.outerRing,
-                  {
-                    width: Animated.add(innerWidth, new Animated.Value(BORDER_W * 2)),
-                    borderColor: '#FFFFFF',
-                    borderWidth: BORDER_W,
-                  },
-                ]}
-              >
-                {/* Inner fill — gray or green */}
-                <Animated.View
-                  style={[styles.innerFill, { width: innerWidth, backgroundColor: bgColor }]}
-                >
-                  <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+            <React.Fragment key={route.key}>
 
-                  {/* Label — reveals as pill expands, always fits on one line */}
-                  <Animated.View style={{ width: labelContainerW, overflow: 'hidden' }}>
-                    <Animated.Text
-                      style={[styles.label, { opacity: labelOpacity }]}
-                      numberOfLines={1}
-                      allowFontScaling={false}
-                    >
-                      {tab.label}
-                    </Animated.Text>
+              {/* ── Bubble: white shell → coloured fill ─────────────── */}
+              <TouchableOpacity
+                onPress={() => navigation.navigate(route.name)}
+                activeOpacity={0.82}
+                style={{ zIndex: isActive ? 10 : 1 }}
+              >
+                {/*
+                 * White shell — a real layout View whose width is animated.
+                 * Its white background IS the visible ring.  Because it is an
+                 * independent Animated.View (not borderWidth), it can never be
+                 * clipped and always shows as a distinct white stroke around
+                 * the coloured fill inside.
+                 */}
+                <Animated.View style={[styles.shell, { width: shellWidth }]}>
+                  {/* Coloured fill (grey → green) centred inside the shell */}
+                  <Animated.View
+                    style={[styles.fill, { width: fillWidth, backgroundColor: bgColor }]}
+                  >
+                    <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+
+                    <Animated.View style={{ width: labelSlotW, overflow: 'hidden' }}>
+                      <Animated.Text
+                        style={[styles.label, { opacity: labelOpacity }]}
+                        numberOfLines={1}
+                        allowFontScaling={false}
+                      >
+                        {tab.label}
+                      </Animated.Text>
+                    </Animated.View>
                   </Animated.View>
                 </Animated.View>
-              </Animated.View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+
+              {/* ── Bridge connector (not after last tab) ───────────── */}
+              {!isLast && <View style={styles.bridge} />}
+
+            </React.Fragment>
           );
         })}
       </View>
@@ -169,51 +173,58 @@ export default function TabLayout() {
 }
 
 const styles = StyleSheet.create({
-  floatingWrapper: {
+  wrapper: {
     position: 'absolute',
-    left: 0,
-    right: 0,
+    left    : 0,
+    right   : 0,
     alignItems: 'center',
   },
 
   row: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems   : 'center',
   },
 
-  // White border ring — animates in width together with the inner fill
-  outerRing: {
-    height: OUTER_W,
-    borderRadius: OUTER_W / 2,
-    alignItems: 'center',
+  // White outer shell — its background colour IS the white ring stroke
+  shell: {
+    height      : OUTER,
+    borderRadius: OUTER / 2,
+    backgroundColor: '#FFFFFF',
+    alignItems  : 'center',
     justifyContent: 'center',
-    overflow: 'hidden',
-    // Subtle shadow so each bubble floats above the page
-    shadowColor: '#000',
+    // Shadow applied to the shell so the ring casts the drop shadow
+    shadowColor  : '#000',
     shadowOpacity: 0.10,
-    shadowRadius: 8,
-    shadowOffset: { width: 0, height: 3 },
-    elevation: 5,
-    backgroundColor: '#FFFFFF', // white shows through as the ring
+    shadowRadius : 8,
+    shadowOffset : { width: 0, height: 3 },
+    elevation    : 5,
   },
 
-  // Colored fill inside the white ring
-  innerFill: {
-    height: INNER_W,
-    borderRadius: INNER_W / 2,
-    flexDirection: 'row',
-    alignItems: 'center',
+  // Coloured fill — always RING px inset from each edge of the shell
+  fill: {
+    height      : FILL,
+    borderRadius: FILL / 2,
+    flexDirection : 'row',
+    alignItems    : 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
-    gap: 5,
-    overflow: 'hidden',
+    gap      : 5,
+    overflow : 'hidden',
+  },
+
+  // Small grey rounded bridge between adjacent bubbles
+  bridge: {
+    width          : BRW,
+    height         : BRH,
+    borderRadius   : BRR,
+    backgroundColor: INACTIVE_FILL,
   },
 
   label: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontFamily: 'Inter_600SemiBold',
+    color        : '#FFFFFF',
+    fontSize     : 14,
+    fontFamily   : 'Inter_600SemiBold',
     letterSpacing: 0.1,
-    flexShrink: 0,
+    flexShrink   : 0,
   },
 });

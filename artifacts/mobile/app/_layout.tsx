@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -30,23 +31,16 @@ function RootLayoutNav() {
 }
 
 export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
+  // On web the FontFaceObserver inside useFonts throws an uncaught 6 000 ms
+  // timeout error — fonts never actually load in the Replit web preview.
+  // Skip the font-loading call entirely on web; native loads them normally.
+  const [fontsLoaded, fontError] = useFonts(
+    Platform.OS === 'web'
+      ? {}   // resolves instantly → [true, null]
+      : { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold }
+  );
 
-  // Safety valve: FontFaceObserver can throw an uncaught 6 000 ms timeout on web.
-  // If fonts haven't resolved after 4 s, proceed anyway — the app renders fine
-  // with system fonts as a fallback.
-  const [timedOut, setTimedOut] = useState(false);
-  useEffect(() => {
-    const t = setTimeout(() => setTimedOut(true), 4000);
-    return () => clearTimeout(t);
-  }, []);
-
-  const ready = fontsLoaded || !!fontError || timedOut;
+  const ready = fontsLoaded || !!fontError;
 
   useEffect(() => {
     if (ready) {
