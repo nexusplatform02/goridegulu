@@ -134,6 +134,8 @@ export default function ConfirmScreen() {
 
   const mainBtnLabel = payment === 'momo'
     ? `Pay ${fmtUGX(vehicle.priceUGX)}`
+    : payment === 'rewards'
+    ? 'Use Reward Amount'
     : `Request ${vehicle.name}`;
 
   return (
