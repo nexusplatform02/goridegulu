@@ -4,8 +4,8 @@ import {
   Modal, TextInput, Pressable, Animated, KeyboardAvoidingView, ScrollView,
 } from 'react-native';
 
-const AIRTEL_LOGO  = require('../../assets/images/airtel-money_2.png');
-const MTN_LOGO     = require('../../assets/images/mtn-momo_2.png');
+const MTN_LOGO    = require('../../assets/images/mtn-momo-real.png');
+const AIRTEL_LOGO = require('../../assets/images/airtel-money_2.png');
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -256,13 +256,13 @@ export default function ConfirmScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Network logos */}
+            {/* Network logos — MTN first */}
             <View style={styles.networkLogos}>
               <View style={styles.networkLogoCard}>
-                <Image source={AIRTEL_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
+                <Image source={MTN_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
               </View>
               <View style={styles.networkLogoCard}>
-                <Image source={MTN_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
+                <Image source={AIRTEL_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
               </View>
             </View>
 
@@ -415,10 +415,10 @@ const styles = StyleSheet.create({
   networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
   networkLogoCard: {
     flex: 1, backgroundColor: '#F7F7F7', borderRadius: 14,
-    paddingVertical: 12, paddingHorizontal: 8,
+    paddingVertical: 16, paddingHorizontal: 8,
     alignItems: 'center', justifyContent: 'center',
   },
-  networkLogoImg: { width: '100%', height: 48 },
+  networkLogoImg: { width: '100%', height: 70 },
 
   amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 14, padding: 16, marginBottom: 20 },
   amountLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
