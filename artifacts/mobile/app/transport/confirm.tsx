@@ -67,6 +67,29 @@ export default function ConfirmScreen() {
   const spinAnim                      = useRef(new Animated.Value(0)).current;
   const sheetY                        = useRef(new Animated.Value(0)).current;
 
+  // Vehicle swipe
+  const vehicleSlide = useRef(new Animated.Value(0)).current;
+
+  const vehiclePan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => false,
+      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dy) > 8 && Math.abs(g.dy) > Math.abs(g.dx),
+      onPanResponderMove: (_, g) => {
+        vehicleSlide.setValue(g.dy);
+      },
+      onPanResponderRelease: (_, g) => {
+        const ids = VEHICLES.map(v => v.id);
+        setSelected(prev => {
+          const idx = ids.indexOf(prev);
+          if (g.dy < -40 && idx < ids.length - 1) return ids[idx + 1];
+          if (g.dy >  40 && idx > 0)              return ids[idx - 1];
+          return prev;
+        });
+        Animated.spring(vehicleSlide, { toValue: 0, useNativeDriver: true, tension: 80, friction: 10 }).start();
+      },
+    })
+  ).current;
+
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -191,35 +214,37 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        {/* Vehicle options */}
-        {VEHICLES.map((v) => (
-          <TouchableOpacity
-            key={v.id}
-            style={[styles.vehicleRow, v.id === selected && styles.vehicleRowActive]}
-            activeOpacity={0.8}
-            onPress={() => setSelected(v.id)}
-          >
-            <Image source={v.image} style={styles.vehicleImg} resizeMode="contain" />
-            <View style={styles.vehicleInfo}>
-              <View style={styles.vehicleNameRow}>
-                <Text style={styles.vehicleName}>{v.name}</Text>
-                {v.fast && (
-                  <View style={styles.fastBadge}>
-                    <Ionicons name="flash" size={10} color="#FF8C00" />
-                    <Text style={styles.fastText}>Fast</Text>
-                  </View>
-                )}
+        {/* Vehicle options — swipe up/down to switch */}
+        <Animated.View style={{ transform: [{ translateY: vehicleSlide }] }} {...vehiclePan.panHandlers}>
+          {VEHICLES.map((v) => (
+            <TouchableOpacity
+              key={v.id}
+              style={[styles.vehicleRow, v.id === selected && styles.vehicleRowActive]}
+              activeOpacity={0.8}
+              onPress={() => setSelected(v.id)}
+            >
+              <Image source={v.image} style={styles.vehicleImg} resizeMode="contain" />
+              <View style={styles.vehicleInfo}>
+                <View style={styles.vehicleNameRow}>
+                  <Text style={styles.vehicleName}>{v.name}</Text>
+                  {v.fast && (
+                    <View style={styles.fastBadge}>
+                      <Ionicons name="flash" size={10} color="#FF8C00" />
+                      <Text style={styles.fastText}>Fast</Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={styles.vehicleSub}>{v.seats} · {v.luggage}</Text>
               </View>
-              <Text style={styles.vehicleSub}>{v.seats} · {v.luggage}</Text>
-            </View>
-            <View style={styles.vehiclePriceCol}>
-              <Text style={styles.vehiclePrice}>{fmtUGX(v.priceUGX)}</Text>
-              <Text style={styles.vehicleEta}>
-                {v.id === selected ? `${etaMin} min` : (v.id === 'moto' ? `${etaMin} min` : `${etaMin + 4} min`)}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+              <View style={styles.vehiclePriceCol}>
+                <Text style={styles.vehiclePrice}>{fmtUGX(v.priceUGX)}</Text>
+                <Text style={styles.vehicleEta}>
+                  {v.id === selected ? `${etaMin} min` : (v.id === 'moto' ? `${etaMin} min` : `${etaMin + 4} min`)}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </Animated.View>
 
         <View style={styles.divider} />
 
