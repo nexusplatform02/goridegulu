@@ -414,8 +414,8 @@ const styles = StyleSheet.create({
 
   networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
   networkLogoCard: {
-    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 14,
-    paddingVertical: 10, paddingHorizontal: 4,
+    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 12,
+    paddingVertical: 4, paddingHorizontal: 4,
     alignItems: 'center', justifyContent: 'center',
   },
   networkLogoImg: { width: '100%', height: 100 },
