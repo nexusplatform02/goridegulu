@@ -41,6 +41,8 @@ const PAYMENT_METHODS = [
   { id: 'rewards', label: 'Rewards',      icon: 'gift-outline'             },
 ];
 
+const REWARDS_BALANCE = 4000;
+
 function fmtDist(m: number) {
   return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`;
 }
@@ -135,7 +137,7 @@ export default function ConfirmScreen() {
   const mainBtnLabel = payment === 'momo'
     ? `Pay ${fmtUGX(vehicle.priceUGX)}`
     : payment === 'rewards'
-    ? 'Use Reward Amount'
+    ? `Use ${fmtUGX(REWARDS_BALANCE)}`
     : `Request ${vehicle.name}`;
 
   return (
