@@ -16,17 +16,17 @@ const TAB_DEFS: {
   name: string;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>['name'];
+  pillW: number; // width of the expanded green pill, sized per label
 }[] = [
-  { name: 'index',    label: 'Home',     icon: 'home' },
-  { name: 'activity', label: 'Activity', icon: 'trending-up' },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline' },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline' },
+  { name: 'index',    label: 'Home',     icon: 'home',                     pillW: 112 },
+  { name: 'activity', label: 'Activity', icon: 'trending-up',               pillW: 128 },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',            pillW: 124 },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline',  pillW: 104 },
 ];
 
-const PILL_W   = 116;
-const CIRCLE_W = 52;
+const CIRCLE_W = 52; // resting circle diameter
 
-// Animated icon — listens to an interpolated color value and re-renders
+// Animated icon — interpolated color can't be passed directly to Ionicons
 function AnimatedIcon({
   name,
   animatedColor,
@@ -35,12 +35,10 @@ function AnimatedIcon({
   animatedColor: Animated.AnimatedInterpolation<string>;
 }) {
   const [color, setColor] = useState('#9E9E9E');
-
   useEffect(() => {
     const id = animatedColor.addListener(({ value }) => setColor(value as string));
     return () => animatedColor.removeListener(id);
   }, [animatedColor]);
-
   return <Ionicons name={name} size={22} color={color} />;
 }
 
@@ -48,7 +46,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   const insets       = useSafeAreaInsets();
   const bottomOffset = Platform.OS === 'web' ? 20 : Math.max(insets.bottom + 8, 20);
 
-  // One Animated.Value per tab: 0 = small circle, 1 = expanded pill
+  // One Animated.Value per tab: 0 = circle, 1 = expanded pill
   const anims = useRef(
     TAB_DEFS.map((_, i) => new Animated.Value(i === state.index ? 1 : 0))
   ).current;
@@ -58,7 +56,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
       anims.map((anim, i) =>
         Animated.spring(anim, {
           toValue: i === state.index ? 1 : 0,
-          useNativeDriver: false, // animating layout props — native driver not supported
+          useNativeDriver: false,
           friction: 7,
           tension: 60,
         })
@@ -68,53 +66,58 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
 
   return (
     <View style={[styles.floatingWrapper, { bottom: bottomOffset }]}>
-      <View style={styles.pillBar}>
+      {/* No single outer pill — tabs are individual bubbles linked by slim connectors */}
+      <View style={styles.bar}>
         {state.routes.map((route, index) => {
           const tab  = TAB_DEFS[index];
           const anim = anims[index];
+          const isLast = index === state.routes.length - 1;
 
           const width = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: [CIRCLE_W, PILL_W],
+            outputRange: [CIRCLE_W, tab.pillW],
           });
           const bgColor = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: ['#DCDCDC', '#00B14F'],
+            outputRange: ['#E6E6E6', '#00B14F'],
           });
           const iconColor = anim.interpolate({
             inputRange : [0, 1],
             outputRange: ['#9E9E9E', '#FFFFFF'],
           });
           const labelOpacity = anim.interpolate({
-            inputRange : [0, 0.5, 1],
+            inputRange : [0, 0.45, 1],
             outputRange: [0, 0, 1],
           });
-          const labelWidth = anim.interpolate({
+          // Label container grows from 0 to a fixed max wide enough for the label
+          const labelMaxW = tab.pillW - CIRCLE_W - 18; // pill extra space minus padding
+          const labelContainerW = anim.interpolate({
             inputRange : [0, 0.45, 1],
-            outputRange: [0, 0, 54],
+            outputRange: [0, 0, labelMaxW],
           });
 
           return (
-            <TouchableOpacity
-              key={route.key}
-              onPress={() => navigation.navigate(route.name)}
-              activeOpacity={0.85}
-              style={styles.tabSlot}
-            >
-              <Animated.View style={[styles.tabPill, { width, backgroundColor: bgColor }]}>
-                <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+            <React.Fragment key={route.key}>
+              {/* Tab bubble */}
+              <TouchableOpacity
+                onPress={() => navigation.navigate(route.name)}
+                activeOpacity={0.85}
+              >
+                <Animated.View style={[styles.bubble, { width, backgroundColor: bgColor }]}>
+                  <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
 
-                {/* Label slides in as pill expands */}
-                <Animated.View style={{ width: labelWidth, overflow: 'hidden' }}>
-                  <Animated.Text
-                    style={[styles.tabLabel, { opacity: labelOpacity }]}
-                    numberOfLines={1}
-                  >
-                    {tab.label}
-                  </Animated.Text>
+                  {/* Label — slides in as pill expands, never truncated */}
+                  <Animated.View style={{ width: labelContainerW, overflow: 'hidden' }}>
+                    <Animated.Text style={[styles.label, { opacity: labelOpacity }]}>
+                      {tab.label}
+                    </Animated.Text>
+                  </Animated.View>
                 </Animated.View>
-              </Animated.View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+
+              {/* Slim connector between tabs — not after the last tab */}
+              {!isLast && <View style={styles.connector} />}
+            </React.Fragment>
           );
         })}
       </View>
@@ -139,31 +142,20 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   floatingWrapper: {
     position: 'absolute',
-    left: 16,
-    right: 16,
+    left: 20,
+    right: 20,
+    alignItems: 'center', // center the bar horizontally if it doesn't fill full width
   },
 
-  pillBar: {
+  // Row of independent bubbles + connectors — no background, no outer pill
+  bar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#EBEBEB',
-    borderRadius: 50,
-    paddingVertical: 8,
-    paddingHorizontal: 8,
-    shadowColor: '#000',
-    shadowOpacity: 0.12,
-    shadowRadius: 20,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 14,
+    // subtle shadow cast by each bubble individually via `bubble` below
   },
 
-  tabSlot: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  tabPill: {
+  // Each tab: its own pill/circle
+  bubble: {
     height: 52,
     borderRadius: 26,
     flexDirection: 'row',
@@ -172,9 +164,24 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     gap: 5,
     overflow: 'hidden',
+    // soft shadow per bubble
+    shadowColor: '#000',
+    shadowOpacity: 0.10,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
   },
 
-  tabLabel: {
+  // Slim bridge connecting adjacent bubbles
+  connector: {
+    width: 8,
+    height: 20,
+    borderRadius: 4,
+    backgroundColor: '#E6E6E6',
+    // no shadow — it's just a small visual link
+  },
+
+  label: {
     color: '#FFFFFF',
     fontSize: 14,
     fontFamily: 'Inter_600SemiBold',
