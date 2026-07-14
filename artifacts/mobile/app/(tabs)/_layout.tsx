@@ -16,17 +16,17 @@ const TAB_DEFS: {
   name: string;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>['name'];
-  pillW: number; // width of the expanded green pill, sized per label
+  pillW: number;
 }[] = [
-  { name: 'index',    label: 'Home',     icon: 'home',                     pillW: 112 },
-  { name: 'activity', label: 'Activity', icon: 'trending-up',               pillW: 128 },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',            pillW: 124 },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline',  pillW: 104 },
+  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 118 },
+  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 130 },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 126 },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 106 },
 ];
 
-const CIRCLE_W = 52; // resting circle diameter
+const CIRCLE_W = 54;    // resting diameter
+const OVERLAP  = 10;    // how much adjacent bubbles overlap — creates the chained look
 
-// Animated icon — interpolated color can't be passed directly to Ionicons
 function AnimatedIcon({
   name,
   animatedColor,
@@ -46,7 +46,6 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
   const insets       = useSafeAreaInsets();
   const bottomOffset = Platform.OS === 'web' ? 20 : Math.max(insets.bottom + 8, 20);
 
-  // One Animated.Value per tab: 0 = circle, 1 = expanded pill
   const anims = useRef(
     TAB_DEFS.map((_, i) => new Animated.Value(i === state.index ? 1 : 0))
   ).current;
@@ -66,12 +65,10 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
 
   return (
     <View style={[styles.floatingWrapper, { bottom: bottomOffset }]}>
-      {/* No single outer pill — tabs are individual bubbles linked by slim connectors */}
-      <View style={styles.bar}>
+      <View style={styles.row}>
         {state.routes.map((route, index) => {
           const tab  = TAB_DEFS[index];
           const anim = anims[index];
-          const isLast = index === state.routes.length - 1;
 
           const width = anim.interpolate({
             inputRange : [0, 1],
@@ -79,45 +76,45 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
           });
           const bgColor = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: ['#E6E6E6', '#00B14F'],
+            outputRange: ['#EBEBEB', '#00B14F'],
           });
           const iconColor = anim.interpolate({
             inputRange : [0, 1],
             outputRange: ['#9E9E9E', '#FFFFFF'],
           });
           const labelOpacity = anim.interpolate({
-            inputRange : [0, 0.45, 1],
+            inputRange : [0, 0.5, 1],
             outputRange: [0, 0, 1],
           });
-          // Label container grows from 0 to a fixed max wide enough for the label
-          const labelMaxW = tab.pillW - CIRCLE_W - 18; // pill extra space minus padding
-          const labelContainerW = anim.interpolate({
-            inputRange : [0, 0.45, 1],
-            outputRange: [0, 0, labelMaxW],
+          // Reserve enough room for the label so it never wraps
+          const labelW = anim.interpolate({
+            inputRange : [0, 0.4, 1],
+            outputRange: [0, 0, tab.pillW - CIRCLE_W - 4],
           });
 
           return (
-            <React.Fragment key={route.key}>
-              {/* Tab bubble */}
-              <TouchableOpacity
-                onPress={() => navigation.navigate(route.name)}
-                activeOpacity={0.85}
-              >
-                <Animated.View style={[styles.bubble, { width, backgroundColor: bgColor }]}>
-                  <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+            <TouchableOpacity
+              key={route.key}
+              onPress={() => navigation.navigate(route.name)}
+              activeOpacity={0.85}
+              // Each tab after the first overlaps the previous by OVERLAP px
+              style={index === 0 ? undefined : { marginLeft: -OVERLAP, zIndex: state.index === index ? 10 : index }}
+            >
+              <Animated.View style={[styles.bubble, { width, backgroundColor: bgColor }]}>
+                <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
 
-                  {/* Label — slides in as pill expands, never truncated */}
-                  <Animated.View style={{ width: labelContainerW, overflow: 'hidden' }}>
-                    <Animated.Text style={[styles.label, { opacity: labelOpacity }]}>
-                      {tab.label}
-                    </Animated.Text>
-                  </Animated.View>
+                {/* Label in a fixed-width container — single line, no wrap */}
+                <Animated.View style={{ width: labelW, overflow: 'hidden' }}>
+                  <Animated.Text
+                    style={[styles.label, { opacity: labelOpacity }]}
+                    numberOfLines={1}
+                    allowFontScaling={false}
+                  >
+                    {tab.label}
+                  </Animated.Text>
                 </Animated.View>
-              </TouchableOpacity>
-
-              {/* Slim connector between tabs — not after the last tab */}
-              {!isLast && <View style={styles.connector} />}
-            </React.Fragment>
+              </Animated.View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -142,43 +139,32 @@ export default function TabLayout() {
 const styles = StyleSheet.create({
   floatingWrapper: {
     position: 'absolute',
-    left: 20,
-    right: 20,
-    alignItems: 'center', // center the bar horizontally if it doesn't fill full width
+    left: 0,
+    right: 0,
+    alignItems: 'center',  // center the chain horizontally
   },
 
-  // Row of independent bubbles + connectors — no background, no outer pill
-  bar: {
+  // No background, no outer container — just a row of overlapping bubbles
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
-    // subtle shadow cast by each bubble individually via `bubble` below
   },
 
-  // Each tab: its own pill/circle
   bubble: {
-    height: 52,
-    borderRadius: 26,
+    height: CIRCLE_W,
+    borderRadius: CIRCLE_W / 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
     gap: 5,
     overflow: 'hidden',
-    // soft shadow per bubble
+    // Each bubble casts its own shadow, creating the floating depth look
     shadowColor: '#000',
-    shadowOpacity: 0.10,
+    shadowOpacity: 0.12,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
-  },
-
-  // Slim bridge connecting adjacent bubbles
-  connector: {
-    width: 8,
-    height: 20,
-    borderRadius: 4,
-    backgroundColor: '#E6E6E6',
-    // no shadow — it's just a small visual link
   },
 
   label: {
@@ -186,5 +172,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Inter_600SemiBold',
     letterSpacing: 0.1,
+    flexShrink: 0,      // never shrink — the container width controls display
   },
 });
