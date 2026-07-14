@@ -1,113 +1,184 @@
 import React from 'react';
 import {
   View, Text, StyleSheet, ScrollView, TouchableOpacity,
-  Image, Platform,
+  Image, Platform, Dimensions,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+const { width: SW } = Dimensions.get('window');
+
 const SUGGESTIONS = [
-  { id: '1', icon: 'time-outline' as const, name: 'Central Market',       addr: '12 Market St, City Center' },
-  { id: '2', icon: 'time-outline' as const, name: 'City Bus Terminal',    addr: '5 Terminal Rd, Downtown' },
-  { id: '3', icon: 'bookmark-outline' as const, name: 'Merlion Park',     addr: '1 Fullerton Rd, Waterfront' },
+  {
+    id: '1',
+    icon: 'time-outline' as const,
+    name: 'L1 Lobby (Near Pezzo Pizza), Tampines 1',
+    addr: '10 Tampines Central 1, Singapore, 529536',
+  },
+  {
+    id: '2',
+    icon: 'location-outline' as const,
+    name: 'Gardens by the Bay',
+    addr: '18 Marina Gardens Dr, Singapore, 018953',
+  },
+  {
+    id: '3',
+    icon: 'location-outline' as const,
+    name: 'Merlion Park - One Fullerton',
+    addr: '21 Esplanade Dr, One Fullerton, Singapore, 038805',
+  },
 ];
+
+// Step-photo placeholders (two side-by-side cards that look like location photos)
+function PhotoCard({
+  step,
+  caption,
+  colors,
+}: {
+  step: string;
+  caption: string;
+  colors: [string, string];
+}) {
+  return (
+    <View style={[photoStyles.card, { width: (SW - 48) / 2 }]}>
+      {/* Simulated interior photo */}
+      <View style={[photoStyles.photo, { backgroundColor: colors[0] }]}>
+        <View style={[photoStyles.photoInner, { backgroundColor: colors[1] }]} />
+        <View style={photoStyles.photoPerson} />
+        <View style={photoStyles.stepBadge}>
+          <Text style={photoStyles.stepNum}>{step}</Text>
+        </View>
+      </View>
+      <Text style={photoStyles.caption}>{caption}</Text>
+    </View>
+  );
+}
+
+const photoStyles = StyleSheet.create({
+  card: { marginRight: 12 },
+  photo: {
+    height: 130, borderRadius: 14, overflow: 'hidden',
+    justifyContent: 'flex-end', marginBottom: 8, position: 'relative',
+  },
+  photoInner: {
+    position: 'absolute', bottom: 0, left: 0, right: 0, height: 60,
+    opacity: 0.6,
+  },
+  photoPerson: {
+    position: 'absolute', bottom: 12, left: '40%',
+    width: 18, height: 36, backgroundColor: 'rgba(100,70,40,0.7)',
+    borderRadius: 4,
+  },
+  stepBadge: {
+    position: 'absolute', bottom: 8, left: 8,
+    width: 24, height: 24, borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  stepNum: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  caption: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#4A4A4A', lineHeight: 17 },
+});
 
 export default function TransportScreen() {
   const insets = useSafeAreaInsets();
-  const topPad = Platform.OS === 'web' ? 60 : insets.top;
+  const topPad = Platform.OS === 'web' ? 50 : insets.top;
 
   return (
     <View style={styles.root}>
-      {/* ── Header ─────────────────────────────────────────────── */}
-      <View style={[styles.header, { paddingTop: topPad + 8 }]}>
-        <TouchableOpacity style={styles.headerBtn} onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={22} color="#1A1A1A" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Transport</Text>
-        <TouchableOpacity style={styles.headerBtn}>
-          <Ionicons name="map-outline" size={20} color="#1A1A1A" />
-          <Text style={styles.mapLabel}>Map</Text>
-        </TouchableOpacity>
-      </View>
+      {/* ── Fixed green hero area (behind everything) ───────────── */}
+      <View style={[styles.greenBg, { paddingTop: topPad }]}>
 
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      >
-        {/* ── Hero card ──────────────────────────────────────────── */}
-        <View style={styles.heroCard}>
-          {/* Green top */}
-          <View style={styles.heroGreen}>
-            <Image
-              source={require('../../assets/images/vehicle-car.png')}
-              style={styles.carImage}
-              resizeMode="contain"
-            />
-          </View>
-
-          {/* White bottom */}
-          <View style={styles.heroWhite}>
-            <Text style={styles.heroTitle}>Transport</Text>
-            <Text style={styles.heroSubtitle}>
-              Wherever you're going, let's get{'\n'}you there!
-            </Text>
-
-            {/* Where to? bar */}
-            <TouchableOpacity
-              style={styles.whereToBar}
-              activeOpacity={0.85}
-              onPress={() => router.push('/transport/location')}
-            >
-              <View style={styles.whereToLeft}>
-                <Ionicons name="location-outline" size={18} color="#8A8A8A" />
-                <Text style={styles.whereToText}>Where to?</Text>
-              </View>
-              <TouchableOpacity style={styles.nowBtn} activeOpacity={0.85}>
-                <Text style={styles.nowText}>Now</Text>
-                <Ionicons name="chevron-down" size={13} color="#FFFFFF" />
-              </TouchableOpacity>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-        {/* ── Pickup section ─────────────────────────────────────── */}
-        <View style={styles.pickupSection}>
-          <Text style={styles.pickupLabel}>Directions to pickup point</Text>
-
-          <TouchableOpacity style={styles.pickupSelector} activeOpacity={0.8}>
-            <Ionicons name="location" size={16} color="#1A1A1A" />
-            <Text style={styles.pickupSelectorText}>Main Entrance, Ground Floor</Text>
-            <Ionicons name="chevron-down" size={16} color="#1A1A1A" />
-            <TouchableOpacity style={styles.navIcon}>
-              <Ionicons name="navigate-outline" size={18} color="#1A1A1A" />
-            </TouchableOpacity>
+        {/* Header row */}
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.circleBtn} onPress={() => router.back()}>
+            <Ionicons name="chevron-back" size={20} color="#1A1A1A" />
           </TouchableOpacity>
 
-          {/* Photo thumbnails */}
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.photoScroll}>
-            <View style={styles.photoCard}>
-              <View style={[styles.photoPlaceholder, { backgroundColor: '#C8E6B8' }]}>
-                <Ionicons name="storefront-outline" size={32} color="#6B9E6B" />
-              </View>
-              <View style={styles.photoStep}>
-                <Text style={styles.photoStepNum}>1</Text>
-              </View>
-              <Text style={styles.photoCaption}>Exit through main{'\n'}entrance doors.</Text>
-            </View>
-            <View style={styles.photoCard}>
-              <View style={[styles.photoPlaceholder, { backgroundColor: '#D4E8F8' }]}>
-                <Ionicons name="walk-outline" size={32} color="#5B8BB0" />
-              </View>
-              <View style={styles.photoStep}>
-                <Text style={styles.photoStepNum}>2</Text>
-              </View>
-              <Text style={styles.photoCaption}>Walk to the pickup{'\n'}zone on your right.</Text>
-            </View>
+          <Text style={styles.headerTitle}>Transport</Text>
+
+          <TouchableOpacity style={styles.mapBtn}>
+            <Ionicons name="map-outline" size={17} color="#1A1A1A" />
+            <Text style={styles.mapLabel}>Map</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Car image centered on green background */}
+        <View style={styles.carWrap}>
+          <Image
+            source={require('../../assets/images/vehicle-car.png')}
+            style={styles.carImage}
+            resizeMode="contain"
+          />
+        </View>
+      </View>
+
+      {/* ── Scrollable content that overlaps the green hero ──────── */}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Spacer to position white card at right depth */}
+        <View style={styles.greenSpacer} />
+
+        {/* ── White info card ───────────────────────────────────── */}
+        <View style={styles.whiteCard}>
+          <Text style={styles.cardTitle}>Transport</Text>
+          <Text style={styles.cardSubtitle}>
+            Wherever you're going, let's get  you there!
+          </Text>
+
+          {/* Where to? bar */}
+          <TouchableOpacity
+            style={styles.whereBar}
+            activeOpacity={0.85}
+            onPress={() => router.push('/transport/location')}
+          >
+            <Ionicons name="location-outline" size={19} color="#8A8A8A" style={{ marginLeft: 4 }} />
+            <Text style={styles.whereText}>Where to?</Text>
+            <TouchableOpacity style={styles.nowBtn} activeOpacity={0.85}>
+              <Text style={styles.nowText}>Now</Text>
+              <Ionicons name="chevron-down" size={13} color="#FFFFFF" />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
+
+        {/* ── Pickup section ──────────────────────────────────────── */}
+        <View style={styles.pickupSection}>
+          <View style={styles.pickupRow}>
+            <Text style={styles.pickupLabel}>Directions to pickup point</Text>
+            <TouchableOpacity style={styles.navCircle}>
+              <Ionicons name="navigate-outline" size={18} color="#1A1A1A" />
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.pickupLocRow} activeOpacity={0.8}>
+            <Text style={styles.pickupLocText}>T1, Door 8, Basement 1</Text>
+            <Ionicons name="chevron-down" size={18} color="#1A1A1A" />
+          </TouchableOpacity>
+
+          {/* Step photos */}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.photoScroll}
+            contentContainerStyle={{ paddingRight: 4 }}
+          >
+            <PhotoCard
+              step="1"
+              caption={'Exit from the transit area and\nhead  towards the travelator.'}
+              colors={['#C4997A', '#8B5E3C']}
+            />
+            <PhotoCard
+              step="2"
+              caption={'Take the down riding travelator.'}
+              colors={['#8FA8C0', '#5F7890']}
+            />
           </ScrollView>
         </View>
 
-        {/* ── Suggested places ───────────────────────────────────── */}
+        {/* ── Suggested places ─────────────────────────────────────── */}
         <View style={styles.suggestSection}>
           {SUGGESTIONS.map((s) => (
             <TouchableOpacity
@@ -116,98 +187,125 @@ export default function TransportScreen() {
               activeOpacity={0.75}
               onPress={() => router.push('/transport/location')}
             >
-              <View style={styles.suggestIcon}>
+              <View style={styles.suggestIconWrap}>
                 <Ionicons name={s.icon} size={18} color="#6B6B6B" />
               </View>
               <View style={styles.suggestInfo}>
-                <Text style={styles.suggestName}>{s.name}</Text>
-                <Text style={styles.suggestAddr}>{s.addr}</Text>
+                <Text style={styles.suggestName} numberOfLines={1}>{s.name}</Text>
+                <Text style={styles.suggestAddr} numberOfLines={1}>{s.addr}</Text>
               </View>
             </TouchableOpacity>
           ))}
         </View>
+
+        {/* Bottom spacer */}
+        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#FFFFFF' },
+const GREEN_BG_HEIGHT = 300; // total height of the green section
+const CARD_OVERLAP = 80;     // how many px the white card overlaps into the green
 
-  // Header
+const styles = StyleSheet.create({
+  root: { flex: 1, backgroundColor: '#F5F5F5' },
+
+  // ── Green hero ─────────────────────────────────────────────────
+  greenBg: {
+    position: 'absolute', top: 0, left: 0, right: 0,
+    height: GREEN_BG_HEIGHT,
+    backgroundColor: '#C8E8C5',
+  },
+
   header: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: 16, paddingBottom: 12, backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
+    paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12,
   },
-  headerBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, padding: 6 },
-  headerTitle: { fontSize: 17, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  circleBtn: {
+    width: 38, height: 38, borderRadius: 19, backgroundColor: '#FFFFFF',
+    alignItems: 'center', justifyContent: 'center',
+    shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 6, elevation: 3,
+  },
+  headerTitle: {
+    fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A',
+  },
+  mapBtn: {
+    flexDirection: 'row', alignItems: 'center', gap: 5,
+    backgroundColor: '#FFFFFF', borderRadius: 20,
+    paddingHorizontal: 14, paddingVertical: 9,
+    shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 6, elevation: 3,
+  },
   mapLabel: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
 
-  // Hero card
-  heroCard: {
-    margin: 16, borderRadius: 20, overflow: 'hidden',
-    shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 12,
-    shadowOffset: { width: 0, height: 4 }, elevation: 5,
-  },
-  heroGreen: {
-    backgroundColor: '#00B14F', height: 180,
-    alignItems: 'center', justifyContent: 'flex-end',
-  },
-  carImage: { width: 260, height: 170, marginBottom: -10 },
-  heroWhite: { backgroundColor: '#FFFFFF', padding: 18, paddingTop: 20 },
-  heroTitle: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 4 },
-  heroSubtitle: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#6B6B6B', marginBottom: 16, lineHeight: 20 },
+  carWrap: { alignItems: 'center', justifyContent: 'center', flex: 1, paddingBottom: CARD_OVERLAP - 20 },
+  carImage: { width: SW * 0.75, height: 160 },
 
-  whereToBar: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    borderWidth: 1, borderColor: '#E8E8E8', borderRadius: 14, padding: 12, gap: 10,
-    backgroundColor: '#F9F9F9',
+  // ── Scroll layer ────────────────────────────────────────────────
+  scroll: { flex: 1 },
+  scrollContent: {},
+
+  // Spacer pushes white card down so green shows above
+  greenSpacer: { height: GREEN_BG_HEIGHT - CARD_OVERLAP },
+
+  // ── White info card ─────────────────────────────────────────────
+  whiteCard: {
+    backgroundColor: '#FFFFFF',
+    borderTopLeftRadius: 28, borderTopRightRadius: 28,
+    paddingHorizontal: 22, paddingTop: 24, paddingBottom: 22,
   },
-  whereToLeft: { flexDirection: 'row', alignItems: 'center', gap: 8, flex: 1 },
-  whereToText: { fontSize: 15, fontFamily: 'Inter_400Regular', color: '#AAAAAA' },
+  cardTitle: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 5 },
+  cardSubtitle: {
+    fontSize: 14, fontFamily: 'Inter_400Regular', color: '#7A7A7A',
+    lineHeight: 20, marginBottom: 18,
+  },
+  whereBar: {
+    flexDirection: 'row', alignItems: 'center', gap: 10,
+    borderWidth: 1.5, borderColor: '#E5E5E5', borderRadius: 30,
+    paddingLeft: 12, paddingRight: 6, paddingVertical: 8,
+    backgroundColor: '#FAFAFA',
+  },
+  whereText: { flex: 1, fontSize: 15, fontFamily: 'Inter_400Regular', color: '#B0B0B0' },
   nowBtn: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
-    backgroundColor: '#00B14F', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 7,
+    backgroundColor: '#00B14F', borderRadius: 30,
+    paddingHorizontal: 16, paddingVertical: 10,
   },
   nowText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
 
-  // Pickup section
-  pickupSection: { paddingHorizontal: 16, paddingTop: 4, backgroundColor: '#FFFFFF' },
-  pickupLabel: { fontSize: 12, color: '#AAAAAA', fontFamily: 'Inter_400Regular', marginBottom: 8 },
-  pickupSelector: {
-    flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: '#F5F5F5', borderRadius: 12, padding: 12, marginBottom: 14,
+  // ── Pickup section ──────────────────────────────────────────────
+  pickupSection: {
+    backgroundColor: '#FFFFFF', paddingHorizontal: 22, paddingTop: 20, paddingBottom: 12,
   },
-  pickupSelectorText: { flex: 1, fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
-  navIcon: { padding: 4 },
+  pickupRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    marginBottom: 4,
+  },
+  pickupLabel: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  navCircle: {
+    width: 36, height: 36, borderRadius: 18,
+    borderWidth: 1.5, borderColor: '#E0E0E0',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  pickupLocRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 18,
+  },
+  pickupLocText: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
 
-  photoScroll: { marginBottom: 8 },
-  photoCard: { width: 160, marginRight: 12 },
-  photoPlaceholder: {
-    width: 160, height: 110, borderRadius: 12,
-    alignItems: 'center', justifyContent: 'center', marginBottom: 8,
-  },
-  photoStep: {
-    position: 'absolute', top: 8, left: 8,
-    width: 22, height: 22, borderRadius: 11,
-    backgroundColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center',
-  },
-  photoStepNum: { fontSize: 12, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  photoCaption: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#5A5A5A', lineHeight: 17 },
+  photoScroll: { marginBottom: 4 },
 
-  // Suggestions
-  suggestSection: { marginTop: 8, borderTopWidth: 1, borderTopColor: '#F0F0F0' },
+  // ── Suggestions ─────────────────────────────────────────────────
+  suggestSection: { backgroundColor: '#FFFFFF', marginTop: 8 },
   suggestRow: {
-    flexDirection: 'row', alignItems: 'center', gap: 12,
-    paddingHorizontal: 16, paddingVertical: 14,
-    borderBottomWidth: 1, borderBottomColor: '#F8F8F8',
+    flexDirection: 'row', alignItems: 'center', gap: 14,
+    paddingHorizontal: 22, paddingVertical: 16,
+    borderBottomWidth: 1, borderBottomColor: '#F4F4F4',
   },
-  suggestIcon: {
-    width: 42, height: 42, borderRadius: 21, backgroundColor: '#F5F5F5',
+  suggestIconWrap: {
+    width: 40, height: 40, borderRadius: 20, backgroundColor: '#F5F5F5',
     alignItems: 'center', justifyContent: 'center',
   },
   suggestInfo: { flex: 1 },
   suggestName: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  suggestAddr: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+  suggestAddr: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
 });
