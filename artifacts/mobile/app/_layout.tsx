@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
@@ -37,13 +37,24 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
+  // Safety valve: FontFaceObserver can throw an uncaught 6 000 ms timeout on web.
+  // If fonts haven't resolved after 4 s, proceed anyway — the app renders fine
+  // with system fonts as a fallback.
+  const [timedOut, setTimedOut] = useState(false);
   useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
+    const t = setTimeout(() => setTimedOut(true), 4000);
+    return () => clearTimeout(t);
+  }, []);
 
-  if (!fontsLoaded && !fontError) return null;
+  const ready = fontsLoaded || !!fontError || timedOut;
+
+  useEffect(() => {
+    if (ready) {
+      SplashScreen.hideAsync().catch(() => {});
+    }
+  }, [ready]);
+
+  if (!ready) return null;
 
   return (
     <SafeAreaProvider>
