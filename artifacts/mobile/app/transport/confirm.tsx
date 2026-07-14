@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, Platform,
-  Modal, TextInput, Pressable, Animated, KeyboardAvoidingView,
+  Modal, TextInput, Pressable, Animated, KeyboardAvoidingView, ScrollView,
 } from 'react-native';
+
+const AIRTEL_LOGO  = require('../../assets/images/airtel-money_2.png');
+const MTN_LOGO     = require('../../assets/images/mtn-momo_2.png');
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -244,9 +247,6 @@ export default function ConfirmScreen() {
 
             {/* Header */}
             <View style={styles.momoHeader}>
-              <View style={styles.momoIconWrap}>
-                <Ionicons name="phone-portrait-outline" size={26} color="#00B14F" />
-              </View>
               <View style={{ flex: 1 }}>
                 <Text style={styles.momoTitle}>Mobile Money</Text>
                 <Text style={styles.momoSub}>Enter your number to pay</Text>
@@ -254,6 +254,16 @@ export default function ConfirmScreen() {
               <TouchableOpacity onPress={() => payStep === 'idle' && setMomoVisible(false)}>
                 <Ionicons name="close-circle" size={26} color="#D0D0D0" />
               </TouchableOpacity>
+            </View>
+
+            {/* Network logos */}
+            <View style={styles.networkLogos}>
+              <View style={styles.networkLogoCard}>
+                <Image source={AIRTEL_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
+              </View>
+              <View style={styles.networkLogoCard}>
+                <Image source={MTN_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
+              </View>
             </View>
 
             {/* Amount */}
@@ -398,13 +408,17 @@ const styles = StyleSheet.create({
   },
   momoHandle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 20 },
 
-  momoHeader:  { flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 24 },
-  momoIconWrap: {
-    width: 50, height: 50, borderRadius: 25, backgroundColor: '#E8F8EE',
-    alignItems: 'center', justifyContent: 'center',
-  },
+  momoHeader:  { flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 16 },
   momoTitle: { fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   momoSub:   { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+
+  networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
+  networkLogoCard: {
+    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 14,
+    paddingVertical: 12, paddingHorizontal: 8,
+    alignItems: 'center', justifyContent: 'center',
+  },
+  networkLogoImg: { width: '100%', height: 48 },
 
   amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 14, padding: 16, marginBottom: 20 },
   amountLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
