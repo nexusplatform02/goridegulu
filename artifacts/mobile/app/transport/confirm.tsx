@@ -43,8 +43,9 @@ function fmtUGX(n: number) {
 }
 
 const PAYMENT_METHODS = [
-  { id: 'cash',  label: 'Cash',         icon: 'cash-outline' },
-  { id: 'momo',  label: 'Mobile Money', icon: 'phone-portrait-outline' },
+  { id: 'cash',    label: 'Cash',         icon: 'cash-outline' },
+  { id: 'momo',    label: 'Mobile Money', icon: 'phone-portrait-outline' },
+  { id: 'rewards', label: 'Rewards',      icon: 'gift-outline' },
 ];
 
 export default function ConfirmScreen() {
@@ -155,14 +156,6 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        <TouchableOpacity style={styles.offersRow} activeOpacity={0.8}>
-          <Ionicons name="pricetag-outline" size={18} color="#6B6B6B" />
-          <Text style={styles.offersText}>Offers</Text>
-          <Ionicons name="chevron-forward" size={16} color="#C0C0C0" style={{ marginLeft: 'auto' }} />
-        </TouchableOpacity>
-
-        <View style={styles.divider} />
-
         {/* Payment method */}
         <View style={styles.paymentRow}>
           <Ionicons name="wallet-outline" size={18} color="#6B6B6B" />
@@ -268,7 +261,7 @@ const styles = StyleSheet.create({
   fastText: { fontSize: 10, fontFamily: 'Inter_600SemiBold', color: '#FF8C00' },
   vehicleSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
   vehiclePriceCol: { alignItems: 'flex-end' },
-  vehiclePrice: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  vehiclePrice: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   vehicleEta: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
 
   paymentRow: {
