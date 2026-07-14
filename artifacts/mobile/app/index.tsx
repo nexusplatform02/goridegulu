@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Animated } from 'react-native';
-import { router } from 'expo-router';
+import { View, Text, StyleSheet, Animated, Platform } from 'react-native';
+import { Redirect, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SplashScreen() {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.85)).current;
+
+  // On web: jump straight to tabs — no splash delay needed
+  if (Platform.OS === 'web') {
+    return <Redirect href="/(tabs)" />;
+  }
 
   useEffect(() => {
     Animated.parallel([

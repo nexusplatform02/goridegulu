@@ -9,17 +9,18 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Generated 3D illustrated PNG icons — match the real Grab-style icons
 const SERVICES = [
-  { id: '1', label: 'Transport', img: require('../../assets/images/icon-transport.png'), bg: '#E6F9EE' },
-  { id: '2', label: 'Food',      img: require('../../assets/images/icon-food.png'),      bg: '#FFF0E8' },
-  { id: '3', label: 'Dine Out',  img: require('../../assets/images/icon-dineout.png'),   bg: '#E6F9EE' },
-  { id: '4', label: 'Mart',      img: require('../../assets/images/icon-mart.png'),      bg: '#E6F9EE' },
-  { id: '5', label: 'Shopping',  img: require('../../assets/images/icon-shopping.png'),  bg: '#FFF4E0' },
-  { id: '6', label: 'All',       img: null,                                              bg: '#E6F9EE', isAll: true },
+  { id: '1', label: 'Transport', img: require('../../assets/images/icon-transport.png'), bg: '#E6F9EE', route: '/transport' },
+  { id: '2', label: 'Food',      img: require('../../assets/images/icon-food.png'),      bg: '#FFF0E8', route: null },
+  { id: '3', label: 'Dine Out',  img: require('../../assets/images/icon-dineout.png'),   bg: '#E6F9EE', route: null },
+  { id: '4', label: 'Mart',      img: require('../../assets/images/icon-mart.png'),      bg: '#E6F9EE', route: null },
+  { id: '5', label: 'Shopping',  img: require('../../assets/images/icon-shopping.png'),  bg: '#FFF4E0', route: null },
+  { id: '6', label: 'All',       img: null,                                              bg: '#E6F9EE', route: null, isAll: true },
 ];
 
 const FOOD_CARDS = [
@@ -141,7 +142,12 @@ export default function HomeScreen() {
         {/* Services Grid */}
         <View style={styles.servicesCard}>
           {SERVICES.map((svc) => (
-            <TouchableOpacity key={svc.id} style={styles.serviceItem} activeOpacity={0.7}>
+            <TouchableOpacity
+              key={svc.id}
+              style={styles.serviceItem}
+              activeOpacity={0.7}
+              onPress={() => svc.route && router.push(svc.route as any)}
+            >
               <View style={[styles.iconCircle, { backgroundColor: svc.bg }]}>
                 {(svc as any).isAll ? (
                   <AllGrid />

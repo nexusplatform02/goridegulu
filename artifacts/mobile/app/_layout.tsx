@@ -25,6 +25,7 @@ function RootLayoutNav() {
       <Stack.Screen name="onboarding/location" options={{ animation: 'fade' }} />
       <Stack.Screen name="onboarding/country"  options={{ animation: 'slide_from_right' }} />
       <Stack.Screen name="(tabs)"              options={{ animation: 'fade' }} />
+      <Stack.Screen name="transport"           options={{ animation: 'slide_from_right' }} />
     </Stack>
   );
 }

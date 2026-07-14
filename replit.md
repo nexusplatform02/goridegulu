@@ -1,45 +1,39 @@
 # Grabby
 
-A mobile app (Expo/React Native) backed by an Express API server and PostgreSQL database.
+A mobile-first Expo/React Native app — no backend or API server. All data is static/local.
 
 ## Run & Operate
 
-- **Mobile app**: workflow `artifacts/mobile: expo` — Expo dev server (scan QR or open web preview)
-- **API server**: workflow `artifacts/api-server: API Server` — `pnpm --filter @workspace/api-server run dev` (port assigned via `$PORT`)
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes to dev database (dev only)
-- Required env: `DATABASE_URL` — provisioned automatically by Replit (no manual setup needed)
+- **Mobile app**: workflow `artifacts/mobile: expo` — `pnpm --filter @workspace/mobile run dev`
+- `pnpm run typecheck` — typecheck the mobile app
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
 - **Mobile**: Expo ~54, React Native 0.81, expo-router, TanStack Query
-- **API**: Express 5, pino logging
-- **DB**: PostgreSQL + Drizzle ORM + drizzle-zod
-- **Validation**: Zod (`zod/v4`)
-- **API codegen**: Orval (from OpenAPI spec → `lib/api-spec`)
-- **Build**: esbuild (CJS bundle for API server)
+- No backend, no database — fully client-side
 
 ## Where things live
 
-- `artifacts/api-server/` — Express API server
-- `artifacts/mobile/` — Expo mobile app
-- `lib/db/` — Drizzle schema and DB connection (`DATABASE_URL` required)
-- `lib/api-spec/` — OpenAPI spec (source of truth for API contract)
-- `lib/api-zod/` — generated Zod schemas from OpenAPI spec
-- `lib/api-client-react/` — generated TanStack Query hooks for mobile
+- `artifacts/mobile/app/(tabs)/` — main tab screens (Home, Activity, Orders, Chat)
+- `artifacts/mobile/app/(tabs)/_layout.tsx` — custom animated tab bar
+- `artifacts/mobile/app/index.tsx` — splash screen (redirects to tabs)
+- `artifacts/mobile/app/onboarding/` — onboarding flow (native only)
+- `artifacts/mobile/assets/images/` — local image assets
+- `artifacts/mobile/constants/colors.ts` — design tokens
+
+## Navigation bar
+
+Custom animated floating pill bar — matches the Grab-style design reference:
+- Active tab: green elongated pill (#00B14F) with white icon + label
+- Inactive tabs: gray circles (#EFEFEF) with gray icons, inside a rounded gray container (#E2E2E2)
+- Defined in `artifacts/mobile/app/(tabs)/_layout.tsx`
 
 ## Architecture decisions
 
-- API contract is code-generated from the OpenAPI spec in `lib/api-spec`; run codegen after changing the spec.
-- DB schema lives in `lib/db/src/schema/`; run `pnpm --filter @workspace/db run push` after adding tables.
-- API server bundles to a single ESM file via esbuild before running (`node ./dist/index.mjs`).
-
-## Product
-
-_Describe the high-level user-facing capabilities of this app once they exist._
+- Pure client-side — no Express server, no Drizzle/PostgreSQL, no API codegen.
+- Web preview skips the native splash screen and goes straight to tabs (`<Redirect href="/(tabs)" />`).
+- Tab bar uses `Animated.Value` springs to morph inactive circles into the active green pill.
 
 ## User preferences
 
@@ -47,10 +41,5 @@ _Populate as you build — explicit user instructions worth remembering across s
 
 ## Gotchas
 
-- `DATABASE_URL` is runtime-managed by Replit — never set it manually.
-- Always run codegen (`pnpm --filter @workspace/api-spec run codegen`) after changing the OpenAPI spec.
-- DB schema changes require `pnpm --filter @workspace/db run push` on dev; production schema is applied automatically on Publish.
-
-## Pointers
-
-- See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+- On web, `app/index.tsx` renders `<Redirect href="/(tabs)" />` immediately (no timer).
+- On native, the splash shows for 2.2 s then checks `AsyncStorage` for `onboardingDone`.
