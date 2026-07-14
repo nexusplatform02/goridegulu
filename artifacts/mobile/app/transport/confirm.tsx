@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity, Image, Platform, ScrollView,
+  View, Text, StyleSheet, TouchableOpacity, Image, Platform,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MapBackground } from '@/components/MapBackground';
 
+// UGX prices
 const VEHICLES = [
   {
     id: 'moto',
     name: 'Motorcycle',
     seats: '1 seat',
     luggage: 'Small bag only',
-    price: '$3.50',
-    eta: '8 min',
+    priceUGX: 13000,
+    baseDistM: 2400,   // trip distance in metres
     fast: true,
     image: require('../../assets/images/vehicle-moto.png'),
   },
@@ -23,26 +24,49 @@ const VEHICLES = [
     name: 'Tuk Tuk',
     seats: '3 seats',
     luggage: '2 large bags',
-    price: '$5.20',
-    eta: '12 min',
+    priceUGX: 19000,
+    baseDistM: 2400,
     fast: false,
     image: require('../../assets/images/vehicle-tuktuk.png'),
   },
 ];
+
+/** Format metres → "450 m" or "1.2 km" */
+function fmtDist(m: number) {
+  if (m < 1000) return `${Math.round(m)} m`;
+  return `${(m / 1000).toFixed(1)} km`;
+}
+
+/** Format UGX with comma separator */
+function fmtUGX(n: number) {
+  return `UGX ${n.toLocaleString()}`;
+}
 
 export default function ConfirmScreen() {
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === 'web' ? 60 : insets.top;
   const [selected, setSelected] = useState('moto');
 
+  // Live rider distance (metres) — rider is approaching, starts ~1.8 km away
+  const [riderDistM, setRiderDistM] = useState(1820);
+  // Minutes away derived from distance (rough: 250 m/min on motorcycle)
+  const etaMin = Math.max(1, Math.round(riderDistM / 250));
+
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setRiderDistM(prev => Math.max(0, prev - 18));
+    }, 500);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, []);
+
   const vehicle = VEHICLES.find(v => v.id === selected)!;
 
   return (
     <View style={styles.root}>
-      {/* ── Map background ───────────────────────────────────── */}
       <MapBackground showRoute />
 
-      {/* ── Back button ──────────────────────────────────────── */}
+      {/* ── Back button ───────────────────────────────────────── */}
       <TouchableOpacity
         style={[styles.backBtn, { top: topPad + 8 }]}
         onPress={() => router.back()}
@@ -50,7 +74,7 @@ export default function ConfirmScreen() {
         <Ionicons name="chevron-back" size={22} color="#1A1A1A" />
       </TouchableOpacity>
 
-      {/* ── Drop-off info card (top overlay) ─────────────────── */}
+      {/* ── Drop-off card ─────────────────────────────────────── */}
       <View style={[styles.dropoffCard, { top: topPad + 8 }]}>
         <View style={styles.dropoffRow}>
           <View style={styles.dropoffDotGreen} />
@@ -62,29 +86,32 @@ export default function ConfirmScreen() {
           <Text style={styles.dropoffTo}>Central Market, Town Square</Text>
         </View>
         <View style={styles.distBadge}>
-          <Text style={styles.distText}>2.4 km</Text>
+          <Text style={styles.distText}>{fmtDist(vehicle.baseDistM)}</Text>
         </View>
       </View>
 
-      {/* ── Bottom sheet ─────────────────────────────────────── */}
+      {/* ── Bottom sheet ──────────────────────────────────────── */}
       <View style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, 20) + 8 }]}>
         <View style={styles.handle} />
 
-        {/* Route summary */}
+        {/* Live route summary */}
         <View style={styles.routeSummary}>
           <View style={styles.routeItem}>
             <Ionicons name="time-outline" size={16} color="#6B6B6B" />
-            <Text style={styles.routeText}>{vehicle.eta} away</Text>
+            <Text style={styles.routeText}>{etaMin} min away</Text>
           </View>
           <View style={styles.routeDividerV} />
           <View style={styles.routeItem}>
             <Ionicons name="navigate-outline" size={16} color="#6B6B6B" />
-            <Text style={styles.routeText}>2.4 km</Text>
+            {/* Live rider distance */}
+            <Text style={[styles.routeText, { color: riderDistM < 200 ? '#00B14F' : '#5A5A5A' }]}>
+              {fmtDist(riderDistM)}
+            </Text>
           </View>
           <View style={styles.routeDividerV} />
           <View style={styles.routeItem}>
             <Ionicons name="cash-outline" size={16} color="#6B6B6B" />
-            <Text style={styles.routeText}>{vehicle.price}</Text>
+            <Text style={styles.routeText}>{fmtUGX(vehicle.priceUGX)}</Text>
           </View>
         </View>
 
@@ -98,10 +125,7 @@ export default function ConfirmScreen() {
             activeOpacity={0.8}
             onPress={() => setSelected(v.id)}
           >
-            {/* Vehicle image */}
             <Image source={v.image} style={styles.vehicleImg} resizeMode="contain" />
-
-            {/* Info */}
             <View style={styles.vehicleInfo}>
               <View style={styles.vehicleNameRow}>
                 <Text style={styles.vehicleName}>{v.name}</Text>
@@ -114,14 +138,12 @@ export default function ConfirmScreen() {
               </View>
               <Text style={styles.vehicleSub}>{v.seats} · {v.luggage}</Text>
             </View>
-
-            {/* Price + ETA */}
             <View style={styles.vehiclePriceCol}>
-              <Text style={styles.vehiclePrice}>{v.price}</Text>
-              <Text style={styles.vehicleEta}>{v.eta}</Text>
+              <Text style={styles.vehiclePrice}>{fmtUGX(v.priceUGX)}</Text>
+              <Text style={styles.vehicleEta}>
+                {v.id === selected ? `${etaMin} min` : (v.id === 'moto' ? `${etaMin} min` : `${etaMin + 4} min`)}
+              </Text>
             </View>
-
-            {/* Selected indicator */}
             {v.id === selected && (
               <View style={styles.selectedCheck}>
                 <Ionicons name="checkmark-circle" size={20} color="#00B14F" />
@@ -132,7 +154,6 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        {/* Offers row */}
         <TouchableOpacity style={styles.offersRow} activeOpacity={0.8}>
           <Ionicons name="pricetag-outline" size={18} color="#6B6B6B" />
           <Text style={styles.offersText}>Offers</Text>
@@ -141,7 +162,6 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        {/* Book button */}
         <TouchableOpacity
           style={styles.bookBtn}
           activeOpacity={0.88}
@@ -157,7 +177,6 @@ export default function ConfirmScreen() {
 const styles = StyleSheet.create({
   root: { flex: 1 },
 
-  // Back button
   backBtn: {
     position: 'absolute', left: 16, zIndex: 20,
     width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
@@ -165,7 +184,6 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 6, elevation: 4,
   },
 
-  // Drop-off card
   dropoffCard: {
     position: 'absolute', left: 68, right: 16, zIndex: 20,
     backgroundColor: '#FFFFFF', borderRadius: 16, padding: 14,
@@ -179,13 +197,9 @@ const styles = StyleSheet.create({
   dropoffTexts: { flex: 1 },
   dropoffFrom: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A' },
   dropoffTo: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A', marginTop: 4 },
-  distBadge: {
-    backgroundColor: '#F0F0F0', borderRadius: 8,
-    paddingHorizontal: 8, paddingVertical: 4,
-  },
+  distBadge: { backgroundColor: '#F0F0F0', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4 },
   distText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#5A5A5A' },
 
-  // Bottom sheet
   sheet: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', borderTopLeftRadius: 24, borderTopRightRadius: 24,
@@ -198,7 +212,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center', marginBottom: 14,
   },
 
-  // Route summary
   routeSummary: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     gap: 16, marginBottom: 14,
@@ -209,7 +222,6 @@ const styles = StyleSheet.create({
 
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 8 },
 
-  // Vehicle row
   vehicleRow: {
     flexDirection: 'row', alignItems: 'center', gap: 12,
     paddingVertical: 10, paddingHorizontal: 10,
@@ -228,15 +240,13 @@ const styles = StyleSheet.create({
   fastText: { fontSize: 10, fontFamily: 'Inter_600SemiBold', color: '#FF8C00' },
   vehicleSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
   vehiclePriceCol: { alignItems: 'flex-end' },
-  vehiclePrice: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  vehiclePrice: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   vehicleEta: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
   selectedCheck: { position: 'absolute', top: 6, right: 6 },
 
-  // Offers
   offersRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 12 },
   offersText: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
 
-  // Book
   bookBtn: {
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, alignItems: 'center', marginTop: 8,
