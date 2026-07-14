@@ -11,69 +11,62 @@ import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// ─── Tab definitions ─────────────────────────────────────────────────────────
 const TAB_DEFS: {
   name: string;
   label: string;
   icon: React.ComponentProps<typeof Ionicons>['name'];
-  pillW: number; // width of the green pill when this tab is active
+  pillW: number;
 }[] = [
-  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 120 },
-  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 132 },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 128 },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 110 },
+  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 114 },
+  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 126 },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 122 },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 104 },
 ];
 
 // ─── Geometry ────────────────────────────────────────────────────────────────
 //
-//  Each inactive tab = two concentric circles:
+//   Each inactive tab = two concentric animated layers:
 //
-//    ┌─────────────────────┐   ← HALO  (68 px, light #EBEBEB)
-//    │   ┌─────────────┐   │
-//    │   │  inner btn  │   │   ← INNER (50 px, #DCDCDC)
-//    │   │    icon     │   │
-//    │   └─────────────┘   │
-//    └─────────────────────┘
+//     ╔═══════════════════════╗  ← OUTER HALO  68 px  #EBEBEB
+//     ║  ┌─────────────────┐  ║
+//     ║  │   INNER FILL    │  ║  ← INNER FILL  50 px  #D8D8D8
+//     ║  │      icon       │  ║
+//     ║  └─────────────────┘  ║
+//     ╚═══════════════════════╝
 //
-//  Adjacent halos overlap by HALO_OVERLAP pixels.
-//  The overlap zone IS the "bridge" — no separate connector needed.
+//   Active tab:
+//     OUTER → widens to pillW + RING*2, colour → #FFFFFF  (white ring)
+//     INNER → widens to pillW,          colour → #00B14F  (green pill)
 //
-//  Active tab = green pill that grows beyond the halo bounds (zIndex on top).
+//   Adjacent OUTER halos overlap by OVERLAP px.
+//   The overlap zone is the visual "bridge" — same grey, seamlessly joined.
+//   Both layers animate their own width so nothing needs to escape its parent.
 //
-const HALO_D       = 68;   // outer halo diameter
-const INNER_D      = 50;   // inner button diameter
-const HALO_OVERLAP = 20;   // how much adjacent halos overlap → the bridge
-const PILL_H       = 52;   // green pill height (active)
-
-const HALO_COLOR  = '#EBEBEB';  // outer halo fill
-const INNER_COLOR = '#DCDCDC';  // inner button fill (clearly darker than halo)
-
+const OUTER_H  = 68;   // outer halo height (and resting width)
+const INNER_H  = 50;   // inner fill height (and resting width)
+const RING     = 9;    // (OUTER_H - INNER_H) / 2 — ring visible on each side
+const OVERLAP  = 22;   // px each outer halo slides behind its left neighbour
 // ─────────────────────────────────────────────────────────────────────────────
 
 function AnimatedIcon({
   name,
-  animatedColor,
+  color,
 }: {
   name: React.ComponentProps<typeof Ionicons>['name'];
-  animatedColor: Animated.AnimatedInterpolation<string>;
+  color: Animated.AnimatedInterpolation<string | number>;
 }) {
-  const [color, setColor] = useState(INNER_COLOR);
+  const [c, setC] = useState('#9E9E9E');
   useEffect(() => {
-    // Seed with inactive colour immediately
-    setColor('#9E9E9E');
-    const id = animatedColor.addListener(({ value }) => setColor(value as string));
-    return () => animatedColor.removeListener(id);
-  }, [animatedColor]);
-  return <Ionicons name={name} size={22} color={color} />;
+    const id = color.addListener(({ value }) => setC(value as string));
+    return () => color.removeListener(id);
+  }, [color]);
+  return <Ionicons name={name} size={22} color={c} />;
 }
 
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
-  const insets       = useSafeAreaInsets();
-  const bottomOffset = Platform.OS === 'web'
-    ? 20
-    : Math.max(insets.bottom + 8, 20);
+  const insets = useSafeAreaInsets();
+  const bottom = Platform.OS === 'web' ? 20 : Math.max(insets.bottom + 8, 20);
 
-  // One spring value per tab: 0 = inactive, 1 = active
   const anims = useRef(
     TAB_DEFS.map((_, i) => new Animated.Value(i === state.index ? 1 : 0))
   ).current;
@@ -82,43 +75,55 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
     Animated.parallel(
       anims.map((anim, i) =>
         Animated.spring(anim, {
-          toValue        : i === state.index ? 1 : 0,
+          toValue: i === state.index ? 1 : 0,
           useNativeDriver: false,
-          friction       : 7,
-          tension        : 60,
+          friction: 7,
+          tension: 60,
         })
       )
     ).start();
   }, [state.index]);
 
   return (
-    <View style={[styles.wrapper, { bottom: bottomOffset }]}>
+    <View style={[styles.wrapper, { bottom }]}>
       <View style={styles.row}>
         {state.routes.map((route, index) => {
           const tab      = TAB_DEFS[index];
           const anim     = anims[index];
           const isActive = state.index === index;
 
-          // Green pill grows from INNER_D (circle at rest) → tab.pillW
-          const pillWidth = anim.interpolate({
+          // OUTER halo: 68 px circle → (pillW + RING*2) px pill, grey → white
+          const outerW = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: [INNER_D, tab.pillW],
+            outputRange: [OUTER_H, tab.pillW + RING * 2],
           });
-          const pillColor = anim.interpolate({
+          const outerBg = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: [INNER_COLOR, '#00B14F'],
+            outputRange: ['#EBEBEB', '#FFFFFF'],
           });
+
+          // INNER fill: 50 px circle → pillW px pill, dark-grey → green
+          const innerW = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: [INNER_H, tab.pillW],
+          });
+          const innerBg = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: ['#D8D8D8', '#00B14F'],
+          });
+
           const iconColor = anim.interpolate({
             inputRange : [0, 1],
             outputRange: ['#9E9E9E', '#FFFFFF'],
           });
           const labelOpacity = anim.interpolate({
-            inputRange : [0, 0.55, 1],
+            inputRange : [0, 0.6, 1],
             outputRange: [0, 0, 1],
           });
+          // Label slot opens from 0 → the extra width the pill gains over INNER_H
           const labelSlotW = anim.interpolate({
-            inputRange : [0, 0.45, 1],
-            outputRange: [0, 0, tab.pillW - INNER_D],
+            inputRange : [0, 0.5, 1],
+            outputRange: [0, 0, tab.pillW - INNER_H - 4],
           });
 
           return (
@@ -127,37 +132,21 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
               onPress={() => navigation.navigate(route.name)}
               activeOpacity={0.85}
               style={[
-                // Overlap halos: every tab after the first slides left
-                index > 0 && { marginLeft: -HALO_OVERLAP },
-                // Active tab always on top so the growing pill overlays neighbours
+                index > 0 && { marginLeft: -OVERLAP },
                 { zIndex: isActive ? 20 : TAB_DEFS.length - index },
               ]}
             >
-              {/*
-               * OUTER HALO — the large light circle.
-               * overflow:'visible' lets the animated inner pill grow BEYOND these
-               * bounds without being clipped.  Adjacent halos overlap each other;
-               * that shared grey zone is the visual "bridge" between tabs.
-               */}
-              <View style={styles.halo}>
-
-                {/*
-                 * INNER PILL — starts as the small grey circle, springs into the
-                 * full green pill.  Positioned absolute+centred so it can grow
-                 * in both directions past the halo edge.
-                 */}
+              {/* ── Outer halo ── */}
+              <Animated.View
+                style={[styles.outer, { width: outerW, backgroundColor: outerBg }]}
+              >
+                {/* ── Inner fill ── */}
                 <Animated.View
-                  style={[
-                    styles.pill,
-                    {
-                      width          : pillWidth,
-                      backgroundColor: pillColor,
-                    },
-                  ]}
+                  style={[styles.inner, { width: innerW, backgroundColor: innerBg }]}
                 >
-                  <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+                  <AnimatedIcon name={tab.icon} color={iconColor} />
 
-                  {/* Label slot — width animates open; content fades in */}
+                  {/* Label grows in as the pill expands */}
                   <Animated.View style={{ width: labelSlotW, overflow: 'hidden' }}>
                     <Animated.Text
                       style={[styles.label, { opacity: labelOpacity }]}
@@ -168,8 +157,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
                     </Animated.Text>
                   </Animated.View>
                 </Animated.View>
-
-              </View>
+              </Animated.View>
             </TouchableOpacity>
           );
         })}
@@ -194,50 +182,48 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   wrapper: {
-    position  : 'absolute',
-    left      : 0,
-    right     : 0,
+    position: 'absolute',
+    left: 0, right: 0,
+    alignItems: 'center',
+  },
+  row: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
 
-  row: {
+  // Outer halo — animates width & colour; always OUTER_H tall & fully rounded.
+  // Adjacent halos overlap via negative marginLeft on the TouchableOpacity;
+  // that overlap zone is the seamless grey "bridge" between tabs.
+  outer: {
+    height: OUTER_H,
+    borderRadius: OUTER_H / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+    // Shadow on the outer shell
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 3,
+  },
+
+  // Inner fill — animates width & colour; always INNER_H tall & fully rounded.
+  inner: {
+    height: INNER_H,
+    borderRadius: INNER_H / 2,
     flexDirection: 'row',
-    alignItems   : 'center',
-  },
-
-  // Large outer halo — overlaps adjacent halos to form the bridge
-  halo: {
-    width          : HALO_D,
-    height         : HALO_D,
-    borderRadius   : HALO_D / 2,
-    backgroundColor: HALO_COLOR,
-    alignItems     : 'center',
-    justifyContent : 'center',
-    overflow       : 'visible', // pill may grow beyond these bounds
-  },
-
-  // Animated inner pill — small circle at rest, green pill when active
-  pill: {
-    height         : PILL_H,
-    borderRadius   : PILL_H / 2,
-    flexDirection  : 'row',
-    alignItems     : 'center',
-    justifyContent : 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 10,
-    gap            : 6,
-    // Shadow lives on the pill so it follows the active state correctly
-    shadowColor    : '#000',
-    shadowOpacity  : 0.12,
-    shadowRadius   : 8,
-    shadowOffset   : { width: 0, height: 3 },
-    elevation      : 5,
+    gap: 6,
+    overflow: 'hidden',
   },
 
   label: {
-    color        : '#FFFFFF',
-    fontSize     : 14,
-    fontFamily   : 'Inter_600SemiBold',
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: 'Inter_600SemiBold',
     letterSpacing: 0.1,
-    flexShrink   : 0,
+    flexShrink: 0,
   },
 });
