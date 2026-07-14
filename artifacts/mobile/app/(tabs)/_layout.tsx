@@ -1,63 +1,120 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import React, { useRef, useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Platform,
+  Animated,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-// Tab definitions matching the Grab reference design
-const TAB_DEFS = [
-  {
-    name: 'index',
-    label: 'Home',
-    icon: 'home' as const,
-  },
-  {
-    name: 'activity',
-    label: 'Activity',
-    icon: 'trending-up' as const,
-  },
-  {
-    name: 'orders',
-    label: 'Payment',
-    icon: 'wallet-outline' as const,
-  },
-  {
-    name: 'chat',
-    label: 'Chat',
-    icon: 'chatbox-ellipses-outline' as const,
-  },
+const TAB_DEFS: {
+  name: string;
+  label: string;
+  icon: React.ComponentProps<typeof Ionicons>['name'];
+}[] = [
+  { name: 'index',    label: 'Home',     icon: 'home' },
+  { name: 'activity', label: 'Activity', icon: 'trending-up' },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline' },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline' },
 ];
 
+const PILL_W   = 116;
+const CIRCLE_W = 52;
+
+// Animated icon — listens to an interpolated color value and re-renders
+function AnimatedIcon({
+  name,
+  animatedColor,
+}: {
+  name: React.ComponentProps<typeof Ionicons>['name'];
+  animatedColor: Animated.AnimatedInterpolation<string>;
+}) {
+  const [color, setColor] = useState('#9E9E9E');
+
+  useEffect(() => {
+    const id = animatedColor.addListener(({ value }) => setColor(value as string));
+    return () => animatedColor.removeListener(id);
+  }, [animatedColor]);
+
+  return <Ionicons name={name} size={22} color={color} />;
+}
+
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
-  const insets = useSafeAreaInsets();
+  const insets       = useSafeAreaInsets();
   const bottomOffset = Platform.OS === 'web' ? 20 : Math.max(insets.bottom + 8, 20);
+
+  // One Animated.Value per tab: 0 = small circle, 1 = expanded pill
+  const anims = useRef(
+    TAB_DEFS.map((_, i) => new Animated.Value(i === state.index ? 1 : 0))
+  ).current;
+
+  useEffect(() => {
+    Animated.parallel(
+      anims.map((anim, i) =>
+        Animated.spring(anim, {
+          toValue: i === state.index ? 1 : 0,
+          useNativeDriver: false, // animating layout props — native driver not supported
+          friction: 7,
+          tension: 60,
+        })
+      )
+    ).start();
+  }, [state.index]);
 
   return (
     <View style={[styles.floatingWrapper, { bottom: bottomOffset }]}>
       <View style={styles.pillBar}>
         {state.routes.map((route, index) => {
-          const isActive = state.index === index;
-          const tab = TAB_DEFS[index];
-          const isHome = index === 0;
+          const tab  = TAB_DEFS[index];
+          const anim = anims[index];
+
+          const width = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: [CIRCLE_W, PILL_W],
+          });
+          const bgColor = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: ['#DCDCDC', '#00B14F'],
+          });
+          const iconColor = anim.interpolate({
+            inputRange : [0, 1],
+            outputRange: ['#9E9E9E', '#FFFFFF'],
+          });
+          const labelOpacity = anim.interpolate({
+            inputRange : [0, 0.5, 1],
+            outputRange: [0, 0, 1],
+          });
+          const labelWidth = anim.interpolate({
+            inputRange : [0, 0.45, 1],
+            outputRange: [0, 0, 54],
+          });
 
           return (
-            <View key={route.key} style={styles.tabSlot}>
-              <TouchableOpacity
-                onPress={() => navigation.navigate(route.name)}
-                activeOpacity={0.75}
-                style={isHome && isActive ? styles.homePill : styles.iconBox}
-              >
-                <Ionicons
-                  name={tab.icon}
-                  size={22}
-                  color={isHome && isActive ? '#FFFFFF' : '#9E9E9E'}
-                />
-                {isHome && isActive && (
-                  <Text style={styles.homeLabel}>Home</Text>
-                )}
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+              key={route.key}
+              onPress={() => navigation.navigate(route.name)}
+              activeOpacity={0.85}
+              style={styles.tabSlot}
+            >
+              <Animated.View style={[styles.tabPill, { width, backgroundColor: bgColor }]}>
+                <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
+
+                {/* Label slides in as pill expands */}
+                <Animated.View style={{ width: labelWidth, overflow: 'hidden' }}>
+                  <Animated.Text
+                    style={[styles.tabLabel, { opacity: labelOpacity }]}
+                    numberOfLines={1}
+                  >
+                    {tab.label}
+                  </Animated.Text>
+                </Animated.View>
+              </Animated.View>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -86,7 +143,6 @@ const styles = StyleSheet.create({
     right: 16,
   },
 
-  // Outer floating pill — light gray background matching the reference
   pillBar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -94,13 +150,11 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingVertical: 8,
     paddingHorizontal: 8,
-    // iOS shadow
     shadowColor: '#000',
-    shadowOpacity: 0.10,
-    shadowRadius: 18,
+    shadowOpacity: 0.12,
+    shadowRadius: 20,
     shadowOffset: { width: 0, height: 6 },
-    // Android
-    elevation: 12,
+    elevation: 14,
   },
 
   tabSlot: {
@@ -109,30 +163,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Inactive tab: soft gray rounded square — no border, matching reference
-  iconBox: {
-    width: 52,
+  tabPill: {
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#DCDCDC',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  // Active Home tab: green pill with icon + label
-  homePill: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 7,
-    backgroundColor: '#00B14F',
-    paddingHorizontal: 20,
-    paddingVertical: 14,
-    borderRadius: 50,
+    justifyContent: 'center',
+    paddingHorizontal: 10,
+    gap: 5,
+    overflow: 'hidden',
   },
 
-  homeLabel: {
+  tabLabel: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: 14,
     fontFamily: 'Inter_600SemiBold',
     letterSpacing: 0.1,
   },
