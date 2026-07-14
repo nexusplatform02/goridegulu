@@ -29,10 +29,13 @@ const FILL  = 50;          // inner fill circle diameter
 const RING  = 3;           // white ring thickness
 const OUTER = FILL + RING * 2; // 56 — total outer (white shell) diameter at rest
 
-// Bridge connector between adjacent bubbles
-const BRW = 14;
-const BRH = 24;
-const BRR = 6;
+// Bridge connector between adjacent bubbles.
+// marginHorizontal creates a tiny gap so the bridge reads as its own element
+// rather than merging into the white shell of the adjacent bubbles.
+const BRW = 8;    // narrower — sits cleanly between the white rings
+const BRH = 20;
+const BRR = 4;
+const BR_GAP = 3; // gap between bubble white-ring edge and the bridge
 
 const INACTIVE_FILL = '#E6E6E6';
 // ─────────────────────────────────────────────────────────────────────────────
@@ -212,12 +215,16 @@ const styles = StyleSheet.create({
     overflow : 'hidden',
   },
 
-  // Small grey rounded bridge between adjacent bubbles
+  // Small grey rounded bridge between adjacent bubbles.
+  // The horizontal margin is key: it separates the bridge from each bubble's
+  // white shell so the bridge reads as its own discrete connector element
+  // rather than blending into the surrounding white rings.
   bridge: {
-    width          : BRW,
-    height         : BRH,
-    borderRadius   : BRR,
-    backgroundColor: INACTIVE_FILL,
+    width           : BRW,
+    height          : BRH,
+    borderRadius    : BRR,
+    backgroundColor : '#D8D8D8',   // slightly darker than fill → clearly visible
+    marginHorizontal: BR_GAP,
   },
 
   label: {
