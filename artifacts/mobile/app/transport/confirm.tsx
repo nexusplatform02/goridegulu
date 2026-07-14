@@ -242,8 +242,15 @@ export default function ConfirmScreen() {
           <Pressable style={styles.modalOverlay} onPress={() => payStep === 'idle' && setMomoVisible(false)} />
 
           <View style={[styles.momoSheet, { paddingBottom: Math.max(insets.bottom, 24) }]}>
-            {/* Handle */}
-            <View style={styles.momoHandle} />
+            {/* Handle — drag/tap to dismiss */}
+            <TouchableOpacity
+              onPress={() => payStep === 'idle' && setMomoVisible(false)}
+              activeOpacity={0.6}
+              hitSlop={{ top: 16, bottom: 16, left: 80, right: 80 }}
+              style={{ alignItems: 'center' }}
+            >
+              <View style={styles.momoHandle} />
+            </TouchableOpacity>
 
             {/* Header */}
             <View style={styles.momoHeader}>
@@ -251,9 +258,6 @@ export default function ConfirmScreen() {
                 <Text style={styles.momoTitle}>Mobile Money</Text>
                 <Text style={styles.momoSub}>Enter your number to pay</Text>
               </View>
-              <TouchableOpacity onPress={() => payStep === 'idle' && setMomoVisible(false)}>
-                <Ionicons name="close-circle" size={26} color="#D0D0D0" />
-              </TouchableOpacity>
             </View>
 
             {/* Network logos — MTN first */}
