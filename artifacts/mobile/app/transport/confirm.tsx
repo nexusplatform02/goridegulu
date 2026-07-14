@@ -144,11 +144,6 @@ export default function ConfirmScreen() {
                 {v.id === selected ? `${etaMin} min` : (v.id === 'moto' ? `${etaMin} min` : `${etaMin + 4} min`)}
               </Text>
             </View>
-            {v.id === selected && (
-              <View style={styles.selectedCheck}>
-                <Ionicons name="checkmark-circle" size={20} color="#00B14F" />
-              </View>
-            )}
           </TouchableOpacity>
         ))}
 
