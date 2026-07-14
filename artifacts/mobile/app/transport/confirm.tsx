@@ -42,10 +42,16 @@ function fmtUGX(n: number) {
   return `UGX ${n.toLocaleString()}`;
 }
 
+const PAYMENT_METHODS = [
+  { id: 'cash',  label: 'Cash',         icon: 'cash-outline' },
+  { id: 'momo',  label: 'Mobile Money', icon: 'phone-portrait-outline' },
+];
+
 export default function ConfirmScreen() {
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === 'web' ? 60 : insets.top;
   const [selected, setSelected] = useState('moto');
+  const [payment, setPayment]   = useState('cash');
 
   // Live rider distance (metres) — rider is approaching, starts ~1.8 km away
   const [riderDistM, setRiderDistM] = useState(1820);
@@ -157,6 +163,33 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
+        {/* Payment method */}
+        <View style={styles.paymentRow}>
+          <Ionicons name="wallet-outline" size={18} color="#6B6B6B" />
+          <Text style={styles.paymentTitle}>Payment</Text>
+          <View style={styles.paymentOptions}>
+            {PAYMENT_METHODS.map(m => (
+              <TouchableOpacity
+                key={m.id}
+                style={[styles.paymentChip, payment === m.id && styles.paymentChipActive]}
+                activeOpacity={0.8}
+                onPress={() => setPayment(m.id)}
+              >
+                <Ionicons
+                  name={m.icon as any}
+                  size={15}
+                  color={payment === m.id ? '#FFFFFF' : '#5A5A5A'}
+                />
+                <Text style={[styles.paymentChipText, payment === m.id && styles.paymentChipTextActive]}>
+                  {m.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.divider} />
+
         <TouchableOpacity
           style={styles.bookBtn}
           activeOpacity={0.88}
@@ -237,6 +270,21 @@ const styles = StyleSheet.create({
   vehiclePriceCol: { alignItems: 'flex-end' },
   vehiclePrice: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   vehicleEta: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+
+  paymentRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 10,
+    paddingVertical: 14,
+  },
+  paymentTitle: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#6B6B6B' },
+  paymentOptions: { flexDirection: 'row', gap: 8, marginLeft: 'auto' },
+  paymentChip: {
+    flexDirection: 'row', alignItems: 'center', gap: 6,
+    borderRadius: 20, paddingHorizontal: 14, paddingVertical: 8,
+    backgroundColor: '#F2F2F2',
+  },
+  paymentChipActive: { backgroundColor: '#00B14F' },
+  paymentChipText: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
+  paymentChipTextActive: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
 
   offersRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 12 },
   offersText: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
