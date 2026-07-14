@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, Platform,
   Modal, TextInput, Pressable, Animated, KeyboardAvoidingView, ScrollView,
+  PanResponder,
 } from 'react-native';
 
 const MTN_LOGO    = require('../../assets/images/mtn-momo-real.png');
@@ -62,6 +63,27 @@ export default function ConfirmScreen() {
   const [phone, setPhone]             = useState('');
   const [payStep, setPayStep]         = useState<PayStep>('idle');
   const spinAnim                      = useRef(new Animated.Value(0)).current;
+  const sheetY                        = useRef(new Animated.Value(0)).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, g) => g.dy > 5,
+      onPanResponderMove: (_, g) => {
+        if (g.dy > 0) sheetY.setValue(g.dy);
+      },
+      onPanResponderRelease: (_, g) => {
+        if (g.dy > 100 || g.vy > 0.5) {
+          Animated.timing(sheetY, { toValue: 600, duration: 250, useNativeDriver: true }).start(() => {
+            sheetY.setValue(0);
+            setMomoVisible(false);
+          });
+        } else {
+          Animated.spring(sheetY, { toValue: 0, useNativeDriver: true }).start();
+        }
+      },
+    })
+  ).current;
 
   // Live rider distance
   const [riderDistM, setRiderDistM] = useState(1820);
@@ -81,6 +103,7 @@ export default function ConfirmScreen() {
     if (payment === 'momo') {
       setPayStep('idle');
       setPhone('');
+      sheetY.setValue(0);
       setMomoVisible(true);
     } else {
       router.push('/transport/searching');
@@ -241,16 +264,13 @@ export default function ConfirmScreen() {
         >
           <Pressable style={styles.modalOverlay} onPress={() => payStep === 'idle' && setMomoVisible(false)} />
 
-          <View style={[styles.momoSheet, { paddingBottom: Math.max(insets.bottom, 24) }]}>
-            {/* Handle — drag/tap to dismiss */}
-            <TouchableOpacity
-              onPress={() => payStep === 'idle' && setMomoVisible(false)}
-              activeOpacity={0.6}
-              hitSlop={{ top: 16, bottom: 16, left: 80, right: 80 }}
-              style={{ alignItems: 'center' }}
-            >
+          <Animated.View
+            style={[styles.momoSheet, { paddingBottom: Math.max(insets.bottom, 24) }, { transform: [{ translateY: sheetY }] }]}
+          >
+            {/* Handle — drag down to dismiss */}
+            <View style={{ alignItems: 'center' }} {...panResponder.panHandlers}>
               <View style={styles.momoHandle} />
-            </TouchableOpacity>
+            </View>
 
             {/* Header */}
             <View style={styles.momoHeader}>
@@ -317,7 +337,7 @@ export default function ConfirmScreen() {
                   : `Pay ${fmtUGX(vehicle.priceUGX)}`}
               </Text>
             </TouchableOpacity>
-          </View>
+          </Animated.View>
         </KeyboardAvoidingView>
       </Modal>
     </View>
