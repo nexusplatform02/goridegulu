@@ -191,12 +191,6 @@ export default function LocationScreen() {
           hitSlop={{ top: 12, bottom: 12, left: 80, right: 80 }}
         >
           <View style={styles.handle} />
-          <Ionicons
-            name={sheetCollapsed ? 'chevron-up' : 'chevron-down'}
-            size={14}
-            color="#C0C0C0"
-            style={{ marginTop: 2 }}
-          />
         </TouchableOpacity>
 
         {/* Selected destination header */}
