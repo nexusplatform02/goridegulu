@@ -415,10 +415,10 @@ const styles = StyleSheet.create({
   networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
   networkLogoCard: {
     flex: 1, backgroundColor: '#F7F7F7', borderRadius: 14,
-    paddingVertical: 16, paddingHorizontal: 8,
+    paddingVertical: 10, paddingHorizontal: 4,
     alignItems: 'center', justifyContent: 'center',
   },
-  networkLogoImg: { width: '100%', height: 70 },
+  networkLogoImg: { width: '100%', height: 100 },
 
   amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 14, padding: 16, marginBottom: 20 },
   amountLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
