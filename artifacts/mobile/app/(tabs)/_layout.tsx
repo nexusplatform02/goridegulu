@@ -18,14 +18,19 @@ const TAB_DEFS: {
   icon: React.ComponentProps<typeof Ionicons>['name'];
   pillW: number;
 }[] = [
-  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 118 },
-  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 130 },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 126 },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 106 },
+  { name: 'index',    label: 'Home',     icon: 'home',                    pillW: 120 },
+  { name: 'activity', label: 'Activity', icon: 'trending-up',              pillW: 132 },
+  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           pillW: 128 },
+  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', pillW: 108 },
 ];
 
-const CIRCLE_W = 54;    // resting diameter
-const OVERLAP  = 10;    // how much adjacent bubbles overlap — creates the chained look
+// Resting circle diameter (excluding the white border)
+const CIRCLE_W  = 54;
+// White border width — this is the "connector stroke" visible at every junction
+const BORDER_W  = 3;
+// How much each bubble slides behind the previous one
+// The white border on both sides fills the gap, giving the connected-ring look
+const OVERLAP   = 12;
 
 function AnimatedIcon({
   name,
@@ -69,6 +74,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
         {state.routes.map((route, index) => {
           const tab  = TAB_DEFS[index];
           const anim = anims[index];
+          const isActive = state.index === index;
 
           const width = anim.interpolate({
             inputRange : [0, 1],
@@ -76,7 +82,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
           });
           const bgColor = anim.interpolate({
             inputRange : [0, 1],
-            outputRange: ['#EBEBEB', '#00B14F'],
+            outputRange: ['#E8E8E8', '#00B14F'],
           });
           const iconColor = anim.interpolate({
             inputRange : [0, 1],
@@ -86,10 +92,10 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
             inputRange : [0, 0.5, 1],
             outputRange: [0, 0, 1],
           });
-          // Reserve enough room for the label so it never wraps
-          const labelW = anim.interpolate({
+          // Label container expands from 0 → exactly enough for the text (no wrap)
+          const labelContainerW = anim.interpolate({
             inputRange : [0, 0.4, 1],
-            outputRange: [0, 0, tab.pillW - CIRCLE_W - 4],
+            outputRange: [0, 0, tab.pillW - CIRCLE_W - BORDER_W * 2],
           });
 
           return (
@@ -97,14 +103,31 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
               key={route.key}
               onPress={() => navigation.navigate(route.name)}
               activeOpacity={0.85}
-              // Each tab after the first overlaps the previous by OVERLAP px
-              style={index === 0 ? undefined : { marginLeft: -OVERLAP, zIndex: state.index === index ? 10 : index }}
+              style={[
+                // Overlap every tab after the first to create the chained ring look
+                index > 0 && { marginLeft: -OVERLAP },
+                // Active tab always renders on top
+                { zIndex: isActive ? 20 : TAB_DEFS.length - index },
+              ]}
             >
-              <Animated.View style={[styles.bubble, { width, backgroundColor: bgColor }]}>
+              <Animated.View
+                style={[
+                  styles.bubble,
+                  {
+                    width,
+                    backgroundColor: bgColor,
+                    // White border ring — the visible "connector stroke" between bubbles
+                    borderWidth: BORDER_W,
+                    borderColor: '#FFFFFF',
+                  },
+                ]}
+              >
                 <AnimatedIcon name={tab.icon} animatedColor={iconColor} />
 
-                {/* Label in a fixed-width container — single line, no wrap */}
-                <Animated.View style={{ width: labelW, overflow: 'hidden' }}>
+                {/* Label: single line, never wraps */}
+                <Animated.View
+                  style={{ width: labelContainerW, overflow: 'hidden' }}
+                >
                   <Animated.Text
                     style={[styles.label, { opacity: labelOpacity }]}
                     numberOfLines={1}
@@ -141,10 +164,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    alignItems: 'center',  // center the chain horizontally
+    alignItems: 'center',
   },
 
-  // No background, no outer container — just a row of overlapping bubbles
+  // Bare row — no background, no outer container
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -152,19 +175,20 @@ const styles = StyleSheet.create({
 
   bubble: {
     height: CIRCLE_W,
-    borderRadius: CIRCLE_W / 2,
+    // borderRadius must account for the border so the pill stays fully rounded
+    borderRadius: (CIRCLE_W + BORDER_W * 2) / 2,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 10,
     gap: 5,
     overflow: 'hidden',
-    // Each bubble casts its own shadow, creating the floating depth look
+    // Subtle drop shadow so each bubble floats above the page
     shadowColor: '#000',
-    shadowOpacity: 0.12,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 4 },
-    elevation: 6,
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 3 },
+    elevation: 5,
   },
 
   label: {
@@ -172,6 +196,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Inter_600SemiBold',
     letterSpacing: 0.1,
-    flexShrink: 0,      // never shrink — the container width controls display
+    flexShrink: 0,
   },
 });
