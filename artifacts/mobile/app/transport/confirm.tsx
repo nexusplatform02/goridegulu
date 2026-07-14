@@ -237,7 +237,6 @@ const styles = StyleSheet.create({
   vehiclePriceCol: { alignItems: 'flex-end' },
   vehiclePrice: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   vehicleEta: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
-  selectedCheck: { position: 'absolute', top: 6, right: 6 },
 
   offersRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingVertical: 12 },
   offersText: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
