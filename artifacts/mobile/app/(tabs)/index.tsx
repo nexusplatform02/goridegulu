@@ -9,16 +9,17 @@ import {
   TextInput,
   Platform,
 } from 'react-native';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+// Emoji icons render as 3D illustrated images on iOS & Android
 const SERVICES = [
-  { id: '1', label: 'Transport', icon: 'car-sport-outline', lib: 'Ionicons', color: '#00B14F', bg: '#E0F5EA' },
-  { id: '2', label: 'Food', icon: 'hamburger', lib: 'MCI', color: '#FF6B2B', bg: '#FFF0E8' },
-  { id: '3', label: 'Dine Out', icon: 'silverware-fork-knife', lib: 'MCI', color: '#009966', bg: '#DFF5EC' },
-  { id: '4', label: 'Mart', icon: 'basket-outline', lib: 'MCI', color: '#00B14F', bg: '#E0F5EA' },
-  { id: '5', label: 'Shopping', icon: 'bag-handle-outline', lib: 'Ionicons', color: '#E07800', bg: '#FFF4E0' },
-  { id: '6', label: 'All', icon: 'grid-outline', lib: 'Ionicons', color: '#00B14F', bg: '#E0F5EA' },
+  { id: '1', label: 'Transport', emoji: '🚗', bg: '#E6F9EE' },
+  { id: '2', label: 'Food',      emoji: '🍔', bg: '#FFF0E8' },
+  { id: '3', label: 'Dine Out',  emoji: '🍽️', bg: '#E6F9EE' },
+  { id: '4', label: 'Mart',      emoji: '🧺', bg: '#E6F9EE' },
+  { id: '5', label: 'Shopping',  emoji: '🛍️', bg: '#FFF4E0' },
+  { id: '6', label: 'All',       emoji: '🟩', bg: '#E6F9EE', isAll: true },
 ];
 
 const FOOD_CARDS = [
@@ -67,11 +68,15 @@ const SNACK_CARDS = [
   },
 ];
 
-function ServiceIcon({ lib, icon, color }: { lib: string; icon: string; color: string }) {
-  if (lib === 'MCI') {
-    return <MaterialCommunityIcons name={icon as any} size={28} color={color} />;
-  }
-  return <Ionicons name={icon as any} size={28} color={color} />;
+// The "All" tile shows 4 green squares in a 2×2 grid
+function AllGrid() {
+  return (
+    <View style={{ width: 30, height: 30, flexWrap: 'wrap', flexDirection: 'row', gap: 3 }}>
+      {[0, 1, 2, 3].map((i) => (
+        <View key={i} style={{ width: 12, height: 12, borderRadius: 3, backgroundColor: '#00B14F' }} />
+      ))}
+    </View>
+  );
 }
 
 function FoodCard({ item }: { item: (typeof FOOD_CARDS)[0] }) {
@@ -108,7 +113,7 @@ export default function HomeScreen() {
           styles.content,
           {
             paddingTop: topPad + 12,
-            paddingBottom: 110 + (Platform.OS === 'web' ? 34 : 0),
+            paddingBottom: 130,
           },
         ]}
         showsVerticalScrollIndicator={false}
@@ -138,7 +143,11 @@ export default function HomeScreen() {
           {SERVICES.map((svc) => (
             <TouchableOpacity key={svc.id} style={styles.serviceItem} activeOpacity={0.7}>
               <View style={[styles.iconCircle, { backgroundColor: svc.bg }]}>
-                <ServiceIcon lib={svc.lib} icon={svc.icon} color={svc.color} />
+                {(svc as any).isAll ? (
+                  <AllGrid />
+                ) : (
+                  <Text style={styles.serviceEmoji}>{svc.emoji}</Text>
+                )}
               </View>
               <Text style={styles.serviceLabel}>{svc.label}</Text>
             </TouchableOpacity>
@@ -230,6 +239,7 @@ const styles = StyleSheet.create({
     width: 58, height: 58, borderRadius: 18,
     alignItems: 'center', justifyContent: 'center',
   },
+  serviceEmoji: { fontSize: 28, lineHeight: 34 },
   serviceLabel: { fontSize: 12, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
 
   // Info row
