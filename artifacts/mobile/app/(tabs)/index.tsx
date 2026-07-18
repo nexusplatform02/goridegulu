@@ -16,7 +16,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 // Generated 3D illustrated PNG icons — match the real Grab-style icons
 const SERVICES = [
   { id: '1', label: 'Transport', img: require('../../assets/images/icon-transport.png'), bg: '#E6F9EE', route: '/transport' },
-  { id: '2', label: 'Food',      img: require('../../assets/images/icon-food.png'),      bg: '#FFF0E8', route: null },
+  { id: '2', label: 'Food',      img: require('../../assets/images/icon-food.png'),      bg: '#FFF0E8', route: '/food' },
   { id: '3', label: 'Dine Out',  img: require('../../assets/images/icon-dineout.png'),   bg: '#E6F9EE', route: null },
   { id: '4', label: 'Mart',      img: require('../../assets/images/icon-mart.png'),      bg: '#E6F9EE', route: null },
   { id: '5', label: 'Shopping',  img: require('../../assets/images/icon-shopping.png'),  bg: '#FFF4E0', route: null },
