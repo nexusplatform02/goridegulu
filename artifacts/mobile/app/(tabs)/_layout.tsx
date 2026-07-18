@@ -28,7 +28,7 @@ const TAB_DEFS: {
 const BAR_BG        = '#E2E2E2';  // outer container background
 const CIRCLE_BG     = '#EFEFEF';  // inactive tab circle
 const GREEN         = '#00B14F';  // active pill colour
-const ICON_INACTIVE = '#9A9A9A';
+const ICON_INACTIVE = '#1A1A1A';
 const CIRCLE_SIZE   = 54;         // inactive circle diameter
 const PILL_H        = 54;         // pill height (same as circle for alignment)
 const BAR_PADDING   = 8;          // inner padding of the bar container
