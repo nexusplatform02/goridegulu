@@ -6,22 +6,22 @@ import {
   Platform,
   Animated,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { HomeIcon, ActivityIcon, WalletIcon, ChatIcon } from '../../components/TabIcons';
 
 // ─── Tab definitions ──────────────────────────────────────────────────────────
 const TAB_DEFS: {
   name: string;
   label: string;
-  icon: React.ComponentProps<typeof Ionicons>['name'];
+  Icon: React.FC<{ color: string; size?: number }>;
   activeWidth: number;
 }[] = [
-  { name: 'index',    label: 'Home',    icon: 'home-outline',              activeWidth: 130 },
-  { name: 'activity', label: 'Activity', icon: 'trending-up',              activeWidth: 130 },
-  { name: 'orders',   label: 'Payment',  icon: 'wallet-outline',           activeWidth: 130 },
-  { name: 'chat',     label: 'Chat',     icon: 'chatbox-ellipses-outline', activeWidth: 110 },
+  { name: 'index',    label: 'Home',     Icon: HomeIcon,     activeWidth: 130 },
+  { name: 'activity', label: 'Activity', Icon: ActivityIcon, activeWidth: 130 },
+  { name: 'orders',   label: 'Payment',  Icon: WalletIcon,   activeWidth: 130 },
+  { name: 'chat',     label: 'Chat',     Icon: ChatIcon,     activeWidth: 110 },
 ];
 
 // ─── Design tokens ────────────────────────────────────────────────────────────
@@ -35,10 +35,10 @@ const BAR_PADDING   = 8;          // inner padding of the bar container
 // ─────────────────────────────────────────────────────────────────────────────
 
 function AnimatedIcon({
-  name,
+  Icon,
   color,
 }: {
-  name: React.ComponentProps<typeof Ionicons>['name'];
+  Icon: React.FC<{ color: string; size?: number }>;
   color: Animated.AnimatedInterpolation<string | number>;
 }) {
   const [c, setC] = useState(ICON_INACTIVE);
@@ -46,7 +46,7 @@ function AnimatedIcon({
     const id = color.addListener(({ value }) => setC(value as string));
     return () => color.removeListener(id);
   }, [color]);
-  return <Ionicons name={name} size={22} color={c} />;
+  return <Icon color={c} size={22} />;
 }
 
 function CustomTabBar({ state, navigation }: BottomTabBarProps) {
@@ -118,7 +118,7 @@ function CustomTabBar({ state, navigation }: BottomTabBarProps) {
                   { width: pillW, backgroundColor: bgColor },
                 ]}
               >
-                <AnimatedIcon name={tab.icon} color={iconColor} />
+                <AnimatedIcon Icon={tab.Icon} color={iconColor} />
 
                 {/* Label slides in when active */}
                 <Animated.View
