@@ -171,7 +171,7 @@ export default function RestaurantDetailScreen() {
             <Text style={styles.orderTotal}>${totalPrice}</Text>
             <Text style={styles.orderCount}>Total {totalItems} item{totalItems !== 1 ? 's' : ''}</Text>
           </View>
-          <TouchableOpacity style={styles.orderBtn} activeOpacity={0.88}>
+          <TouchableOpacity style={styles.orderBtn} activeOpacity={0.88} onPress={() => router.push('/food/checkout')}>
             <Text style={styles.orderBtnText}>Order Now</Text>
           </TouchableOpacity>
         </View>
