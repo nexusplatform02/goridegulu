@@ -29,7 +29,9 @@ export default function RestaurantDetailScreen() {
   const [liked, setLiked] = useState(false);
   const [cart, setCart] = useState<{ [id: string]: number }>({});
 
-  const totalItems = Object.values(cart).reduce((a, b) => a + b, 0);
+  const [mainQty, setMainQty] = useState(0);
+
+  const totalItems = Object.values(cart).reduce((a, b) => a + b, 0) + mainQty;
   const totalPrice = (totalItems * 18.5).toFixed(2);
 
   function addToCart(id: string) {
@@ -104,6 +106,35 @@ export default function RestaurantDetailScreen() {
             <View style={styles.statItem}>
               <Text style={styles.statValue}>$18.50</Text>
               <Text style={styles.statLabel}>Delivery Time</Text>
+            </View>
+          </View>
+
+          {/* Main product qty control */}
+          <View style={styles.qtyRow}>
+            <View style={styles.qtyLeft}>
+              <Text style={styles.qtyItemName}>Chicken Chashu Collagen Ramen</Text>
+              <Text style={styles.qtyItemPrice}>$18.50</Text>
+            </View>
+            <View style={styles.qtyControl}>
+              {mainQty > 0 ? (
+                <>
+                  <TouchableOpacity
+                    style={styles.qtyBtn}
+                    activeOpacity={0.8}
+                    onPress={() => setMainQty(q => Math.max(0, q - 1))}
+                  >
+                    <Ionicons name="remove" size={16} color="#00B14F" />
+                  </TouchableOpacity>
+                  <Text style={styles.qtyNum}>{mainQty}</Text>
+                </>
+              ) : null}
+              <TouchableOpacity
+                style={styles.qtyBtnAdd}
+                activeOpacity={0.8}
+                onPress={() => setMainQty(q => q + 1)}
+              >
+                <Ionicons name="add" size={18} color="#FFFFFF" />
+              </TouchableOpacity>
             </View>
           </View>
 
@@ -223,6 +254,26 @@ const styles = StyleSheet.create({
   statValue: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   statLabel: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
   statDivider: { width: 1, height: 30, backgroundColor: '#E8E8E8' },
+
+  // Main qty
+  qtyRow: {
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
+    backgroundColor: '#F8F8F8', borderRadius: 14, padding: 12,
+  },
+  qtyLeft: { flex: 1, marginRight: 12 },
+  qtyItemName: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A', lineHeight: 18 },
+  qtyItemPrice: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginTop: 3 },
+  qtyControl: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  qtyBtn: {
+    width: 32, height: 32, borderRadius: 16,
+    borderWidth: 1.5, borderColor: '#00B14F',
+    alignItems: 'center', justifyContent: 'center',
+  },
+  qtyNum: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A', minWidth: 20, textAlign: 'center' },
+  qtyBtnAdd: {
+    width: 36, height: 36, borderRadius: 18, backgroundColor: '#00B14F',
+    alignItems: 'center', justifyContent: 'center',
+  },
 
   toggleRow: { flexDirection: 'row', gap: 10 },
   toggleBtn: {

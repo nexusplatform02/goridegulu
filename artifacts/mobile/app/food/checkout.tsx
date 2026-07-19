@@ -59,12 +59,12 @@ export default function CheckoutScreen() {
 
   function handleSkip() {
     closeSheet();
-    setTimeout(() => router.push('/food/tracking'), 280);
+    setTimeout(() => router.push('/food/payment'), 280);
   }
 
   function handleSave() {
     closeSheet();
-    setTimeout(() => router.push('/food/tracking'), 280);
+    setTimeout(() => router.push('/food/payment'), 280);
   }
 
   return (
