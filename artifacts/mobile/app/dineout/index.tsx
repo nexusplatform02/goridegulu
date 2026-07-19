@@ -70,92 +70,113 @@ export default function DineOutListScreen() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [search, setSearch] = useState('');
 
+  const filtered = activeFilter === 'All'
+    ? RESTAURANTS
+    : RESTAURANTS.filter(r =>
+        activeFilter === 'Nearby'
+          ? parseFloat(r.distance) < 1
+          : r.cuisine.toLowerCase().includes(activeFilter.toLowerCase()) ||
+            r.name.toLowerCase().includes(activeFilter.toLowerCase())
+      );
+
   return (
     <View style={styles.root}>
-      {/* Header */}
-      <View style={[styles.header, { paddingTop: topPad + 8 }]}>
-        <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.8}>
-          <Ionicons name="chevron-back" size={20} color="#1A1A1A" />
-        </TouchableOpacity>
-        <View style={styles.searchBar}>
-          <Ionicons name="search" size={15} color="#AAAAAA" />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Find a place to dine..."
-            placeholderTextColor="#BBBBBB"
-            value={search}
-            onChangeText={setSearch}
-          />
-        </View>
-      </View>
 
-      {/* Page title */}
-      <View style={styles.titleRow}>
-        <Text style={styles.pageTitle}>Dine Out</Text>
-        <Text style={styles.pageSubtitle}>Book a table at top restaurants</Text>
-      </View>
+      {/* ── Fixed top section ── */}
+      <View style={[styles.topSection, { paddingTop: topPad + 8 }]}>
 
-      {/* Filter chips */}
-      <ScrollView
-        horizontal showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.filterRow}
-      >
-        {FILTERS.map(f => (
-          <TouchableOpacity
-            key={f}
-            style={[styles.chip, activeFilter === f && styles.chipActive]}
-            activeOpacity={0.8}
-            onPress={() => setActiveFilter(f)}
-          >
-            <Text style={[styles.chipText, activeFilter === f && styles.chipTextActive]}>{f}</Text>
+        {/* Header row */}
+        <View style={styles.headerRow}>
+          <TouchableOpacity style={styles.backBtn} onPress={() => router.back()} activeOpacity={0.8}>
+            <Ionicons name="chevron-back" size={20} color="#1A1A1A" />
           </TouchableOpacity>
-        ))}
-      </ScrollView>
+          <View style={styles.searchBar}>
+            <Ionicons name="search" size={15} color="#AAAAAA" />
+            <TextInput
+              style={styles.searchInput}
+              placeholder="Find a place to dine..."
+              placeholderTextColor="#BBBBBB"
+              value={search}
+              onChangeText={setSearch}
+            />
+          </View>
+        </View>
 
-      {/* Restaurant list */}
+        {/* Title */}
+        <View style={styles.titleBlock}>
+          <Text style={styles.pageTitle}>Dine Out</Text>
+          <Text style={styles.pageSubtitle}>Book a table at top restaurants</Text>
+        </View>
+
+        {/* Filter chips */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterRow}
+        >
+          {FILTERS.map(f => (
+            <TouchableOpacity
+              key={f}
+              style={[styles.chip, activeFilter === f && styles.chipActive]}
+              activeOpacity={0.8}
+              onPress={() => setActiveFilter(f)}
+            >
+              <Text style={[styles.chipText, activeFilter === f && styles.chipTextActive]}>{f}</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </View>
+
+      {/* ── Scrollable restaurant list ── */}
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 100 }}
+        contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       >
-        {RESTAURANTS.map(item => (
+        {filtered.map(item => (
           <TouchableOpacity
             key={item.id}
             style={styles.card}
             activeOpacity={0.88}
             onPress={() => router.push(`/dineout/${item.id}` as any)}
           >
+            {/* Image */}
             <View style={styles.cardImageWrap}>
               <Image source={item.image} style={styles.cardImage} resizeMode="cover" />
               <View style={[styles.badge, { backgroundColor: item.badgeColor }]}>
                 <Text style={styles.badgeText}>{item.badge}</Text>
               </View>
+              <View style={styles.ratingPill}>
+                <Ionicons name="star" size={11} color="#FFC107" />
+                <Text style={styles.ratingText}> {item.rating}</Text>
+              </View>
             </View>
 
+            {/* Body */}
             <View style={styles.cardBody}>
-              <View style={styles.cardRow}>
-                <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
-                <View style={styles.ratingPill}>
-                  <Ionicons name="star" size={11} color="#FFC107" />
-                  <Text style={styles.ratingText}> {item.rating}</Text>
-                </View>
-              </View>
+              <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
 
               <View style={styles.metaRow}>
                 <Ionicons name="restaurant-outline" size={12} color="#8A8A8A" />
-                <Text style={styles.metaText}> {item.cuisine} · {item.priceRange}</Text>
+                <Text style={styles.metaText}>  {item.cuisine} · {item.priceRange}</Text>
               </View>
 
               <View style={styles.footerRow}>
-                <View style={styles.metaRow}>
-                  <Ionicons name="location-outline" size={12} color="#8A8A8A" />
-                  <Text style={styles.metaText}> {item.distance}</Text>
+                <View style={styles.footerLeft}>
+                  <View style={styles.metaRow}>
+                    <Ionicons name="location-outline" size={12} color="#8A8A8A" />
+                    <Text style={styles.metaText}>  {item.distance}</Text>
+                  </View>
+                  <View style={[styles.metaRow, { marginTop: 2 }]}>
+                    <Ionicons name="time-outline" size={12} color="#8A8A8A" />
+                    <Text style={styles.metaText}>  Next: {item.time}</Text>
+                  </View>
                 </View>
-                <View style={styles.metaRow}>
-                  <Ionicons name="time-outline" size={12} color="#8A8A8A" />
-                  <Text style={styles.metaText}> Next: {item.time}</Text>
-                </View>
-                <TouchableOpacity style={styles.bookBtn} activeOpacity={0.85}>
+                <TouchableOpacity
+                  style={styles.bookBtn}
+                  activeOpacity={0.85}
+                  onPress={() => router.push(`/dineout/${item.id}` as any)}
+                >
                   <Text style={styles.bookBtnText}>Book</Text>
                 </TouchableOpacity>
               </View>
@@ -168,11 +189,18 @@ export default function DineOutListScreen() {
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#F5F5F5' },
+  root: { flex: 1, backgroundColor: '#F2F2F2' },
 
-  header: {
+  /* ── Fixed top section ── */
+  topSection: {
+    backgroundColor: '#FFFFFF',
+    paddingBottom: 12,
+    shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 6, elevation: 4,
+  },
+
+  headerRow: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
-    paddingHorizontal: 16, paddingBottom: 12, backgroundColor: '#FFFFFF',
+    paddingHorizontal: 16, paddingBottom: 12,
   },
   backBtn: {
     width: 36, height: 36, borderRadius: 18, backgroundColor: '#F2F2F2',
@@ -184,50 +212,66 @@ const styles = StyleSheet.create({
   },
   searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'Inter_400Regular' },
 
-  titleRow: { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 4, backgroundColor: '#FFFFFF' },
+  titleBlock: { paddingHorizontal: 16, marginBottom: 12 },
   pageTitle: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
   pageSubtitle: { fontSize: 13, color: '#8A8A8A', fontFamily: 'Inter_400Regular', marginTop: 2 },
 
-  filterRow: { paddingHorizontal: 16, paddingVertical: 10, gap: 8, backgroundColor: '#FFFFFF' },
+  filterRow: {
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   chip: {
     paddingHorizontal: 16, paddingVertical: 8,
     borderRadius: 20, backgroundColor: '#F2F2F2',
   },
   chipActive: { backgroundColor: '#00B14F' },
   chipText: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
-  chipTextActive: { color: '#FFFFFF' },
+  chipTextActive: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
 
-  scroll: { flex: 1, marginTop: 4 },
+  /* ── List ── */
+  scroll: { flex: 1 },
+  listContent: { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 100 },
 
   card: {
     backgroundColor: '#FFFFFF', borderRadius: 18, marginBottom: 14,
     overflow: 'hidden',
     shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 8, elevation: 3,
   },
+
   cardImageWrap: { position: 'relative' },
-  cardImage: { width: '100%', height: 170 },
+  cardImage: { width: '100%', height: 160 },
+
   badge: {
     position: 'absolute', top: 10, left: 10,
     borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4,
   },
   badgeText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
 
-  cardBody: { padding: 14, gap: 6 },
-  cardRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  cardName: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A', flex: 1 },
   ratingPill: {
+    position: 'absolute', top: 10, right: 10,
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFF8E1', borderRadius: 10, paddingHorizontal: 8, paddingVertical: 3,
+    backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 10,
+    paddingHorizontal: 8, paddingVertical: 4,
   },
   ratingText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#FFA000' },
+
+  cardBody: { padding: 14, gap: 6 },
+  cardName: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
 
   metaRow: { flexDirection: 'row', alignItems: 'center' },
   metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
 
-  footerRow: { flexDirection: 'row', alignItems: 'center', gap: 12, marginTop: 4 },
+  footerRow: {
+    flexDirection: 'row', alignItems: 'flex-end',
+    justifyContent: 'space-between', marginTop: 4,
+  },
+  footerLeft: { gap: 4 },
+
   bookBtn: {
-    marginLeft: 'auto', backgroundColor: '#00B14F', borderRadius: 20,
-    paddingHorizontal: 18, paddingVertical: 8,
+    backgroundColor: '#00B14F', borderRadius: 20,
+    paddingHorizontal: 20, paddingVertical: 9,
   },
   bookBtnText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
 });
