@@ -155,10 +155,10 @@ export default function ProductDetailScreen() {
 
       {/* Buy bar */}
       <View style={[styles.buyBar, { paddingBottom: Math.max(insets.bottom, 20) }]}>
-        <TouchableOpacity style={styles.wishlistBtn} activeOpacity={0.85}>
+        <TouchableOpacity style={styles.wishlistBtn} activeOpacity={0.85} onPress={() => router.push('/shopping/cart')}>
           <Ionicons name="bag-add-outline" size={22} color="#00B14F" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.buyBtn} activeOpacity={0.88}>
+        <TouchableOpacity style={styles.buyBtn} activeOpacity={0.88} onPress={() => router.push('/shopping/checkout')}>
           <Text style={styles.buyBtnText}>Buy Now · ${(45 * qty).toFixed(2)}</Text>
         </TouchableOpacity>
       </View>

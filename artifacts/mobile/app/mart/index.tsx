@@ -200,7 +200,7 @@ export default function MartScreen() {
         </View>
         <View style={styles.productsGrid}>
           {PRODUCTS.map(p => (
-            <View key={p.id} style={styles.productCard}>
+            <TouchableOpacity key={p.id} style={styles.productCard} activeOpacity={0.88} onPress={() => p.inStock && router.push(`/mart/${p.id}` as any)}>
               <Image source={p.image} style={styles.productImage} resizeMode="cover" />
               {!p.inStock && (
                 <View style={styles.outOfStock}>
@@ -234,7 +234,7 @@ export default function MartScreen() {
                   ) : null}
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>
@@ -248,7 +248,7 @@ export default function MartScreen() {
             </View>
             <Text style={styles.cartBarLabel}>items in cart</Text>
           </View>
-          <TouchableOpacity style={styles.checkoutBtn} activeOpacity={0.88}>
+          <TouchableOpacity style={styles.checkoutBtn} activeOpacity={0.88} onPress={() => router.push('/mart/cart')}>
             <Text style={styles.checkoutText}>View Cart</Text>
             <Ionicons name="arrow-forward" size={16} color="#FFFFFF" />
           </TouchableOpacity>

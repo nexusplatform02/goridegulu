@@ -207,7 +207,7 @@ export default function ShoppingScreen() {
                   <Text style={styles.price}>${p.price}</Text>
                   <Text style={styles.originalPrice}>${p.original}</Text>
                 </View>
-                <TouchableOpacity style={styles.addCartBtn} activeOpacity={0.85}>
+                <TouchableOpacity style={styles.addCartBtn} activeOpacity={0.85} onPress={(e) => { e.stopPropagation?.(); router.push('/shopping/cart'); }}>
                   <Text style={styles.addCartText}>Add to Cart</Text>
                 </TouchableOpacity>
               </View>
