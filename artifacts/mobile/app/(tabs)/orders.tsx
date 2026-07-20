@@ -6,6 +6,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 import Svg, { Circle, Rect, Path, G, Defs, ClipPath } from 'react-native-svg';
 
 // ─── GXS Logo ────────────────────────────────────────────────────────────────
@@ -76,7 +77,7 @@ export default function PaymentScreen() {
         {/* My Card section */}
         <View style={styles.sectionRow}>
           <Text style={styles.sectionLabel}>My Card</Text>
-          <TouchableOpacity style={styles.addBtn} activeOpacity={0.75}>
+          <TouchableOpacity style={styles.addBtn} activeOpacity={0.75} onPress={() => router.push('/payment')}>
             <Ionicons name="add" size={16} color="#1A1A1A" />
             <Text style={styles.addText}>Add</Text>
           </TouchableOpacity>
