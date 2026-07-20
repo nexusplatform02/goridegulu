@@ -378,26 +378,26 @@ const styles = StyleSheet.create({
 
   backBtn: {
     position: 'absolute', left: 16, zIndex: 20,
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#FFFFFF',
     alignItems: 'center', justifyContent: 'center',
-    shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 6, elevation: 4,
+    shadowColor: '#000', shadowOpacity: 0.07, shadowRadius: 6, elevation: 4,
   },
 
   dropoffCard: {
     position: 'absolute', left: 68, right: 16, zIndex: 20,
-    backgroundColor: '#FFFFFF', borderRadius: 16, padding: 14,
+    backgroundColor: '#FFFFFF', borderRadius: 28, padding: 14,
     flexDirection: 'row', alignItems: 'center', gap: 10,
-    shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 10, elevation: 6,
+    shadowColor: '#000', shadowOpacity: 0.07, shadowRadius: 10, elevation: 6,
   },
   dropoffRow:      { alignItems: 'center', gap: 2 },
   dropoffDotGreen: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
   dropoffLine:     { width: 2, height: 14, backgroundColor: '#E0E0E0' },
   dropoffDotBlue:  { width: 10, height: 10, borderRadius: 5, backgroundColor: '#1A73E8' },
   dropoffTexts:    { flex: 1 },
-  dropoffFrom:     { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A' },
-  dropoffTo:       { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A', marginTop: 4 },
-  distBadge:       { backgroundColor: '#F0F0F0', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4 },
-  distText:        { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#5A5A5A' },
+  dropoffFrom:     { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A' },
+  dropoffTo:       { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A', marginTop: 4 },
+  distBadge:       { backgroundColor: '#F0F0F0', borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4 },
+  distText:        { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
 
   sheet: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
@@ -410,44 +410,44 @@ const styles = StyleSheet.create({
 
   routeSummary:  { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 14 },
   routeItem:     { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  routeText:     { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
+  routeText:     { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
   routeDividerV: { width: 1, height: 16, backgroundColor: '#E0E0E0' },
 
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 8 },
 
-  vehicleRow:       { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, paddingHorizontal: 10, borderRadius: 14, marginBottom: 4 },
+  vehicleRow:       { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, paddingHorizontal: 10, borderRadius: 22, marginBottom: 4 },
   vehicleRowActive: { backgroundColor: '#F0FCF5', borderWidth: 1.5, borderColor: '#00B14F' },
   vehicleImg:       { width: 72, height: 48 },
   vehicleInfo:      { flex: 1 },
   vehicleNameRow:   { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  vehicleName:      { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  fastBadge:        { flexDirection: 'row', alignItems: 'center', gap: 2, backgroundColor: '#FFF3E0', borderRadius: 6, paddingHorizontal: 5, paddingVertical: 2 },
-  fastText:         { fontSize: 10, fontFamily: 'Inter_600SemiBold', color: '#FF8C00' },
-  vehicleSub:       { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+  vehicleName:      { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  fastBadge:        { flexDirection: 'row', alignItems: 'center', gap: 2, backgroundColor: '#FFF3E0', borderRadius: 22, paddingHorizontal: 5, paddingVertical: 2 },
+  fastText:         { fontSize: 10, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FF8C00' },
+  vehicleSub:       { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', marginTop: 2 },
   vehiclePriceCol:  { alignItems: 'flex-end' },
-  vehiclePrice:     { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  vehicleEta:       { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+  vehiclePrice:     { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  vehicleEta:       { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', marginTop: 2 },
 
   // Payment — two-row layout so all chips fit
   paymentSection:  { paddingVertical: 10 },
   paymentLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 },
-  paymentTitle:    { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#6B6B6B' },
+  paymentTitle:    { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#6B6B6B' },
   paymentChips:    { flexDirection: 'row', gap: 8 },
   paymentChip: {
     flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5,
-    borderRadius: 20, paddingVertical: 9,
+    borderRadius: 28, paddingVertical: 9,
     backgroundColor: '#F2F2F2',
   },
   paymentChipActive:     { backgroundColor: '#00B14F' },
-  paymentChipText:       { fontSize: 12, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
-  paymentChipTextActive: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
+  paymentChipText:       { fontSize: 12, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
+  paymentChipTextActive: { color: '#FFFFFF', fontFamily: 'PlusJakartaSans_600SemiBold' },
 
   bookBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, marginTop: 8,
   },
-  bookBtnText: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  bookBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 
   // ── Mobile Money modal ────────────────────────────────────────
   modalWrap:    { flex: 1, justifyContent: 'flex-end' },
@@ -462,34 +462,34 @@ const styles = StyleSheet.create({
   momoHandle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 20 },
 
   momoHeader:  { flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 16 },
-  momoTitle: { fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  momoSub:   { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+  momoTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  momoSub:   { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', marginTop: 2 },
 
   networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
   networkLogoCard: {
-    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 10,
+    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 22,
     paddingVertical: 0, paddingHorizontal: 2,
     alignItems: 'center', justifyContent: 'center',
     overflow: 'hidden',
   },
   networkLogoImg: { width: '100%', height: 100 },
 
-  amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 14, padding: 16, marginBottom: 20 },
-  amountLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
-  amountValue: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#00B14F' },
+  amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 22, padding: 16, marginBottom: 20 },
+  amountLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B' },
+  amountValue: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
 
-  inputLabel: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#6B6B6B', marginBottom: 8 },
-  inputWrap:  { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: '#E8E8E8', borderRadius: 14, overflow: 'hidden', marginBottom: 8 },
+  inputLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#6B6B6B', marginBottom: 8 },
+  inputWrap:  { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: '#E8E8E8', borderRadius: 22, overflow: 'hidden', marginBottom: 8 },
   countryCode: { backgroundColor: '#F5F5F5', paddingHorizontal: 14, paddingVertical: 14, borderRightWidth: 1, borderRightColor: '#E8E8E8' },
-  countryCodeText: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
-  phoneInput: { flex: 1, paddingHorizontal: 14, fontSize: 16, fontFamily: 'Inter_400Regular', color: '#1A1A1A', paddingVertical: 14 },
+  countryCodeText: { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  phoneInput: { flex: 1, paddingHorizontal: 14, fontSize: 16, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A', paddingVertical: 14 },
 
-  networkHint: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#AAAAAA', marginBottom: 24 },
+  networkHint: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA', marginBottom: 24 },
 
   payBtn: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#00B14F', borderRadius: 30, paddingVertical: 16,
   },
   payBtnDisabled: { backgroundColor: '#A8DFC0' },
-  payBtnText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  payBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 });

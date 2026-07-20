@@ -325,18 +325,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12, zIndex: 20,
   },
   backBtn: {
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#FFFFFF',
     alignItems: 'center', justifyContent: 'center',
-    shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 6, elevation: 4,
+    shadowColor: '#000', shadowOpacity: 0.07, shadowRadius: 6, elevation: 4,
   },
   searchBox: {
     flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10,
-    backgroundColor: '#FFFFFF', borderRadius: 14,
+    backgroundColor: '#FFFFFF', borderRadius: 22,
     paddingHorizontal: 14, paddingVertical: 12,
     shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 8, elevation: 4,
   },
   dotGreen: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
-  searchInput: { flex: 1, fontSize: 15, fontFamily: 'Inter_400Regular', color: '#1A1A1A' },
+  searchInput: { flex: 1, fontSize: 15, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
 
   // Pin dropped on map
   tapPinWrap: { position: 'absolute', zIndex: 25, alignItems: 'center' },
@@ -351,32 +351,32 @@ const styles = StyleSheet.create({
   // Hint
   hintBubble: {
     position: 'absolute', top: '45%', alignSelf: 'center',
-    backgroundColor: 'rgba(0,0,0,0.55)', borderRadius: 20,
+    backgroundColor: 'rgba(0,0,0,0.55)', borderRadius: 28,
     paddingHorizontal: 16, paddingVertical: 8, zIndex: 15,
   },
-  hintText: { color: '#FFFFFF', fontSize: 13, fontFamily: 'Inter_500Medium' },
+  hintText: { color: '#FFFFFF', fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium' },
 
   // Floating confirm bar
   floatingBar: {
     position: 'absolute', left: 20, right: 20, zIndex: 40,
     flexDirection: 'row', alignItems: 'center', gap: 10,
-    backgroundColor: '#FFFFFF', borderRadius: 16,
+    backgroundColor: '#FFFFFF', borderRadius: 28,
     paddingHorizontal: 16, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 12, elevation: 10,
   },
-  floatingLabel: { flex: 1, fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
+  floatingLabel: { flex: 1, fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
   floatingBtn: {
     backgroundColor: '#00B14F', borderRadius: 22,
     paddingHorizontal: 20, paddingVertical: 10,
   },
-  floatingBtnText: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  floatingBtnText: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 
   // Bottom sheet
   sheet: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', borderTopLeftRadius: 24, borderTopRightRadius: 24,
     paddingHorizontal: 20, paddingTop: 8,
-    shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 20, elevation: 12,
+    shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 20, elevation: 12,
     zIndex: 30,
   },
   handleWrap: { alignItems: 'center', paddingBottom: 10 },
@@ -385,8 +385,8 @@ const styles = StyleSheet.create({
   },
 
   sheetHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, marginBottom: 14 },
-  mainDestTitle: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  mainDestSub:   { fontSize: 12, fontFamily: 'Inter_400Regular',  color: '#8A8A8A', marginTop: 2 },
+  mainDestTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  mainDestSub:   { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular',  color: '#8A8A8A', marginTop: 2 },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginBottom: 8 },
   iconBtn: { padding: 4 },
 
@@ -399,15 +399,15 @@ const styles = StyleSheet.create({
   destDotInner:   { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
   destInfo:       { flex: 1 },
   destNameRow:    { flexDirection: 'row', alignItems: 'center' },
-  destName:       { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
-  destNameActive: { color: '#1A1A1A', fontFamily: 'Inter_600SemiBold' },
-  destDist:       { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#AAAAAA', marginTop: 2 },
+  destName:       { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
+  destNameActive: { color: '#1A1A1A', fontFamily: 'PlusJakartaSans_600SemiBold' },
+  destDist:       { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA', marginTop: 2 },
 
   chooseBtn: {
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, alignItems: 'center', marginTop: 16,
   },
-  chooseBtnText: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  chooseBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 
   // Modal
   modalOverlay: {
@@ -415,11 +415,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end', padding: 16,
   },
   menuCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 20,
+    backgroundColor: '#FFFFFF', borderRadius: 28,
     paddingTop: 16, paddingBottom: 8, overflow: 'hidden',
   },
   menuHeader: {
-    fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#8A8A8A',
+    fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#8A8A8A',
     paddingHorizontal: 20, paddingBottom: 12,
   },
   menuDivider: { height: 1, backgroundColor: '#F0F0F0' },
@@ -429,21 +429,21 @@ const styles = StyleSheet.create({
   },
   menuItemActive: { backgroundColor: '#F0FCF5' },
   menuIconWrap: {
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#F5F5F5',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#F5F5F5',
     alignItems: 'center', justifyContent: 'center',
   },
   menuIconWrapActive: { backgroundColor: '#E0F5EA' },
-  menuLabel:       { flex: 1, fontSize: 15, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
-  menuLabelActive: { color: '#00B14F', fontFamily: 'Inter_600SemiBold' },
+  menuLabel:       { flex: 1, fontSize: 15, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  menuLabelActive: { color: '#00B14F', fontFamily: 'PlusJakartaSans_600SemiBold' },
   menuCancelBtn:   { paddingVertical: 16, alignItems: 'center' },
-  menuCancelText:  { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#FF3B30' },
+  menuCancelText:  { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FF3B30' },
 
   // Toast
   toast: {
     position: 'absolute', bottom: '42%', left: 40, right: 40,
-    backgroundColor: '#1A1A1A', borderRadius: 24,
+    backgroundColor: '#1A1A1A', borderRadius: 28,
     paddingVertical: 12, paddingHorizontal: 20,
     alignItems: 'center', zIndex: 100,
   },
-  toastText: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  toastText: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 });

@@ -15,7 +15,7 @@ function GXSLogo({ size = 38 }: { size?: number }) {
     <View style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: '#1A1A2E', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
       <LinearGradient colors={['#7B2FF7', '#00C6A2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
         style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFF', fontSize: size * 0.32, fontFamily: 'Inter_700Bold', letterSpacing: -0.5 }}>GXS</Text>
+        <Text style={{ color: '#FFF', fontSize: size * 0.32, fontFamily: 'PlusJakartaSans_700Bold', letterSpacing: -0.5 }}>GXS</Text>
       </LinearGradient>
     </View>
   );
@@ -27,7 +27,7 @@ function Web3Logo({ size = 38 }: { size?: number }) {
     <View style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden' }}>
       <LinearGradient colors={['#3B0087', '#7B2FF7']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
         style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFF', fontSize: size * 0.38, fontFamily: 'Inter_700Bold' }}>W3</Text>
+        <Text style={{ color: '#FFF', fontSize: size * 0.38, fontFamily: 'PlusJakartaSans_700Bold' }}>W3</Text>
       </LinearGradient>
     </View>
   );
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1A1A1A',
   },
   settingsBtn: {
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 16,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#1A1A1A',
   },
   addBtn: {
@@ -192,12 +192,12 @@ const styles = StyleSheet.create({
   },
   addText: {
     fontSize: 14,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: '#1A1A1A',
   },
 
   walletCard: {
-    borderRadius: 20,
+    borderRadius: 28,
     padding: 22,
     marginBottom: 20,
     overflow: 'hidden',
@@ -211,12 +211,12 @@ const styles = StyleSheet.create({
   },
   walletLabel: {
     fontSize: 13,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
     color: 'rgba(255,255,255,0.8)',
   },
   walletAmount: {
     fontSize: 32,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#FFFFFF',
     marginTop: 6,
   },
@@ -228,19 +228,19 @@ const styles = StyleSheet.create({
   },
   grabCardText: {
     fontSize: 13,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
     color: 'rgba(255,255,255,0.85)',
   },
   cardExpiry: {
     fontSize: 13,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: 'rgba(255,255,255,0.85)',
   },
 
   actionsRow: {
     flexDirection: 'row',
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     paddingVertical: 18,
     marginBottom: 28,
     shadowColor: '#000',
@@ -257,27 +257,27 @@ const styles = StyleSheet.create({
   actionIcon: {
     width: 50,
     height: 50,
-    borderRadius: 16,
+    borderRadius: 28,
     backgroundColor: '#F5F5F5',
     alignItems: 'center',
     justifyContent: 'center',
   },
   actionLabel: {
     fontSize: 12,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: '#1A1A1A',
     textAlign: 'center',
   },
 
   fsLabel: {
     fontSize: 16,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#1A1A1A',
     marginBottom: 12,
   },
   fsCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     overflow: 'hidden',
     shadowColor: '#000',
     shadowOpacity: 0.04,
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   fsName: {
     flex: 1,
     fontSize: 15,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: '#1A1A1A',
   },
   fsDivider: {

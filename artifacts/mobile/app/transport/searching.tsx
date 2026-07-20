@@ -277,9 +277,9 @@ const styles = StyleSheet.create({
   // Back button
   backBtn: {
     position: 'absolute', left: 16, zIndex: 30,
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#FFFFFF',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#FFFFFF',
     alignItems: 'center', justifyContent: 'center',
-    shadowColor: '#000', shadowOpacity: 0.12, shadowRadius: 6, elevation: 4,
+    shadowColor: '#000', shadowOpacity: 0.07, shadowRadius: 6, elevation: 4,
   },
 
   // User location pin
@@ -303,10 +303,10 @@ const styles = StyleSheet.create({
     width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFFFFF',
   },
   userPinLabel: {
-    fontSize: 10, fontFamily: 'Inter_700Bold', color: '#00B14F',
+    fontSize: 10, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F',
     backgroundColor: '#FFFFFF', borderRadius: 4,
     paddingHorizontal: 4, paddingVertical: 1, marginTop: 3,
-    shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 3, elevation: 2,
+    shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 3, elevation: 2,
   },
 
   // Rider marker
@@ -315,17 +315,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   riderBubble: {
-    width: 40, height: 40, borderRadius: 20,
+    width: 40, height: 40, borderRadius: 28,
     backgroundColor: '#FF6B35',
     alignItems: 'center', justifyContent: 'center',
     borderWidth: 2.5, borderColor: '#FFFFFF',
     shadowColor: '#FF6B35', shadowOpacity: 0.5, shadowRadius: 10, elevation: 8,
   },
   riderDistBubble: {
-    backgroundColor: '#1A1A1A', borderRadius: 8,
+    backgroundColor: '#1A1A1A', borderRadius: 28,
     paddingHorizontal: 6, paddingVertical: 3, marginTop: 4,
   },
-  riderDistText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  riderDistText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 
   // Searching animation (center dot)
   searchCenter: {
@@ -348,8 +348,8 @@ const styles = StyleSheet.create({
     position: 'absolute', left: 0, right: 0,
     alignItems: 'center', top: '56%',
   },
-  statusText: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  statusSub: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#6B6B6B', marginTop: 4 },
+  statusText: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  statusSub: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B', marginTop: 4 },
 
   // Sheets
   sheet: {
@@ -366,36 +366,36 @@ const styles = StyleSheet.create({
   },
 
   // Searching sheet
-  sheetTitle: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A', marginBottom: 12 },
+  sheetTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A', marginBottom: 12 },
   nearbyRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 },
   nearbyDot: {
-    width: 28, height: 28, borderRadius: 14, backgroundColor: '#E0F5EA',
+    width: 28, height: 28, borderRadius: 22, backgroundColor: '#E0F5EA',
     alignItems: 'center', justifyContent: 'center',
   },
-  nearbyText: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
+  nearbyText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B' },
   distRow: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: '#F0FCF5', borderRadius: 12, padding: 12, marginBottom: 16,
+    backgroundColor: '#F0FCF5', borderRadius: 28, padding: 12, marginBottom: 16,
   },
-  distLabel: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#5A5A5A' },
-  distValue: { fontFamily: 'Inter_700Bold', color: '#00B14F' },
+  distLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
+  distValue: { fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
   cancelBtn: {
     borderWidth: 1.5, borderColor: '#E0E0E0', borderRadius: 30,
     paddingVertical: 14, alignItems: 'center',
   },
-  cancelText: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#5A5A5A' },
+  cancelText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
 
   // Found sheet
   liveDistRow: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: '#FFF7F4', borderRadius: 12, padding: 12, marginBottom: 14,
+    backgroundColor: '#FFF7F4', borderRadius: 28, padding: 12, marginBottom: 14,
   },
   liveDot: { width: 8, height: 8, borderRadius: 4 },
-  liveDistText: { flex: 1, fontSize: 13, fontFamily: 'Inter_400Regular', color: '#5A5A5A' },
-  liveDistVal: { fontFamily: 'Inter_700Bold', color: '#FF6B35' },
+  liveDistText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
+  liveDistVal: { fontFamily: 'PlusJakartaSans_700Bold', color: '#FF6B35' },
   etaBadge: {
-    fontSize: 12, fontFamily: 'Inter_700Bold', color: '#00B14F',
-    backgroundColor: '#E0F5EA', borderRadius: 8,
+    fontSize: 12, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F',
+    backgroundColor: '#E0F5EA', borderRadius: 28,
     paddingHorizontal: 8, paddingVertical: 4,
   },
 
@@ -405,12 +405,12 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   riderInfo: { flex: 1 },
-  riderName: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  riderSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A', marginTop: 2 },
+  riderName: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  riderSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', marginTop: 2 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 3 },
-  ratingText: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#6B6B6B' },
+  ratingText: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B' },
   actionBtn: {
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#E0F5EA',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#E0F5EA',
     alignItems: 'center', justifyContent: 'center',
   },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginBottom: 14 },
@@ -418,5 +418,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, alignItems: 'center',
   },
-  trackBtnText: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  trackBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 });

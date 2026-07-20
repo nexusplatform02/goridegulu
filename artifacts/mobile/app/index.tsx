@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     fontSize: 46,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#FFFFFF',
     letterSpacing: 2,
   },

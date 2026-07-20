@@ -14,7 +14,7 @@ function GXSLogo({ size = 36 }: { size?: number }) {
     <View style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden' }}>
       <LinearGradient colors={['#7B2FF7', '#00C6A2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
         style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFF', fontSize: size * 0.3, fontFamily: 'Inter_700Bold', letterSpacing: -0.5 }}>GXS</Text>
+        <Text style={{ color: '#FFF', fontSize: size * 0.3, fontFamily: 'PlusJakartaSans_700Bold', letterSpacing: -0.5 }}>GXS</Text>
       </LinearGradient>
     </View>
   );
@@ -110,11 +110,11 @@ function CategoryBar({ label, amount, total, color, icon }: {
 }
 const catStyles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 14 },
-  iconWrap: { width: 38, height: 38, borderRadius: 12, alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
+  iconWrap: { width: 38, height: 38, borderRadius: 28, alignItems: 'center', justifyContent: 'center', flexShrink: 0 },
   info: { flex: 1, gap: 6 },
   labelRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  label: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
-  amount: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  label: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  amount: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   track: { height: 6, backgroundColor: '#F0F0F0', borderRadius: 4, overflow: 'hidden' },
   fill: { height: 6, borderRadius: 4 },
 });
@@ -347,13 +347,13 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F0F0F0',
   },
   avatar: {
-    width: 48, height: 48, borderRadius: 24,
+    width: 48, height: 48, borderRadius: 28,
     backgroundColor: '#E0F5EA', alignItems: 'center', justifyContent: 'center',
   },
-  avatarText: { fontSize: 17, fontFamily: 'Inter_700Bold', color: '#00B14F' },
+  avatarText: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
   userInfo: { flex: 1, gap: 2 },
-  userName: { fontSize: 16, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  userEmail: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A' },
+  userName: { fontSize: 16, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  userEmail: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A' },
 
   tabWrap: {
     backgroundColor: '#FFFFFF',
@@ -376,8 +376,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tabBtnActive: { backgroundColor: '#00B14F' },
-  tabText: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#8A8A8A' },
-  tabTextActive: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
+  tabText: { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#8A8A8A' },
+  tabTextActive: { color: '#FFFFFF', fontFamily: 'PlusJakartaSans_600SemiBold' },
 
   // ── Dashboard ──
   dashContent: { padding: 16, gap: 0 },
@@ -389,18 +389,18 @@ const styles = StyleSheet.create({
   },
   gxsCard: {
     flex: 1,
-    borderRadius: 18,
+    borderRadius: 22,
     padding: 16,
     gap: 8,
     minHeight: 120,
     justifyContent: 'space-between',
   },
-  gxsTitle: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
-  gxsSub: { fontSize: 11, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.7)' },
+  gxsTitle: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  gxsSub: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.7)' },
 
   addPayCard: {
     flex: 1,
-    borderRadius: 18,
+    borderRadius: 22,
     borderWidth: 1.5,
     borderColor: '#E8E8E8',
     borderStyle: 'dashed',
@@ -411,14 +411,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   addPayIcon: {
-    width: 40, height: 40, borderRadius: 20,
+    width: 40, height: 40, borderRadius: 28,
     backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center',
   },
-  addPayText: { fontSize: 11, fontFamily: 'Inter_500Medium', color: '#8A8A8A', textAlign: 'center', paddingHorizontal: 8 },
+  addPayText: { fontSize: 11, fontFamily: 'PlusJakartaSans_500Medium', color: '#8A8A8A', textAlign: 'center', paddingHorizontal: 8 },
 
   bizRow: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     paddingHorizontal: 18,
     paddingVertical: 18,
     flexDirection: 'row',
@@ -427,17 +427,17 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, shadowOffset: { width: 0, height: 1 }, elevation: 1,
   },
-  bizLabel: { fontSize: 15, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
+  bizLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
 
   sectionHead: {
     fontSize: 15,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#1A1A1A',
     marginBottom: 10,
   },
   accountCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     overflow: 'hidden',
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, shadowOffset: { width: 0, height: 1 }, elevation: 1,
   },
@@ -448,50 +448,50 @@ const styles = StyleSheet.create({
     paddingHorizontal: 18,
     paddingVertical: 16,
   },
-  accountLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#1A1A1A' },
+  accountLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
   accountRight: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  accountValue: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#8A8A8A' },
+  accountValue: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A' },
   accountDivider: { height: 1, backgroundColor: '#F5F5F5', marginLeft: 18 },
 
   // ── Activity / Stats ──
   actContent: { padding: 16, gap: 0 },
 
   summaryCard: {
-    borderRadius: 20,
+    borderRadius: 28,
     padding: 22,
     marginBottom: 16,
   },
-  summaryPeriod: { fontSize: 12, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.75)', marginBottom: 4 },
-  summaryAmount: { fontSize: 36, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
-  summarySub: { fontSize: 13, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.75)', marginBottom: 18 },
+  summaryPeriod: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.75)', marginBottom: 4 },
+  summaryAmount: { fontSize: 36, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  summarySub: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.75)', marginBottom: 18 },
   summaryRow: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.18)',
-    borderRadius: 14,
+    borderRadius: 22,
     paddingVertical: 12,
   },
   summaryItem: { flex: 1, alignItems: 'center', gap: 2 },
-  summaryItemVal: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
-  summaryItemLbl: { fontSize: 11, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.7)' },
+  summaryItemVal: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  summaryItemLbl: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.7)' },
   summaryDivider: { width: 1, backgroundColor: 'rgba(255,255,255,0.3)' },
 
   chartCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     padding: 18,
     marginBottom: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 2,
   },
   chartHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 },
-  chartTitle: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  chartSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#AAAAAA' },
+  chartTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  chartSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA' },
 
   sectionHeader: { marginBottom: 10, marginTop: 4 },
-  sectionTitle: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  sectionTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
 
   catCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     padding: 18,
     marginBottom: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 2,
@@ -499,7 +499,7 @@ const styles = StyleSheet.create({
 
   txCard: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 18,
+    borderRadius: 22,
     overflow: 'hidden',
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 2,
   },
@@ -515,9 +515,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center', flexShrink: 0,
   },
   txInfo: { flex: 1, gap: 2 },
-  txTitle: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
-  txSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#8A8A8A' },
-  txDate: { fontSize: 11, fontFamily: 'Inter_400Regular', color: '#BBBBBB' },
-  txAmount: { fontSize: 14, fontFamily: 'Inter_600SemiBold' },
+  txTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  txSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A' },
+  txDate: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#BBBBBB' },
+  txAmount: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold' },
   txDivider: { height: 1, backgroundColor: '#F5F5F5', marginLeft: 68 },
 });

@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 28,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1A1A1A',
     lineHeight: 36,
     marginBottom: 28,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingHorizontal: 14,
     paddingVertical: 14,
-    borderRadius: 14,
+    borderRadius: 22,
     backgroundColor: '#FFFFFF',
     borderWidth: 1.5,
     borderColor: '#EBEBEB',
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   countryName: {
     fontSize: 13,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: '#1A1A1A',
     flex: 1,
   },

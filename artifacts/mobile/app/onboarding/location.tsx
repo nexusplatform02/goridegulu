@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 22,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#00B14F',
     marginTop: 12,
     letterSpacing: 1,
@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 34,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1A1A1A',
     lineHeight: 42,
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 14,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
     color: '#8A8A8A',
     lineHeight: 22,
     textAlign: 'center',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   allowBtnText: {
     fontSize: 16,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#FFFFFF',
   },
   enterBtn: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   enterBtnText: {
     fontSize: 16,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#1A1A1A',
   },
 });

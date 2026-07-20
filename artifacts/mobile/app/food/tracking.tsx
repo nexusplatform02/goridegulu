@@ -170,21 +170,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  helpLink: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#00B14F' },
+  helpLink: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#00B14F' },
 
   scroll: { flex: 1 },
 
   // ETA card
   etaCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 16, margin: 16,
+    backgroundColor: '#FFFFFF', borderRadius: 28, margin: 16,
     padding: 18,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   etaTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 },
-  etaTime: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  etaTime: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
   etaStatusRow: { flexDirection: 'row', alignItems: 'center', marginTop: 4, gap: 6 },
   onTimeDot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#00B14F' },
-  etaStatus: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  etaStatus: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
   riderAvatar: {
     width: 46, height: 46, borderRadius: 23, backgroundColor: '#E8F5EE',
     alignItems: 'center', justifyContent: 'center',
@@ -198,45 +198,45 @@ const styles = StyleSheet.create({
   },
   stepNode: { alignItems: 'center' },
   stepCircle: {
-    width: 36, height: 36, borderRadius: 18,
+    width: 36, height: 36, borderRadius: 22,
     backgroundColor: '#EEEEEE',
     alignItems: 'center', justifyContent: 'center',
   },
   stepCircleActive: { backgroundColor: '#00B14F' },
-  stepInitial: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  stepInitial: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
   trackerLine: { flex: 1, height: 3, backgroundColor: '#E0E0E0', marginHorizontal: 4 },
   trackerLineDone: { backgroundColor: '#00B14F' },
-  kitchenNote: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  kitchenNote: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
 
   // Promo
   promoBanner: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 0,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 0,
     paddingHorizontal: 14, paddingVertical: 14, gap: 10,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   promoIconWrap: {},
   promoIconCircle: {
-    width: 36, height: 36, borderRadius: 18, backgroundColor: '#E8F5EE',
+    width: 36, height: 36, borderRadius: 22, backgroundColor: '#E8F5EE',
     alignItems: 'center', justifyContent: 'center',
   },
-  promoText: { flex: 1, fontSize: 13, fontFamily: 'Inter_400Regular', color: '#1A1A1A', lineHeight: 18 },
+  promoText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A', lineHeight: 18 },
 
   // Restaurant card
   restaurantCard: {
     flexDirection: 'row', alignItems: 'center', gap: 12,
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 10,
     paddingHorizontal: 14, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   restaurantLogoWrap: {},
   restaurantLogo: {
-    width: 48, height: 48, borderRadius: 12, backgroundColor: '#1A1A1A',
+    width: 48, height: 48, borderRadius: 28, backgroundColor: '#1A1A1A',
     alignItems: 'center', justifyContent: 'center',
   },
-  restaurantLogoText: { fontSize: 9, fontFamily: 'Inter_700Bold', color: '#FFFFFF', letterSpacing: 1 },
+  restaurantLogoText: { fontSize: 9, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF', letterSpacing: 1 },
   restaurantInfo: { flex: 1 },
-  restaurantName: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A', lineHeight: 20 },
+  restaurantName: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', lineHeight: 20 },
 
   // Save fav
   saveFavCard: {
@@ -248,20 +248,20 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
     marginTop: -2,
   },
-  saveFavText: { flex: 1, fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A', lineHeight: 18 },
+  saveFavText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', lineHeight: 18 },
 
   // Summary card
   summaryCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 10,
     paddingHorizontal: 16, paddingVertical: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   totalRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
-  totalLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#1A1A1A' },
-  totalAmount: { fontSize: 20, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  totalLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
+  totalAmount: { fontSize: 20, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
   viewSummaryRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 4 },
-  viewSummaryText: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  viewSummaryText: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 12 },
   locationItem: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  locationText: { flex: 1, fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  locationText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
 });

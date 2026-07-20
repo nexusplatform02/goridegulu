@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     padding: BAR_PADDING,
     // Subtle shadow so it floats above the page
     shadowColor: '#000',
-    shadowOpacity: 0.12,
+    shadowOpacity: 0.07,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 4 },
     elevation: 8,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   label: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     letterSpacing: 0.1,
     flexShrink: 0,
   },

@@ -237,64 +237,64 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8,
-    backgroundColor: '#FFFFFF', borderRadius: 24, paddingHorizontal: 14, height: 44,
+    backgroundColor: '#FFFFFF', borderRadius: 28, paddingHorizontal: 14, height: 44,
   },
   searchInput: {
-    flex: 1, fontSize: 14, color: '#1A1A1A', fontFamily: 'Inter_400Regular',
+    flex: 1, fontSize: 14, color: '#1A1A1A', fontFamily: 'PlusJakartaSans_400Regular',
   },
   qrBtn: {
-    width: 42, height: 42, borderRadius: 14, backgroundColor: '#FFFFFF',
+    width: 42, height: 42, borderRadius: 22, backgroundColor: '#FFFFFF',
     alignItems: 'center', justifyContent: 'center',
   },
 
   // Services
   servicesCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 20, padding: 8,
+    backgroundColor: '#FFFFFF', borderRadius: 28, padding: 8,
     flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12,
   },
   serviceItem: { width: '33.33%', alignItems: 'center', paddingVertical: 14, gap: 8 },
   iconCircle: {
-    width: 58, height: 58, borderRadius: 18,
+    width: 58, height: 58, borderRadius: 22,
     alignItems: 'center', justifyContent: 'center',
   },
   serviceImg: { width: 36, height: 36 },
-  serviceLabel: { fontSize: 12, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
+  serviceLabel: { fontSize: 12, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
 
   // Info row
   infoRow: { flexDirection: 'row', gap: 12, marginBottom: 20 },
   infoCard: {
-    flex: 1, backgroundColor: '#FFFFFF', borderRadius: 16, padding: 14,
+    flex: 1, backgroundColor: '#FFFFFF', borderRadius: 28, padding: 14,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     borderWidth: 1, borderColor: '#F0F0F0',
   },
   infoTextBlock: { gap: 2 },
-  infoTitle: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
-  infoValue: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  infoTitle: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  infoValue: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   infoIcon: { width: 36, height: 36 },
 
   // Section
   sectionRow: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12,
   },
-  sectionTitle: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  seeAll: { fontSize: 13, color: '#00B14F', fontFamily: 'Inter_500Medium' },
+  sectionTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  seeAll: { fontSize: 13, color: '#00B14F', fontFamily: 'PlusJakartaSans_500Medium' },
   hList: { paddingRight: 16, marginBottom: 20, gap: 12 },
 
   // Food card
   foodCard: {
-    width: 165, backgroundColor: '#FFFFFF', borderRadius: 16, overflow: 'hidden',
-    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3,
+    width: 165, backgroundColor: '#FFFFFF', borderRadius: 28, overflow: 'hidden',
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, shadowOffset: { width: 0, height: 2 }, elevation: 3,
   },
   foodImage: { width: '100%', height: 112, backgroundColor: '#F0F0F0' },
   foodBody: { padding: 10, gap: 4 },
-  foodName: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  foodName: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   ratingRow: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  ratingText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
   priceRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' },
-  price: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  price: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   originalPrice: {
-    fontSize: 11, color: '#BBBBBB', fontFamily: 'Inter_400Regular',
+    fontSize: 11, color: '#BBBBBB', fontFamily: 'PlusJakartaSans_400Regular',
     textDecorationLine: 'line-through',
   },
-  timeText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  timeText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
 });

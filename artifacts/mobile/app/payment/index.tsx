@@ -190,51 +190,51 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   scroll: { flex: 1, paddingHorizontal: 16 },
 
   cardPreview: {
     backgroundColor: '#00B14F',
-    borderRadius: 20,
+    borderRadius: 28,
     padding: 22,
     marginTop: 20,
     marginBottom: 24,
     minHeight: 170,
     justifyContent: 'space-between',
     shadowColor: '#00B14F',
-    shadowOpacity: 0.35,
+    shadowOpacity: 0.22,
     shadowRadius: 16,
     shadowOffset: { width: 0, height: 6 },
     elevation: 8,
   },
   cardPreviewTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  cardPreviewType: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
-  cardPreviewNumber: { fontSize: 18, fontFamily: 'Inter_400Regular', color: '#FFFFFF', letterSpacing: 2, marginVertical: 18 },
+  cardPreviewType: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  cardPreviewNumber: { fontSize: 18, fontFamily: 'PlusJakartaSans_400Regular', color: '#FFFFFF', letterSpacing: 2, marginVertical: 18 },
   cardPreviewBottom: { flexDirection: 'row', justifyContent: 'space-between' },
-  cardPreviewMeta: { fontSize: 10, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.8 },
-  cardPreviewValue: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#FFFFFF', marginTop: 2 },
+  cardPreviewMeta: { fontSize: 10, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.8 },
+  cardPreviewValue: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF', marginTop: 2 },
 
   fieldLabel: {
-    fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A',
+    fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A',
     marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5,
   },
 
   typeRow: { flexDirection: 'row', gap: 10, marginBottom: 20 },
   typeChip: {
     paddingHorizontal: 18, paddingVertical: 10,
-    backgroundColor: '#FFFFFF', borderRadius: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 22,
     borderWidth: 1.5, borderColor: '#EBEBEB',
   },
   typeChipActive: { borderColor: '#00B14F', backgroundColor: '#E8F5EE' },
-  typeChipText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A' },
+  typeChipText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A' },
   typeChipTextActive: { color: '#00B14F' },
 
   inputRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 0 },
   input: {
-    backgroundColor: '#FFFFFF', borderRadius: 12,
+    backgroundColor: '#FFFFFF', borderRadius: 28,
     paddingHorizontal: 14, paddingVertical: 14,
-    fontSize: 15, fontFamily: 'Inter_400Regular', color: '#1A1A1A',
+    fontSize: 15, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A',
     marginBottom: 18,
     borderWidth: 1, borderColor: '#EBEBEB',
   },
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   fieldRow: { flexDirection: 'row', marginBottom: 0 },
 
   secureNote: {
-    fontSize: 12, fontFamily: 'Inter_400Regular', color: '#AAAAAA',
+    fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA',
     textAlign: 'center', marginTop: 4,
   },
 
@@ -253,12 +253,12 @@ const styles = StyleSheet.create({
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', paddingHorizontal: 20, paddingTop: 14,
     borderTopWidth: 1, borderTopColor: '#F0F0F0',
-    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 10, elevation: 10,
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 10, elevation: 10,
   },
   saveBtn: {
-    backgroundColor: '#00B14F', borderRadius: 14,
+    backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
   saveBtnDisabled: { backgroundColor: '#B8DDCA' },
-  saveBtnText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  saveBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 });

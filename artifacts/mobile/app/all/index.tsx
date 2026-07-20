@@ -167,44 +167,44 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
   backBtn: {
-    width: 36, height: 36, borderRadius: 18, backgroundColor: '#F2F2F2',
+    width: 36, height: 36, borderRadius: 22, backgroundColor: '#F2F2F2',
     alignItems: 'center', justifyContent: 'center',
   },
-  headerTitle: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   scroll: { flex: 1 },
 
-  sectionTitle: { fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  sectionTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
 
   promoRow: { gap: 12, paddingBottom: 4 },
   promoCard: {
-    width: 160, borderRadius: 18, padding: 16, gap: 6,
+    width: 160, borderRadius: 22, padding: 16, gap: 6,
   },
-  promoTitle: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
-  promoSub: { fontSize: 12, color: '#FFFFFFCC', fontFamily: 'Inter_400Regular' },
+  promoTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  promoSub: { fontSize: 12, color: '#FFFFFFCC', fontFamily: 'PlusJakartaSans_400Regular' },
 
   servicesList: { gap: 10 },
   serviceRow: {
     flexDirection: 'row', alignItems: 'center', gap: 14,
-    backgroundColor: '#FFFFFF', borderRadius: 18, padding: 14,
+    backgroundColor: '#FFFFFF', borderRadius: 22, padding: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   iconBox: {
-    width: 52, height: 52, borderRadius: 16,
+    width: 52, height: 52, borderRadius: 28,
     alignItems: 'center', justifyContent: 'center',
   },
   serviceIcon: { width: 30, height: 30 },
   serviceText: { flex: 1 },
-  serviceLabel: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  serviceDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Inter_400Regular', marginTop: 2 },
+  serviceLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  serviceDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2 },
   arrowBox: {
-    width: 34, height: 34, borderRadius: 12,
+    width: 34, height: 34, borderRadius: 28,
     alignItems: 'center', justifyContent: 'center',
   },
 
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
   statCard: {
-    width: '47%', backgroundColor: '#FFFFFF', borderRadius: 16, padding: 16,
+    width: '47%', backgroundColor: '#FFFFFF', borderRadius: 28, padding: 16,
     alignItems: 'center', gap: 6,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
@@ -212,6 +212,6 @@ const styles = StyleSheet.create({
     width: 44, height: 44, borderRadius: 22, backgroundColor: '#F0FFF6',
     alignItems: 'center', justifyContent: 'center',
   },
-  statValue: { fontSize: 20, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  statLabel: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Inter_400Regular', textAlign: 'center' },
+  statValue: { fontSize: 20, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  statLabel: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', textAlign: 'center' },
 });

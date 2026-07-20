@@ -270,14 +270,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
   headerCenter: { flex: 1, alignItems: 'center' },
-  headerTitle: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  headerSub: { fontSize: 11, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 1 },
+  headerTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerSub: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 1 },
 
   scroll: { flex: 1 },
 
   // Cards
   card: {
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 12,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 12,
     paddingHorizontal: 16, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
@@ -285,52 +285,52 @@ const styles = StyleSheet.create({
   // Delivery row
   deliveryRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   deliveryAvatarWrap: {
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#E8F5EE',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#E8F5EE',
     alignItems: 'center', justifyContent: 'center',
   },
   deliveryInfo: { flex: 1 },
-  deliveryLabel: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  deliverySubLabel: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 1 },
-  changeLink: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#00B14F' },
+  deliveryLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  deliverySubLabel: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 1 },
+  changeLink: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#00B14F' },
 
   // Flexibility banner
   flexCard: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 12,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 12,
     paddingHorizontal: 16, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   flexText: { flex: 1 },
-  flexTitle: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  flexSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 3, lineHeight: 16 },
+  flexTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  flexSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 3, lineHeight: 16 },
 
   // Address
   addressRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   addressText: { flex: 1 },
-  addressMain: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  addressSub: { fontSize: 11, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
+  addressMain: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  addressSub: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 12 },
   addInstructRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  addInstructText: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  addInstructText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
 
   // Delivery Options
   deliveryOptHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 14 },
-  deliveryOptTitle: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  deliveryOptTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   optionRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 6, gap: 10 },
   optionRowSelected: {},
   optionLeft: { flex: 1 },
   optionLabelRow: { flexDirection: 'row', alignItems: 'center' },
-  optionName: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  optionTime: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
-  optionPrice: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  optionName: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  optionTime: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  optionPrice: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
   optionDesc: {
-    fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A',
+    fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A',
     marginTop: 4, lineHeight: 17,
   },
 
   radioOuter: {
-    width: 20, height: 20, borderRadius: 10,
+    width: 20, height: 20, borderRadius: 22,
     borderWidth: 2, borderColor: '#CCCCCC',
     alignItems: 'center', justifyContent: 'center', marginTop: 2,
   },
@@ -342,21 +342,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     marginHorizontal: 16, marginTop: 16, paddingVertical: 4,
   },
-  totalLabel: { fontSize: 14, fontFamily: 'Inter_400Regular', color: '#1A1A1A' },
-  totalAmount: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  totalLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
+  totalAmount: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   // Bottom bar
   bottomBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', paddingHorizontal: 20, paddingTop: 14,
     borderTopWidth: 1, borderTopColor: '#F0F0F0',
-    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 10, elevation: 10,
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 10, elevation: 10,
   },
   placeOrderBtn: {
-    backgroundColor: '#00B14F', borderRadius: 14,
+    backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  placeOrderText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  placeOrderText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 
   // Save location sheet
   sheetOverlay: {
@@ -372,29 +372,29 @@ const styles = StyleSheet.create({
   },
   sheetHandle: { alignItems: 'center', paddingTop: 12, paddingBottom: 8 },
   handleBar: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0' },
-  sheetTitle: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 20 },
-  sheetInputLabel: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A', marginBottom: 6 },
+  sheetTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 20 },
+  sheetInputLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A', marginBottom: 6 },
   sheetInput: {
-    borderWidth: 1, borderColor: '#EEEEEE', borderRadius: 10,
+    borderWidth: 1, borderColor: '#EEEEEE', borderRadius: 22,
     paddingHorizontal: 14, paddingVertical: 12,
-    fontSize: 14, fontFamily: 'Inter_400Regular', color: '#1A1A1A',
+    fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A',
     marginBottom: 16, backgroundColor: '#FAFAFA',
   },
   saveToFavRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     paddingVertical: 6, marginBottom: 24,
   },
-  saveToFavTitle: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  saveToFavSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
+  saveToFavTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  saveToFavSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
   sheetButtons: { flexDirection: 'row', gap: 12 },
   skipBtn: {
-    flex: 1, backgroundColor: '#00B14F', borderRadius: 14,
+    flex: 1, backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 15,
   },
-  skipText: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  skipText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
   saveBtn: {
-    flex: 1, backgroundColor: '#FFFFFF', borderRadius: 14, borderWidth: 1.5, borderColor: '#E0E0E0',
+    flex: 1, backgroundColor: '#FFFFFF', borderRadius: 22, borderWidth: 1.5, borderColor: '#E0E0E0',
     alignItems: 'center', paddingVertical: 15,
   },
-  saveBtnText: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  saveBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 });

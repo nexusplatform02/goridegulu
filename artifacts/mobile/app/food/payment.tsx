@@ -115,29 +115,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   scroll: { flex: 1 },
 
   summaryStrip: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     backgroundColor: '#FFFFFF', marginHorizontal: 16, marginTop: 14,
-    borderRadius: 16, paddingHorizontal: 16, paddingVertical: 14,
+    borderRadius: 28, paddingHorizontal: 16, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   summaryLeft: { flex: 1 },
-  summaryRestaurant: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  summaryItems: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
-  summaryTotal: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  summaryRestaurant: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  summaryItems: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
+  summaryTotal: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   sectionLabel: {
-    fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A',
+    fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A',
     marginHorizontal: 16, marginTop: 20, marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5,
   },
 
   methodCard: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 16,
+    backgroundColor: '#FFFFFF', borderRadius: 28,
     marginHorizontal: 16, marginBottom: 10,
     paddingHorizontal: 14, paddingVertical: 14,
     borderWidth: 1.5, borderColor: 'transparent',
@@ -151,10 +151,10 @@ const styles = StyleSheet.create({
   },
   methodIconWrapActive: { backgroundColor: '#00B14F' },
   methodText: { flex: 1 },
-  methodLabel: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  methodSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
+  methodLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  methodSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
   radioOuter: {
-    width: 20, height: 20, borderRadius: 10,
+    width: 20, height: 20, borderRadius: 22,
     borderWidth: 2, borderColor: '#CCCCCC',
     alignItems: 'center', justifyContent: 'center',
   },
@@ -162,27 +162,27 @@ const styles = StyleSheet.create({
   radioInner: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
 
   breakdownCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginHorizontal: 16, marginTop: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginHorizontal: 16, marginTop: 10,
     paddingHorizontal: 16, paddingVertical: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
-  breakdownTitle: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  breakdownTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
   breakdownRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  breakdownKey: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
-  breakdownVal: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#1A1A1A' },
+  breakdownKey: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  breakdownVal: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 8 },
-  breakdownKeyBold: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  breakdownValBold: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  breakdownKeyBold: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  breakdownValBold: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   bottomBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', paddingHorizontal: 20, paddingTop: 14,
     borderTopWidth: 1, borderTopColor: '#F0F0F0',
-    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 10, elevation: 10,
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 10, elevation: 10,
   },
   payBtn: {
-    backgroundColor: '#00B14F', borderRadius: 14,
+    backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  payBtnText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  payBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 });

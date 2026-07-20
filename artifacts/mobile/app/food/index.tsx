@@ -171,14 +171,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   backBtn: {
-    width: 36, height: 36, borderRadius: 18, backgroundColor: '#F2F2F2',
+    width: 36, height: 36, borderRadius: 22, backgroundColor: '#F2F2F2',
     alignItems: 'center', justifyContent: 'center',
   },
   searchBar: {
     flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: '#F5F5F5', borderRadius: 22, paddingHorizontal: 14, height: 42,
   },
-  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'Inter_400Regular' },
+  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'PlusJakartaSans_400Regular' },
 
   filterRow: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
@@ -188,46 +188,46 @@ const styles = StyleSheet.create({
   chip: {
     flexDirection: 'row', alignItems: 'center', gap: 5,
     paddingHorizontal: 12, paddingVertical: 7,
-    borderRadius: 20, backgroundColor: '#F2F2F2',
+    borderRadius: 28, backgroundColor: '#F2F2F2',
   },
   chipActive: { backgroundColor: '#00B14F' },
   chipIcon: { width: 16, height: 16 },
-  chipText: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
+  chipText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
   chipTextActive: { color: '#FFFFFF' },
   avatarChip: {
-    width: 36, height: 36, borderRadius: 18, backgroundColor: '#F2F2F2',
+    width: 36, height: 36, borderRadius: 22, backgroundColor: '#F2F2F2',
     alignItems: 'center', justifyContent: 'center', marginLeft: 'auto',
   },
 
   scroll: { flex: 1, marginTop: 4 },
 
   card: {
-    backgroundColor: '#FFFFFF', borderRadius: 16, marginBottom: 12, overflow: 'hidden',
+    backgroundColor: '#FFFFFF', borderRadius: 28, marginBottom: 12, overflow: 'hidden',
     shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 8, elevation: 2,
     flexDirection: 'row',
   },
   cardImage: { width: 100, height: 100 },
   discountBadge: {
     position: 'absolute', top: 8, left: 8,
-    backgroundColor: '#E8F5E9', borderRadius: 6, paddingHorizontal: 6, paddingVertical: 2,
+    backgroundColor: '#E8F5E9', borderRadius: 22, paddingHorizontal: 6, paddingVertical: 2,
   },
-  discountText: { fontSize: 10, fontFamily: 'Inter_700Bold', color: '#00B14F' },
+  discountText: { fontSize: 10, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
 
   cardBody: { flex: 1, padding: 12, justifyContent: 'center' },
   cardTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   cardInfo: { flex: 1, gap: 3 },
-  cardName: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  cardName: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
   metaRow: { flexDirection: 'row', alignItems: 'center' },
-  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
   priceRow: { flexDirection: 'row', alignItems: 'center', marginTop: 2 },
-  price: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  originalPrice: { fontSize: 12, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'Inter_400Regular' },
+  price: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  originalPrice: { fontSize: 12, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'PlusJakartaSans_400Regular' },
 
   addBtn: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
-    backgroundColor: '#00B14F', borderRadius: 20,
+    backgroundColor: '#00B14F', borderRadius: 28,
     paddingHorizontal: 12, paddingVertical: 7,
     marginLeft: 8,
   },
-  addText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  addText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 });

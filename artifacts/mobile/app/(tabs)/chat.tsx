@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1A1A1A',
   },
 
@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
   },
   segText: {
     fontSize: 14,
-    fontFamily: 'Inter_500Medium',
+    fontFamily: 'PlusJakartaSans_500Medium',
     color: '#8A8A8A',
   },
   segTextActive: {
     color: '#FFFFFF',
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
   },
 
   emptyWrap: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 16,
-    fontFamily: 'Inter_700Bold',
+    fontFamily: 'PlusJakartaSans_700Bold',
     color: '#1A1A1A',
     textAlign: 'center',
     lineHeight: 24,
@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
   },
   emptyBody: {
     fontSize: 13,
-    fontFamily: 'Inter_400Regular',
+    fontFamily: 'PlusJakartaSans_400Regular',
     color: '#8A8A8A',
     textAlign: 'center',
   },
   helpLink: {
     fontSize: 14,
-    fontFamily: 'Inter_600SemiBold',
+    fontFamily: 'PlusJakartaSans_600SemiBold',
     color: '#00B14F',
     marginTop: 2,
   },
@@ -218,14 +218,14 @@ const styles = StyleSheet.create({
   notifIcon: {
     width: 46,
     height: 46,
-    borderRadius: 14,
+    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 0,
   },
   notifBody: { flex: 1, gap: 4 },
   notifTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  notifTitle: { flex: 1, fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A', marginRight: 8 },
-  notifTime: { fontSize: 11, fontFamily: 'Inter_400Regular', color: '#BBBBBB' },
-  notifText: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#8A8A8A', lineHeight: 18 },
+  notifTitle: { flex: 1, fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A', marginRight: 8 },
+  notifTime: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#BBBBBB' },
+  notifText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', lineHeight: 18 },
 });

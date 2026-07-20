@@ -179,9 +179,9 @@ const styles = StyleSheet.create({
   },
   heroBadge: {
     position: 'absolute', bottom: 14, left: 14,
-    backgroundColor: '#E53935', borderRadius: 10, paddingHorizontal: 10, paddingVertical: 5,
+    backgroundColor: '#E53935', borderRadius: 22, paddingHorizontal: 10, paddingVertical: 5,
   },
-  heroBadgeText: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  heroBadgeText: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 
   scroll: { flex: 1 },
 
@@ -189,21 +189,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF', padding: 18, gap: 12,
     marginTop: -20, borderTopLeftRadius: 24, borderTopRightRadius: 24,
   },
-  brand: { fontSize: 11, fontFamily: 'Inter_700Bold', color: '#8A8A8A', letterSpacing: 1.5 },
-  productName: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  brand: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#8A8A8A', letterSpacing: 1.5 },
+  productName: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
   ratingRow: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 13, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  ratingText: { fontSize: 13, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
   priceRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  price: { fontSize: 26, fontFamily: 'Inter_700Bold', color: '#E53935' },
-  originalPrice: { fontSize: 16, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'Inter_400Regular' },
-  discountPill: { backgroundColor: '#FFE8E8', borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4 },
-  discountText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: '#E53935' },
+  price: { fontSize: 26, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
+  originalPrice: { fontSize: 16, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'PlusJakartaSans_400Regular' },
+  discountPill: { backgroundColor: '#FFE8E8', borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4 },
+  discountText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
 
-  optionLabel: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
+  optionLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
 
   colorRow: { flexDirection: 'row', gap: 10 },
   colorBtn: {
-    width: 32, height: 32, borderRadius: 16,
+    width: 32, height: 32, borderRadius: 28,
     alignItems: 'center', justifyContent: 'center',
   },
   colorBtnActive: {
@@ -213,11 +213,11 @@ const styles = StyleSheet.create({
 
   sizeRow: { flexDirection: 'row', gap: 10 },
   sizeBtn: {
-    width: 46, height: 46, borderRadius: 12, alignItems: 'center', justifyContent: 'center',
+    width: 46, height: 46, borderRadius: 28, alignItems: 'center', justifyContent: 'center',
     backgroundColor: '#F2F2F2', borderWidth: 1.5, borderColor: 'transparent',
   },
   sizeBtnActive: { backgroundColor: '#E8F5E9', borderColor: '#00B14F' },
-  sizeText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#5A5A5A' },
+  sizeText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
   sizeTextActive: { color: '#00B14F' },
 
   qtyRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
@@ -227,45 +227,45 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: '#00B14F',
     alignItems: 'center', justifyContent: 'center',
   },
-  qtyText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A', minWidth: 20, textAlign: 'center' },
+  qtyText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', minWidth: 20, textAlign: 'center' },
 
-  description: { fontSize: 13, color: '#5A5A5A', fontFamily: 'Inter_400Regular', lineHeight: 20 },
+  description: { fontSize: 13, color: '#5A5A5A', fontFamily: 'PlusJakartaSans_400Regular', lineHeight: 20 },
 
   deliveryBox: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
-    backgroundColor: '#F8F8F8', borderRadius: 14, padding: 14,
+    backgroundColor: '#F8F8F8', borderRadius: 22, padding: 14,
   },
   deliveryText: { flex: 1 },
-  deliveryTitle: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  deliverySub: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  deliveryTitle: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  deliverySub: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
 
   section: { paddingHorizontal: 16, paddingTop: 20 },
-  sectionTitle: { fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  sectionTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
   relatedRow: { gap: 12, paddingBottom: 4 },
   relatedCard: {
-    width: 130, backgroundColor: '#FFFFFF', borderRadius: 14, overflow: 'hidden',
+    width: 130, backgroundColor: '#FFFFFF', borderRadius: 22, overflow: 'hidden',
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
   relatedImage: { width: '100%', height: 100 },
   relatedBody: { padding: 8, gap: 3 },
-  relatedName: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  relatedPrice: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#E53935' },
+  relatedName: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  relatedPrice: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
 
   buyBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', paddingHorizontal: 20, paddingTop: 14,
     flexDirection: 'row', alignItems: 'center', gap: 12,
     borderTopWidth: 1, borderTopColor: '#F0F0F0',
-    shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 12, elevation: 10,
+    shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 12, elevation: 10,
   },
   wishlistBtn: {
-    width: 50, height: 50, borderRadius: 14,
+    width: 50, height: 50, borderRadius: 22,
     borderWidth: 1.5, borderColor: '#00B14F',
     alignItems: 'center', justifyContent: 'center',
   },
   buyBtn: {
-    flex: 1, backgroundColor: '#00B14F', borderRadius: 14,
+    flex: 1, backgroundColor: '#00B14F', borderRadius: 22,
     paddingVertical: 14, alignItems: 'center',
   },
-  buyBtnText: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  buyBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 });

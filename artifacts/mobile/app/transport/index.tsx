@@ -58,7 +58,7 @@ function PhotoCard({
 const photoStyles = StyleSheet.create({
   card: { marginRight: 12 },
   photo: {
-    height: 130, borderRadius: 14, overflow: 'hidden',
+    height: 130, borderRadius: 22, overflow: 'hidden',
     justifyContent: 'flex-end', marginBottom: 8, position: 'relative',
   },
   photoInner: {
@@ -72,12 +72,12 @@ const photoStyles = StyleSheet.create({
   },
   stepBadge: {
     position: 'absolute', bottom: 8, left: 8,
-    width: 24, height: 24, borderRadius: 12,
+    width: 24, height: 24, borderRadius: 28,
     backgroundColor: 'rgba(255,255,255,0.9)',
     alignItems: 'center', justifyContent: 'center',
   },
-  stepNum: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  caption: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#4A4A4A', lineHeight: 17 },
+  stepNum: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  caption: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#4A4A4A', lineHeight: 17 },
 });
 
 export default function TransportScreen() {
@@ -228,15 +228,15 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 6, elevation: 3,
   },
   headerTitle: {
-    fontSize: 17, fontFamily: 'Inter_700Bold', color: '#1A1A1A',
+    fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A',
   },
   mapBtn: {
     flexDirection: 'row', alignItems: 'center', gap: 5,
-    backgroundColor: '#FFFFFF', borderRadius: 20,
+    backgroundColor: '#FFFFFF', borderRadius: 28,
     paddingHorizontal: 14, paddingVertical: 9,
     shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 6, elevation: 3,
   },
-  mapLabel: { fontSize: 14, fontFamily: 'Inter_500Medium', color: '#1A1A1A' },
+  mapLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
 
   carWrap: { alignItems: 'center', justifyContent: 'center', flex: 1, paddingBottom: CARD_OVERLAP - 20 },
   carImage: { width: SW * 0.75, height: 160 },
@@ -254,9 +254,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 28, borderTopRightRadius: 28,
     paddingHorizontal: 22, paddingTop: 24, paddingBottom: 22,
   },
-  cardTitle: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 5 },
+  cardTitle: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 5 },
   cardSubtitle: {
-    fontSize: 14, fontFamily: 'Inter_400Regular', color: '#7A7A7A',
+    fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#7A7A7A',
     lineHeight: 20, marginBottom: 18,
   },
   whereBar: {
@@ -265,13 +265,13 @@ const styles = StyleSheet.create({
     paddingLeft: 12, paddingRight: 6, paddingVertical: 8,
     backgroundColor: '#FAFAFA',
   },
-  whereText: { flex: 1, fontSize: 15, fontFamily: 'Inter_400Regular', color: '#B0B0B0' },
+  whereText: { flex: 1, fontSize: 15, fontFamily: 'PlusJakartaSans_400Regular', color: '#B0B0B0' },
   nowBtn: {
     flexDirection: 'row', alignItems: 'center', gap: 4,
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingHorizontal: 16, paddingVertical: 10,
   },
-  nowText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  nowText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 
   // ── Pickup section ──────────────────────────────────────────────
   pickupSection: {
@@ -281,16 +281,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     marginBottom: 4,
   },
-  pickupLabel: { fontSize: 13, fontFamily: 'Inter_400Regular', color: '#9A9A9A' },
+  pickupLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
   navCircle: {
-    width: 36, height: 36, borderRadius: 18,
+    width: 36, height: 36, borderRadius: 22,
     borderWidth: 1.5, borderColor: '#E0E0E0',
     alignItems: 'center', justifyContent: 'center',
   },
   pickupLocRow: {
     flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 18,
   },
-  pickupLocText: { fontSize: 18, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  pickupLocText: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   photoScroll: { marginBottom: 4 },
 
@@ -302,10 +302,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: '#F4F4F4',
   },
   suggestIconWrap: {
-    width: 40, height: 40, borderRadius: 20, backgroundColor: '#F5F5F5',
+    width: 40, height: 40, borderRadius: 28, backgroundColor: '#F5F5F5',
     alignItems: 'center', justifyContent: 'center',
   },
   suggestInfo: { flex: 1 },
-  suggestName: { fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#1A1A1A' },
-  suggestAddr: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
+  suggestName: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  suggestAddr: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
 });

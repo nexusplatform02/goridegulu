@@ -203,18 +203,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12,
   },
   backBtn: {
-    width: 36, height: 36, borderRadius: 18, backgroundColor: '#F2F2F2',
+    width: 36, height: 36, borderRadius: 22, backgroundColor: '#F2F2F2',
     alignItems: 'center', justifyContent: 'center',
   },
   searchBar: {
     flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: '#F5F5F5', borderRadius: 22, paddingHorizontal: 14, height: 42,
   },
-  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'Inter_400Regular' },
+  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'PlusJakartaSans_400Regular' },
 
   titleBlock: { paddingHorizontal: 16, marginBottom: 12 },
-  pageTitle: { fontSize: 22, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  pageSubtitle: { fontSize: 13, color: '#8A8A8A', fontFamily: 'Inter_400Regular', marginTop: 2 },
+  pageTitle: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  pageSubtitle: { fontSize: 13, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2 },
 
   filterRow: {
     paddingHorizontal: 16,
@@ -224,20 +224,20 @@ const styles = StyleSheet.create({
   },
   chip: {
     paddingHorizontal: 16, paddingVertical: 8,
-    borderRadius: 20, backgroundColor: '#F2F2F2',
+    borderRadius: 28, backgroundColor: '#F2F2F2',
   },
   chipActive: { backgroundColor: '#00B14F' },
-  chipText: { fontSize: 13, fontFamily: 'Inter_500Medium', color: '#5A5A5A' },
-  chipTextActive: { color: '#FFFFFF', fontFamily: 'Inter_600SemiBold' },
+  chipText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
+  chipTextActive: { color: '#FFFFFF', fontFamily: 'PlusJakartaSans_600SemiBold' },
 
   /* ── List ── */
   scroll: { flex: 1 },
   listContent: { paddingHorizontal: 16, paddingTop: 14, paddingBottom: 100 },
 
   card: {
-    backgroundColor: '#FFFFFF', borderRadius: 18, marginBottom: 14,
+    backgroundColor: '#FFFFFF', borderRadius: 22, marginBottom: 14,
     overflow: 'hidden',
-    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 8, elevation: 3,
+    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, elevation: 3,
   },
 
   cardImageWrap: { position: 'relative' },
@@ -245,23 +245,23 @@ const styles = StyleSheet.create({
 
   badge: {
     position: 'absolute', top: 10, left: 10,
-    borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4,
+    borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4,
   },
-  badgeText: { fontSize: 11, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  badgeText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
 
   ratingPill: {
     position: 'absolute', top: 10, right: 10,
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 10,
+    backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 22,
     paddingHorizontal: 8, paddingVertical: 4,
   },
-  ratingText: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#FFA000' },
+  ratingText: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFA000' },
 
   cardBody: { padding: 14, gap: 6 },
-  cardName: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
+  cardName: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
 
   metaRow: { flexDirection: 'row', alignItems: 'center' },
-  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Inter_400Regular' },
+  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
 
   footerRow: {
     flexDirection: 'row', alignItems: 'flex-end',
@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
   footerLeft: { gap: 4 },
 
   bookBtn: {
-    backgroundColor: '#00B14F', borderRadius: 20,
+    backgroundColor: '#00B14F', borderRadius: 28,
     paddingHorizontal: 20, paddingVertical: 9,
   },
-  bookBtnText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#FFFFFF' },
+  bookBtnText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
 });
