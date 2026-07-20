@@ -1,31 +1,22 @@
 import React, { useState } from 'react';
 import {
-  View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, TextInput,
+  View, Text, StyleSheet, ScrollView, TouchableOpacity, Platform, TextInput, Alert,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const SAVED_METHODS = [
-  { id: 'grab', label: 'GrabPay Wallet', sub: 'Balance: UGX 12,000', icon: 'wallet-outline' as const, color: '#00B14F' },
-  { id: 'momo', label: 'Mobile Money', sub: 'MTN MoMo · Airtel Money', icon: 'phone-portrait-outline' as const, color: '#FFCC00' },
-];
+const CARD_TYPES = ['Visa', 'Mastercard', 'Amex'];
 
-const CARD_TYPES = [
-  { id: 'visa', label: 'Visa', icon: 'card-outline' as const },
-  { id: 'mastercard', label: 'Mastercard', icon: 'card-outline' as const },
-  { id: 'amex', label: 'Amex', icon: 'card-outline' as const },
-];
-
-export default function PaymentWalletScreen() {
+export default function AddCardScreen() {
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === 'web' ? 48 : insets.top;
-  const [showAddCard, setShowAddCard] = useState(false);
+
+  const [selectedType, setSelectedType] = useState('Visa');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
   const [cardName, setCardName] = useState('');
-  const [saved, setSaved] = useState(false);
 
   function formatCardNumber(val: string) {
     const digits = val.replace(/\D/g, '').slice(0, 16);
@@ -38,15 +29,20 @@ export default function PaymentWalletScreen() {
     return digits;
   }
 
-  function handleSaveCard() {
-    if (!cardNumber || !expiry || !cvv || !cardName) return;
-    setSaved(true);
-    setShowAddCard(false);
-    setCardNumber('');
-    setExpiry('');
-    setCvv('');
-    setCardName('');
+  function handleSave() {
+    if (!cardName || cardNumber.replace(/\s/g, '').length < 16 || expiry.length < 5 || cvv.length < 3) {
+      Alert.alert('Incomplete', 'Please fill in all card details.');
+      return;
+    }
+    Alert.alert('Card Added', 'Your card has been saved successfully.', [
+      { text: 'OK', onPress: () => router.back() },
+    ]);
   }
+
+  const isComplete = cardName.length > 0
+    && cardNumber.replace(/\s/g, '').length === 16
+    && expiry.length === 5
+    && cvv.length >= 3;
 
   return (
     <View style={styles.root}>
@@ -55,140 +51,132 @@ export default function PaymentWalletScreen() {
         <TouchableOpacity onPress={() => router.back()} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
           <Ionicons name="chevron-back" size={22} color="#1A1A1A" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Payment</Text>
+        <Text style={styles.headerTitle}>Add Card</Text>
         <View style={{ width: 22 }} />
       </View>
 
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={{ paddingBottom: 40 }}
+        contentContainerStyle={{ paddingBottom: 120 }}
+        keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        {/* GrabPay balance banner */}
-        <View style={styles.balanceBanner}>
-          <View>
-            <Text style={styles.balanceLabel}>GrabPay Balance</Text>
-            <Text style={styles.balanceAmount}>UGX 12,000</Text>
+        {/* Card preview */}
+        <View style={styles.cardPreview}>
+          <View style={styles.cardPreviewTop}>
+            <Ionicons name="wifi-outline" size={22} color="rgba(255,255,255,0.7)" style={{ transform: [{ rotate: '90deg' }] }} />
+            <Text style={styles.cardPreviewType}>{selectedType}</Text>
           </View>
-          <View style={styles.balanceIconWrap}>
-            <Ionicons name="wallet" size={28} color="#FFFFFF" />
+          <Text style={styles.cardPreviewNumber}>
+            {cardNumber
+              ? cardNumber.padEnd(19, ' ').replace(/(.{4})/g, (g, i) => g.trim().padEnd(4, '•') + ' ').trim()
+              : '•••• •••• •••• ••••'}
+          </Text>
+          <View style={styles.cardPreviewBottom}>
+            <View>
+              <Text style={styles.cardPreviewMeta}>CARDHOLDER</Text>
+              <Text style={styles.cardPreviewValue}>{cardName || '—'}</Text>
+            </View>
+            <View>
+              <Text style={styles.cardPreviewMeta}>EXPIRES</Text>
+              <Text style={styles.cardPreviewValue}>{expiry || 'MM/YY'}</Text>
+            </View>
           </View>
         </View>
 
-        {/* Saved methods */}
-        <Text style={styles.sectionLabel}>Your Payment Methods</Text>
-        {SAVED_METHODS.map(m => (
-          <View key={m.id} style={styles.methodCard}>
-            <View style={[styles.methodIconWrap, { backgroundColor: m.color + '20' }]}>
-              <Ionicons name={m.icon} size={20} color={m.color} />
-            </View>
-            <View style={styles.methodText}>
-              <Text style={styles.methodLabel}>{m.label}</Text>
-              <Text style={styles.methodSub}>{m.sub}</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={18} color="#CCCCCC" />
+        {/* Card type picker */}
+        <Text style={styles.fieldLabel}>Card Type</Text>
+        <View style={styles.typeRow}>
+          {CARD_TYPES.map(t => (
+            <TouchableOpacity
+              key={t}
+              style={[styles.typeChip, selectedType === t && styles.typeChipActive]}
+              activeOpacity={0.8}
+              onPress={() => setSelectedType(t)}
+            >
+              <Text style={[styles.typeChipText, selectedType === t && styles.typeChipTextActive]}>{t}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Cardholder name */}
+        <Text style={styles.fieldLabel}>Cardholder Name</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Name as on card"
+          placeholderTextColor="#BBBBBB"
+          value={cardName}
+          onChangeText={setCardName}
+          autoCapitalize="words"
+        />
+
+        {/* Card number */}
+        <Text style={styles.fieldLabel}>Card Number</Text>
+        <View style={styles.inputRow}>
+          <TextInput
+            style={[styles.input, { flex: 1 }]}
+            placeholder="0000 0000 0000 0000"
+            placeholderTextColor="#BBBBBB"
+            keyboardType="number-pad"
+            value={cardNumber}
+            onChangeText={v => setCardNumber(formatCardNumber(v))}
+            maxLength={19}
+          />
+          <View style={styles.inputIcon}>
+            <Ionicons name="card-outline" size={20} color="#AAAAAA" />
           </View>
-        ))}
+        </View>
 
-        {/* Saved card (if user added one) */}
-        {saved && (
-          <View style={[styles.methodCard, styles.methodCardSaved]}>
-            <View style={[styles.methodIconWrap, { backgroundColor: '#E8F5EE' }]}>
-              <Ionicons name="card-outline" size={20} color="#00B14F" />
-            </View>
-            <View style={styles.methodText}>
-              <Text style={styles.methodLabel}>Credit / Debit Card</Text>
-              <Text style={styles.methodSub}>Card saved successfully</Text>
-            </View>
-            <Ionicons name="checkmark-circle" size={20} color="#00B14F" />
-          </View>
-        )}
-
-        {/* Add card CTA */}
-        {!showAddCard && (
-          <TouchableOpacity style={styles.addCardBtn} activeOpacity={0.8} onPress={() => setShowAddCard(true)}>
-            <View style={styles.addCardIconWrap}>
-              <Ionicons name="add" size={20} color="#00B14F" />
-            </View>
-            <Text style={styles.addCardText}>Add a Credit / Debit Card</Text>
-            <Ionicons name="chevron-forward" size={18} color="#CCCCCC" />
-          </TouchableOpacity>
-        )}
-
-        {/* Add card form */}
-        {showAddCard && (
-          <View style={styles.formCard}>
-            <Text style={styles.formTitle}>Add New Card</Text>
-
-            <Text style={styles.fieldLabel}>Card Type</Text>
-            <View style={styles.cardTypeRow}>
-              {CARD_TYPES.map(ct => (
-                <View key={ct.id} style={styles.cardTypeChip}>
-                  <Ionicons name={ct.icon} size={14} color="#555" />
-                  <Text style={styles.cardTypeLabel}>{ct.label}</Text>
-                </View>
-              ))}
-            </View>
-
-            <Text style={styles.fieldLabel}>Cardholder Name</Text>
+        {/* Expiry + CVV */}
+        <View style={styles.fieldRow}>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.fieldLabel}>Expiry Date</Text>
             <TextInput
               style={styles.input}
-              placeholder="Name on card"
-              placeholderTextColor="#AAAAAA"
-              value={cardName}
-              onChangeText={setCardName}
-            />
-
-            <Text style={styles.fieldLabel}>Card Number</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="0000 0000 0000 0000"
-              placeholderTextColor="#AAAAAA"
+              placeholder="MM/YY"
+              placeholderTextColor="#BBBBBB"
               keyboardType="number-pad"
-              value={cardNumber}
-              onChangeText={v => setCardNumber(formatCardNumber(v))}
-              maxLength={19}
+              value={expiry}
+              onChangeText={v => setExpiry(formatExpiry(v))}
+              maxLength={5}
             />
-
-            <View style={styles.fieldRow}>
-              <View style={styles.fieldHalf}>
-                <Text style={styles.fieldLabel}>Expiry</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="MM/YY"
-                  placeholderTextColor="#AAAAAA"
-                  keyboardType="number-pad"
-                  value={expiry}
-                  onChangeText={v => setExpiry(formatExpiry(v))}
-                  maxLength={5}
-                />
+          </View>
+          <View style={{ width: 12 }} />
+          <View style={{ flex: 1 }}>
+            <Text style={styles.fieldLabel}>CVV</Text>
+            <View style={styles.inputRow}>
+              <TextInput
+                style={[styles.input, { flex: 1 }]}
+                placeholder="•••"
+                placeholderTextColor="#BBBBBB"
+                keyboardType="number-pad"
+                secureTextEntry
+                value={cvv}
+                onChangeText={v => setCvv(v.replace(/\D/g, '').slice(0, 4))}
+                maxLength={4}
+              />
+              <View style={styles.inputIcon}>
+                <Ionicons name="help-circle-outline" size={18} color="#AAAAAA" />
               </View>
-              <View style={[styles.fieldHalf, { marginLeft: 12 }]}>
-                <Text style={styles.fieldLabel}>CVV</Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="•••"
-                  placeholderTextColor="#AAAAAA"
-                  keyboardType="number-pad"
-                  secureTextEntry
-                  value={cvv}
-                  onChangeText={v => setCvv(v.replace(/\D/g, '').slice(0, 4))}
-                  maxLength={4}
-                />
-              </View>
-            </View>
-
-            <View style={styles.formActions}>
-              <TouchableOpacity style={styles.cancelBtn} activeOpacity={0.8} onPress={() => setShowAddCard(false)}>
-                <Text style={styles.cancelBtnText}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.saveBtn} activeOpacity={0.85} onPress={handleSaveCard}>
-                <Text style={styles.saveBtnText}>Save Card</Text>
-              </TouchableOpacity>
             </View>
           </View>
-        )}
+        </View>
+
+        <Text style={styles.secureNote}>
+          <Ionicons name="lock-closed-outline" size={12} color="#AAAAAA" /> Your card info is encrypted and stored securely.
+        </Text>
       </ScrollView>
+
+      {/* Save button */}
+      <View style={[styles.bottomBar, { paddingBottom: Math.max(insets.bottom, 20) }]}>
+        <TouchableOpacity
+          style={[styles.saveBtn, !isComplete && styles.saveBtnDisabled]}
+          activeOpacity={0.85}
+          onPress={handleSave}
+        >
+          <Text style={styles.saveBtnText}>Save Card</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -204,93 +192,73 @@ const styles = StyleSheet.create({
   },
   headerTitle: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
 
-  scroll: { flex: 1 },
+  scroll: { flex: 1, paddingHorizontal: 16 },
 
-  balanceBanner: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    backgroundColor: '#00B14F', marginHorizontal: 16, marginTop: 16,
-    borderRadius: 18, paddingHorizontal: 20, paddingVertical: 20,
+  cardPreview: {
+    backgroundColor: '#00B14F',
+    borderRadius: 20,
+    padding: 22,
+    marginTop: 20,
+    marginBottom: 24,
+    minHeight: 170,
+    justifyContent: 'space-between',
+    shadowColor: '#00B14F',
+    shadowOpacity: 0.35,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 8,
   },
-  balanceLabel: { fontSize: 13, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.8)' },
-  balanceAmount: { fontSize: 26, fontFamily: 'Inter_700Bold', color: '#FFFFFF', marginTop: 4 },
-  balanceIconWrap: {
-    width: 52, height: 52, borderRadius: 26,
-    backgroundColor: 'rgba(255,255,255,0.2)',
-    alignItems: 'center', justifyContent: 'center',
+  cardPreviewTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  cardPreviewType: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  cardPreviewNumber: { fontSize: 18, fontFamily: 'Inter_400Regular', color: '#FFFFFF', letterSpacing: 2, marginVertical: 18 },
+  cardPreviewBottom: { flexDirection: 'row', justifyContent: 'space-between' },
+  cardPreviewMeta: { fontSize: 10, fontFamily: 'Inter_400Regular', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.8 },
+  cardPreviewValue: { fontSize: 13, fontFamily: 'Inter_700Bold', color: '#FFFFFF', marginTop: 2 },
+
+  fieldLabel: {
+    fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A',
+    marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5,
   },
 
-  sectionLabel: {
-    fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A',
-    marginHorizontal: 16, marginTop: 22, marginBottom: 8,
-    textTransform: 'uppercase', letterSpacing: 0.5,
+  typeRow: { flexDirection: 'row', gap: 10, marginBottom: 20 },
+  typeChip: {
+    paddingHorizontal: 18, paddingVertical: 10,
+    backgroundColor: '#FFFFFF', borderRadius: 10,
+    borderWidth: 1.5, borderColor: '#EBEBEB',
   },
+  typeChipActive: { borderColor: '#00B14F', backgroundColor: '#E8F5EE' },
+  typeChipText: { fontSize: 13, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A' },
+  typeChipTextActive: { color: '#00B14F' },
 
-  methodCard: {
-    flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 16,
-    marginHorizontal: 16, marginBottom: 10,
-    paddingHorizontal: 14, paddingVertical: 14,
-    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
-  },
-  methodCardSaved: { borderWidth: 1.5, borderColor: '#00B14F' },
-  methodIconWrap: {
-    width: 42, height: 42, borderRadius: 21,
-    alignItems: 'center', justifyContent: 'center', marginRight: 12,
-  },
-  methodText: { flex: 1 },
-  methodLabel: { fontSize: 14, fontFamily: 'Inter_700Bold', color: '#1A1A1A' },
-  methodSub: { fontSize: 12, fontFamily: 'Inter_400Regular', color: '#9A9A9A', marginTop: 2 },
-
-  addCardBtn: {
-    flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 16,
-    marginHorizontal: 16, marginBottom: 10,
-    paddingHorizontal: 14, paddingVertical: 14,
-    borderWidth: 1.5, borderColor: '#E8F5EE',
-    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
-  },
-  addCardIconWrap: {
-    width: 42, height: 42, borderRadius: 21,
-    backgroundColor: '#E8F5EE',
-    alignItems: 'center', justifyContent: 'center', marginRight: 12,
-  },
-  addCardText: { flex: 1, fontSize: 14, fontFamily: 'Inter_600SemiBold', color: '#00B14F' },
-
-  formCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 18,
-    marginHorizontal: 16, marginTop: 4, marginBottom: 10,
-    paddingHorizontal: 16, paddingVertical: 20,
-    shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 8, elevation: 3,
-  },
-  formTitle: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#1A1A1A', marginBottom: 16 },
-
-  cardTypeRow: { flexDirection: 'row', gap: 8, marginBottom: 16 },
-  cardTypeChip: {
-    flexDirection: 'row', alignItems: 'center', gap: 4,
-    backgroundColor: '#F5F5F5', borderRadius: 8,
-    paddingHorizontal: 10, paddingVertical: 6,
-  },
-  cardTypeLabel: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#555555' },
-
-  fieldLabel: { fontSize: 12, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.4 },
+  inputRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 0 },
   input: {
-    backgroundColor: '#F5F5F5', borderRadius: 12,
-    paddingHorizontal: 14, paddingVertical: 12,
+    backgroundColor: '#FFFFFF', borderRadius: 12,
+    paddingHorizontal: 14, paddingVertical: 14,
     fontSize: 15, fontFamily: 'Inter_400Regular', color: '#1A1A1A',
-    marginBottom: 14,
+    marginBottom: 18,
+    borderWidth: 1, borderColor: '#EBEBEB',
   },
-  fieldRow: { flexDirection: 'row' },
-  fieldHalf: { flex: 1 },
+  inputIcon: {
+    position: 'absolute', right: 14, bottom: 18 + 4,
+  },
 
-  formActions: { flexDirection: 'row', gap: 10, marginTop: 4 },
-  cancelBtn: {
-    flex: 1, borderRadius: 14, borderWidth: 1.5, borderColor: '#E0E0E0',
-    alignItems: 'center', paddingVertical: 14,
+  fieldRow: { flexDirection: 'row', marginBottom: 0 },
+
+  secureNote: {
+    fontSize: 12, fontFamily: 'Inter_400Regular', color: '#AAAAAA',
+    textAlign: 'center', marginTop: 4,
   },
-  cancelBtnText: { fontSize: 15, fontFamily: 'Inter_600SemiBold', color: '#9A9A9A' },
+
+  bottomBar: {
+    position: 'absolute', bottom: 0, left: 0, right: 0,
+    backgroundColor: '#FFFFFF', paddingHorizontal: 20, paddingTop: 14,
+    borderTopWidth: 1, borderTopColor: '#F0F0F0',
+    shadowColor: '#000', shadowOpacity: 0.06, shadowRadius: 10, elevation: 10,
+  },
   saveBtn: {
-    flex: 1, backgroundColor: '#00B14F', borderRadius: 14,
-    alignItems: 'center', paddingVertical: 14,
+    backgroundColor: '#00B14F', borderRadius: 14,
+    alignItems: 'center', paddingVertical: 16,
   },
-  saveBtnText: { fontSize: 15, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
+  saveBtnDisabled: { backgroundColor: '#B8DDCA' },
+  saveBtnText: { fontSize: 16, fontFamily: 'Inter_700Bold', color: '#FFFFFF' },
 });
