@@ -336,7 +336,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.10, shadowRadius: 8, elevation: 4,
   },
   dotGreen: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
-  searchInput: { flex: 1, fontSize: 15, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
+  searchInput: { flex: 1, fontSize: 15, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
 
   // Pin dropped on map
   tapPinWrap: { position: 'absolute', zIndex: 25, alignItems: 'center' },
@@ -354,7 +354,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.55)', borderRadius: 28,
     paddingHorizontal: 16, paddingVertical: 8, zIndex: 15,
   },
-  hintText: { color: '#FFFFFF', fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium' },
+  hintText: { color: '#FFFFFF', fontSize: 13, fontFamily: 'Aeonik-Medium' },
 
   // Floating confirm bar
   floatingBar: {
@@ -364,12 +364,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingVertical: 14,
     shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 12, elevation: 10,
   },
-  floatingLabel: { flex: 1, fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  floatingLabel: { flex: 1, fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
   floatingBtn: {
     backgroundColor: '#00B14F', borderRadius: 22,
     paddingHorizontal: 20, paddingVertical: 10,
   },
-  floatingBtnText: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  floatingBtnText: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 
   // Bottom sheet
   sheet: {
@@ -385,8 +385,8 @@ const styles = StyleSheet.create({
   },
 
   sheetHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, marginBottom: 14 },
-  mainDestTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  mainDestSub:   { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular',  color: '#8A8A8A', marginTop: 2 },
+  mainDestTitle: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  mainDestSub:   { fontSize: 12, fontFamily: 'Aeonik-Regular',  color: '#8A8A8A', marginTop: 2 },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginBottom: 8 },
   iconBtn: { padding: 4 },
 
@@ -399,15 +399,15 @@ const styles = StyleSheet.create({
   destDotInner:   { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
   destInfo:       { flex: 1 },
   destNameRow:    { flexDirection: 'row', alignItems: 'center' },
-  destName:       { fontSize: 14, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
-  destNameActive: { color: '#1A1A1A', fontFamily: 'PlusJakartaSans_600SemiBold' },
-  destDist:       { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA', marginTop: 2 },
+  destName:       { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
+  destNameActive: { color: '#1A1A1A', fontFamily: 'Aeonik-Medium' },
+  destDist:       { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA', marginTop: 2 },
 
   chooseBtn: {
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, alignItems: 'center', marginTop: 16,
   },
-  chooseBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  chooseBtnText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 
   // Modal
   modalOverlay: {
@@ -419,7 +419,7 @@ const styles = StyleSheet.create({
     paddingTop: 16, paddingBottom: 8, overflow: 'hidden',
   },
   menuHeader: {
-    fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#8A8A8A',
+    fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#8A8A8A',
     paddingHorizontal: 20, paddingBottom: 12,
   },
   menuDivider: { height: 1, backgroundColor: '#F0F0F0' },
@@ -433,10 +433,10 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   menuIconWrapActive: { backgroundColor: '#E0F5EA' },
-  menuLabel:       { flex: 1, fontSize: 15, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
-  menuLabelActive: { color: '#00B14F', fontFamily: 'PlusJakartaSans_600SemiBold' },
+  menuLabel:       { flex: 1, fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  menuLabelActive: { color: '#00B14F', fontFamily: 'Aeonik-Medium' },
   menuCancelBtn:   { paddingVertical: 16, alignItems: 'center' },
-  menuCancelText:  { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FF3B30' },
+  menuCancelText:  { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FF3B30' },
 
   // Toast
   toast: {
@@ -445,5 +445,5 @@ const styles = StyleSheet.create({
     paddingVertical: 12, paddingHorizontal: 20,
     alignItems: 'center', zIndex: 100,
   },
-  toastText: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  toastText: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 });

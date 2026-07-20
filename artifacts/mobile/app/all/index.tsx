@@ -170,18 +170,18 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 22, backgroundColor: '#F2F2F2',
     alignItems: 'center', justifyContent: 'center',
   },
-  headerTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
   scroll: { flex: 1 },
 
-  sectionTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  sectionTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 12 },
 
   promoRow: { gap: 12, paddingBottom: 4 },
   promoCard: {
     width: 160, borderRadius: 22, padding: 16, gap: 6,
   },
-  promoTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
-  promoSub: { fontSize: 12, color: '#FFFFFFCC', fontFamily: 'PlusJakartaSans_400Regular' },
+  promoTitle: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
+  promoSub: { fontSize: 12, color: '#FFFFFFCC', fontFamily: 'Aeonik-Regular' },
 
   servicesList: { gap: 10 },
   serviceRow: {
@@ -195,8 +195,8 @@ const styles = StyleSheet.create({
   },
   serviceIcon: { width: 30, height: 30 },
   serviceText: { flex: 1 },
-  serviceLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  serviceDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2 },
+  serviceLabel: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  serviceDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', marginTop: 2 },
   arrowBox: {
     width: 34, height: 34, borderRadius: 28,
     alignItems: 'center', justifyContent: 'center',
@@ -212,6 +212,6 @@ const styles = StyleSheet.create({
     width: 44, height: 44, borderRadius: 22, backgroundColor: '#F0FFF6',
     alignItems: 'center', justifyContent: 'center',
   },
-  statValue: { fontSize: 20, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  statLabel: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', textAlign: 'center' },
+  statValue: { fontSize: 20, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  statLabel: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', textAlign: 'center' },
 });

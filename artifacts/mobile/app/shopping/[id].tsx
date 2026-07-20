@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     position: 'absolute', bottom: 14, left: 14,
     backgroundColor: '#E53935', borderRadius: 22, paddingHorizontal: 10, paddingVertical: 5,
   },
-  heroBadgeText: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  heroBadgeText: { fontSize: 13, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 
   scroll: { flex: 1 },
 
@@ -189,17 +189,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF', padding: 18, gap: 12,
     marginTop: -20, borderTopLeftRadius: 24, borderTopRightRadius: 24,
   },
-  brand: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#8A8A8A', letterSpacing: 1.5 },
-  productName: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  brand: { fontSize: 11, fontFamily: 'Aeonik-Bold', color: '#8A8A8A', letterSpacing: 1.5 },
+  productName: { fontSize: 22, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   ratingRow: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 13, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  ratingText: { fontSize: 13, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
   priceRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  price: { fontSize: 26, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
-  originalPrice: { fontSize: 16, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'PlusJakartaSans_400Regular' },
+  price: { fontSize: 26, fontFamily: 'Aeonik-Bold', color: '#E53935' },
+  originalPrice: { fontSize: 16, color: '#BBBBBB', textDecorationLine: 'line-through', fontFamily: 'Aeonik-Regular' },
   discountPill: { backgroundColor: '#FFE8E8', borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4 },
-  discountText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
+  discountText: { fontSize: 11, fontFamily: 'Aeonik-Bold', color: '#E53935' },
 
-  optionLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  optionLabel: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
 
   colorRow: { flexDirection: 'row', gap: 10 },
   colorBtn: {
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F2F2F2', borderWidth: 1.5, borderColor: 'transparent',
   },
   sizeBtnActive: { backgroundColor: '#E8F5E9', borderColor: '#00B14F' },
-  sizeText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
+  sizeText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
   sizeTextActive: { color: '#00B14F' },
 
   qtyRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
@@ -227,20 +227,20 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: '#00B14F',
     alignItems: 'center', justifyContent: 'center',
   },
-  qtyText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', minWidth: 20, textAlign: 'center' },
+  qtyText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', minWidth: 20, textAlign: 'center' },
 
-  description: { fontSize: 13, color: '#5A5A5A', fontFamily: 'PlusJakartaSans_400Regular', lineHeight: 20 },
+  description: { fontSize: 13, color: '#5A5A5A', fontFamily: 'Aeonik-Regular', lineHeight: 20 },
 
   deliveryBox: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
     backgroundColor: '#F8F8F8', borderRadius: 22, padding: 14,
   },
   deliveryText: { flex: 1 },
-  deliveryTitle: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  deliverySub: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  deliveryTitle: { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  deliverySub: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
 
   section: { paddingHorizontal: 16, paddingTop: 20 },
-  sectionTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  sectionTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 12 },
   relatedRow: { gap: 12, paddingBottom: 4 },
   relatedCard: {
     width: 130, backgroundColor: '#FFFFFF', borderRadius: 22, overflow: 'hidden',
@@ -248,8 +248,8 @@ const styles = StyleSheet.create({
   },
   relatedImage: { width: '100%', height: 100 },
   relatedBody: { padding: 8, gap: 3 },
-  relatedName: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  relatedPrice: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#E53935' },
+  relatedName: { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  relatedPrice: { fontSize: 13, fontFamily: 'Aeonik-Bold', color: '#E53935' },
 
   buyBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
@@ -267,5 +267,5 @@ const styles = StyleSheet.create({
     flex: 1, backgroundColor: '#00B14F', borderRadius: 22,
     paddingVertical: 14, alignItems: 'center',
   },
-  buyBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  buyBtnText: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

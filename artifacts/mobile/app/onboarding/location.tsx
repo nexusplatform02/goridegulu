@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 22,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#00B14F',
     marginTop: 12,
     letterSpacing: 1,
@@ -104,14 +104,14 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 34,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#1A1A1A',
     lineHeight: 42,
     marginBottom: 12,
   },
   subtitle: {
     fontSize: 14,
-    fontFamily: 'PlusJakartaSans_400Regular',
+    fontFamily: 'Aeonik-Regular',
     color: '#8A8A8A',
     lineHeight: 22,
     textAlign: 'center',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   },
   allowBtnText: {
     fontSize: 16,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     color: '#FFFFFF',
   },
   enterBtn: {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   },
   enterBtnText: {
     fontSize: 16,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
   },
 });

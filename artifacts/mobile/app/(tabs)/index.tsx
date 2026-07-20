@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF', borderRadius: 28, paddingHorizontal: 14, height: 44,
   },
   searchInput: {
-    flex: 1, fontSize: 14, color: '#1A1A1A', fontFamily: 'PlusJakartaSans_400Regular',
+    flex: 1, fontSize: 14, color: '#1A1A1A', fontFamily: 'Aeonik-Regular',
   },
   qrBtn: {
     width: 42, height: 42, borderRadius: 22, backgroundColor: '#FFFFFF',
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   serviceImg: { width: 36, height: 36 },
-  serviceLabel: { fontSize: 12, fontFamily: 'PlusJakartaSans_500Medium', color: '#1A1A1A' },
+  serviceLabel: { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
 
   // Info row
   infoRow: { flexDirection: 'row', gap: 12, marginBottom: 20 },
@@ -268,16 +268,16 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: '#F0F0F0',
   },
   infoTextBlock: { gap: 2 },
-  infoTitle: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
-  infoValue: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  infoTitle: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
+  infoValue: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
   infoIcon: { width: 36, height: 36 },
 
   // Section
   sectionRow: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12,
   },
-  sectionTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  seeAll: { fontSize: 13, color: '#00B14F', fontFamily: 'PlusJakartaSans_500Medium' },
+  sectionTitle: { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  seeAll: { fontSize: 13, color: '#00B14F', fontFamily: 'Aeonik-Medium' },
   hList: { paddingRight: 16, marginBottom: 20, gap: 12 },
 
   // Food card
@@ -287,14 +287,14 @@ const styles = StyleSheet.create({
   },
   foodImage: { width: '100%', height: 112, backgroundColor: '#F0F0F0' },
   foodBody: { padding: 10, gap: 4 },
-  foodName: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  foodName: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
   ratingRow: { flexDirection: 'row', alignItems: 'center' },
-  ratingText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  ratingText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
   priceRow: { flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap' },
-  price: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  price: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
   originalPrice: {
-    fontSize: 11, color: '#BBBBBB', fontFamily: 'PlusJakartaSans_400Regular',
+    fontSize: 11, color: '#BBBBBB', fontFamily: 'Aeonik-Regular',
     textDecorationLine: 'line-through',
   },
-  timeText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  timeText: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
 });

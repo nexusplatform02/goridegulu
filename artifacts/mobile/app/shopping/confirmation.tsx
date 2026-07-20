@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12,
     backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   scroll: { flex: 1 },
 
   successCircle: {
@@ -124,8 +124,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
 
-  successTitle: { fontSize: 28, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 10 },
-  successSub: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', textAlign: 'center', lineHeight: 21, marginBottom: 28 },
+  successTitle: { fontSize: 28, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 10 },
+  successSub: { fontSize: 14, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', textAlign: 'center', lineHeight: 21, marginBottom: 28 },
 
   orderCard: {
     backgroundColor: '#FFFFFF', borderRadius: 28, padding: 16,
@@ -133,10 +133,10 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   orderRow: { flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 10 },
-  orderKey: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
-  orderVal: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  orderKeyBold: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  orderValBold: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
+  orderKey: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
+  orderVal: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  orderKeyBold: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  orderValBold: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#00B14F' },
   divider: { height: 1, backgroundColor: '#F0F0F0' },
 
   stepsCard: {
@@ -144,22 +144,22 @@ const styles = StyleSheet.create({
     width: '100%', gap: 14, marginBottom: 28,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
-  stepsTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  stepsTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   stepRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 12 },
   stepIconWrap: {
     width: 34, height: 34, borderRadius: 17, backgroundColor: '#E8F5EE',
     alignItems: 'center', justifyContent: 'center', flexShrink: 0,
   },
-  stepText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A', lineHeight: 19, paddingTop: 7 },
+  stepText: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#5A5A5A', lineHeight: 19, paddingTop: 7 },
 
   primaryBtn: {
     backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16, width: '100%', marginBottom: 12,
   },
-  primaryBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  primaryBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
   secondaryBtn: {
     backgroundColor: '#FFFFFF', borderRadius: 22, borderWidth: 1.5, borderColor: '#E0E0E0',
     alignItems: 'center', paddingVertical: 15, width: '100%',
   },
-  secondaryBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#5A5A5A' },
+  secondaryBtnText: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#5A5A5A' },
 });

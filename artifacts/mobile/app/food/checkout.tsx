@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
   headerCenter: { flex: 1, alignItems: 'center' },
-  headerTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  headerSub: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 1 },
+  headerTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  headerSub: { fontSize: 11, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 1 },
 
   scroll: { flex: 1 },
 
@@ -289,9 +289,9 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   deliveryInfo: { flex: 1 },
-  deliveryLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  deliverySubLabel: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 1 },
-  changeLink: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#00B14F' },
+  deliveryLabel: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  deliverySubLabel: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 1 },
+  changeLink: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#00B14F' },
 
   // Flexibility banner
   flexCard: {
@@ -301,31 +301,31 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 6, elevation: 2,
   },
   flexText: { flex: 1 },
-  flexTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  flexSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 3, lineHeight: 16 },
+  flexTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  flexSub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 3, lineHeight: 16 },
 
   // Address
   addressRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   addressText: { flex: 1 },
-  addressMain: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  addressSub: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
+  addressMain: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  addressSub: { fontSize: 11, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 2 },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 12 },
   addInstructRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  addInstructText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  addInstructText: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
 
   // Delivery Options
   deliveryOptHeader: { flexDirection: 'row', alignItems: 'center', gap: 12, marginBottom: 14 },
-  deliveryOptTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  deliveryOptTitle: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
   optionRow: { flexDirection: 'row', alignItems: 'flex-start', paddingVertical: 6, gap: 10 },
   optionRowSelected: {},
   optionLeft: { flex: 1 },
   optionLabelRow: { flexDirection: 'row', alignItems: 'center' },
-  optionName: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  optionTime: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
-  optionPrice: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  optionName: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  optionTime: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
+  optionPrice: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   optionDesc: {
-    fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A',
+    fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A',
     marginTop: 4, lineHeight: 17,
   },
 
@@ -342,8 +342,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     marginHorizontal: 16, marginTop: 16, paddingVertical: 4,
   },
-  totalLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
-  totalAmount: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  totalLabel: { fontSize: 14, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
+  totalAmount: { fontSize: 22, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
   // Bottom bar
   bottomBar: {
@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  placeOrderText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  placeOrderText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 
   // Save location sheet
   sheetOverlay: {
@@ -372,29 +372,29 @@ const styles = StyleSheet.create({
   },
   sheetHandle: { alignItems: 'center', paddingTop: 12, paddingBottom: 8 },
   handleBar: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0' },
-  sheetTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 20 },
-  sheetInputLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A', marginBottom: 6 },
+  sheetTitle: { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 20 },
+  sheetInputLabel: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#9A9A9A', marginBottom: 6 },
   sheetInput: {
     borderWidth: 1, borderColor: '#EEEEEE', borderRadius: 22,
     paddingHorizontal: 14, paddingVertical: 12,
-    fontSize: 14, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A',
+    fontSize: 14, fontFamily: 'Aeonik-Regular', color: '#1A1A1A',
     marginBottom: 16, backgroundColor: '#FAFAFA',
   },
   saveToFavRow: {
     flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
     paddingVertical: 6, marginBottom: 24,
   },
-  saveToFavTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  saveToFavSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
+  saveToFavTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  saveToFavSub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 2 },
   sheetButtons: { flexDirection: 'row', gap: 12 },
   skipBtn: {
     flex: 1, backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 15,
   },
-  skipText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  skipText: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
   saveBtn: {
     flex: 1, backgroundColor: '#FFFFFF', borderRadius: 22, borderWidth: 1.5, borderColor: '#E0E0E0',
     alignItems: 'center', paddingVertical: 15,
   },
-  saveBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  saveBtnText: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 });

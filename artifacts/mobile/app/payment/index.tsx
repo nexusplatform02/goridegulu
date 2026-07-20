@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
   scroll: { flex: 1, paddingHorizontal: 16 },
 
@@ -209,14 +209,14 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   cardPreviewTop: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
-  cardPreviewType: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
-  cardPreviewNumber: { fontSize: 18, fontFamily: 'PlusJakartaSans_400Regular', color: '#FFFFFF', letterSpacing: 2, marginVertical: 18 },
+  cardPreviewType: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
+  cardPreviewNumber: { fontSize: 18, fontFamily: 'Aeonik-Regular', color: '#FFFFFF', letterSpacing: 2, marginVertical: 18 },
   cardPreviewBottom: { flexDirection: 'row', justifyContent: 'space-between' },
-  cardPreviewMeta: { fontSize: 10, fontFamily: 'PlusJakartaSans_400Regular', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.8 },
-  cardPreviewValue: { fontSize: 13, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF', marginTop: 2 },
+  cardPreviewMeta: { fontSize: 10, fontFamily: 'Aeonik-Regular', color: 'rgba(255,255,255,0.65)', letterSpacing: 0.8 },
+  cardPreviewValue: { fontSize: 13, fontFamily: 'Aeonik-Bold', color: '#FFFFFF', marginTop: 2 },
 
   fieldLabel: {
-    fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A',
+    fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#9A9A9A',
     marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5,
   },
 
@@ -227,14 +227,14 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: '#EBEBEB',
   },
   typeChipActive: { borderColor: '#00B14F', backgroundColor: '#E8F5EE' },
-  typeChipText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A' },
+  typeChipText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#9A9A9A' },
   typeChipTextActive: { color: '#00B14F' },
 
   inputRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 0 },
   input: {
     backgroundColor: '#FFFFFF', borderRadius: 28,
     paddingHorizontal: 14, paddingVertical: 14,
-    fontSize: 15, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A',
+    fontSize: 15, fontFamily: 'Aeonik-Regular', color: '#1A1A1A',
     marginBottom: 18,
     borderWidth: 1, borderColor: '#EBEBEB',
   },
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
   fieldRow: { flexDirection: 'row', marginBottom: 0 },
 
   secureNote: {
-    fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#AAAAAA',
+    fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA',
     textAlign: 'center', marginTop: 4,
   },
 
@@ -260,5 +260,5 @@ const styles = StyleSheet.create({
     alignItems: 'center', paddingVertical: 16,
   },
   saveBtnDisabled: { backgroundColor: '#B8DDCA' },
-  saveBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  saveBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

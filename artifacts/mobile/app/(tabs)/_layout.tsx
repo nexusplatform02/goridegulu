@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   label: {
     color: '#FFFFFF',
     fontSize: 14,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     letterSpacing: 0.1,
     flexShrink: 0,
   },

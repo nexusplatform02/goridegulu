@@ -182,20 +182,20 @@ const styles = StyleSheet.create({
   restaurantHeader: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   logo: { width: 52, height: 52, borderRadius: 22, backgroundColor: '#F5F5F5' },
   titles: { flex: 1 },
-  restaurantName: { fontSize: 20, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  tagline: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2 },
+  restaurantName: { fontSize: 20, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  tagline: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', marginTop: 2 },
   metaRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
-  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
-  ratingText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginLeft: 3 },
+  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
+  ratingText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', marginLeft: 3 },
   statsRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#F8F8F8', borderRadius: 22, padding: 14 },
   statItem: { flex: 1, alignItems: 'center', gap: 3 },
-  statValue: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  statLabel: { fontSize: 11, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  statValue: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  statLabel: { fontSize: 11, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
   statDivider: { width: 1, height: 30, backgroundColor: '#E8E8E8' },
 
   section: { paddingHorizontal: 16, paddingTop: 20 },
-  sectionTitle: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 14 },
-  subLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A', marginBottom: 10 },
+  sectionTitle: { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 14 },
+  subLabel: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A', marginBottom: 10 },
 
   guestRow: { gap: 10, paddingBottom: 4 },
   guestBtn: {
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: 'transparent',
   },
   guestBtnActive: { backgroundColor: '#00B14F', borderColor: '#00B14F' },
-  guestText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
+  guestText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
   guestTextActive: { color: '#FFFFFF' },
 
   timeGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
@@ -215,8 +215,8 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: 'transparent',
   },
   timeBtnActive: { backgroundColor: '#E8F5E9', borderColor: '#00B14F' },
-  timeText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
-  timeTextActive: { color: '#00B14F', fontFamily: 'PlusJakartaSans_600SemiBold' },
+  timeText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
+  timeTextActive: { color: '#00B14F', fontFamily: 'Aeonik-Medium' },
 
   menuCard: {
     flexDirection: 'row', backgroundColor: '#FFFFFF', borderRadius: 22, overflow: 'hidden',
@@ -224,9 +224,9 @@ const styles = StyleSheet.create({
   },
   menuImage: { width: 90, height: 90 },
   menuBody: { flex: 1, padding: 12, gap: 3, justifyContent: 'center' },
-  menuName: { fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
-  menuDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', lineHeight: 17 },
-  menuPrice: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F', marginTop: 2 },
+  menuName: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  menuDesc: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', lineHeight: 17 },
+  menuPrice: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#00B14F', marginTop: 2 },
 
   bookBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
@@ -235,8 +235,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1, borderTopColor: '#F0F0F0',
     shadowColor: '#000', shadowOpacity: 0.05, shadowRadius: 12, elevation: 10,
   },
-  bookSummary: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
-  bookLabel: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  bookSummary: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
+  bookLabel: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   bookBtn: { backgroundColor: '#00B14F', borderRadius: 22, paddingHorizontal: 22, paddingVertical: 14 },
-  bookBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  bookBtnText: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

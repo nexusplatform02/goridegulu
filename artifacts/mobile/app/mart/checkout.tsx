@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12,
     backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   scroll: { flex: 1 },
-  sectionLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 10, marginTop: 16 },
+  sectionLabel: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 10, marginTop: 16 },
 
   addressCard: {
     flexDirection: 'row', alignItems: 'center', gap: 12,
@@ -149,8 +149,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   addressText: { flex: 1 },
-  addressTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  addressSub: { fontSize: 12, color: '#9A9A9A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2, lineHeight: 17 },
+  addressTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  addressSub: { fontSize: 12, color: '#9A9A9A', fontFamily: 'Aeonik-Regular', marginTop: 2, lineHeight: 17 },
 
   slotChip: {
     flexDirection: 'row', alignItems: 'center', gap: 5,
@@ -159,37 +159,37 @@ const styles = StyleSheet.create({
     borderWidth: 1.5, borderColor: '#E8E8E8',
   },
   slotChipActive: { backgroundColor: '#00B14F', borderColor: '#00B14F' },
-  slotText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
-  slotTextActive: { color: '#FFFFFF', fontFamily: 'PlusJakartaSans_600SemiBold' },
+  slotText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
+  slotTextActive: { color: '#FFFFFF', fontFamily: 'Aeonik-Medium' },
 
   instructCard: {
     flexDirection: 'row', alignItems: 'center', gap: 10,
     backgroundColor: '#FFFFFF', borderRadius: 22, padding: 14,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
-  instructText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  instructText: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
 
   summaryHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginTop: 16, marginBottom: 6 },
   summaryHeaderRight: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  summaryCount: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  summaryCount: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
 
   summaryItems: {
     backgroundColor: '#FFFFFF', borderRadius: 22, paddingHorizontal: 14, paddingVertical: 10,
     gap: 8, marginBottom: 8,
   },
   summaryItemRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  summaryItemName: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
-  summaryItemPrice: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  summaryItemName: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#5A5A5A' },
+  summaryItemPrice: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
 
   billCard: {
     backgroundColor: '#FFFFFF', borderRadius: 22, padding: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
   billRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  billKey: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
-  billVal: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
-  billKeyBold: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  billValBold: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  billKey: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
+  billVal: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
+  billKeyBold: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  billValBold: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 6 },
 
   bottomBar: {
@@ -202,5 +202,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  placeBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  placeBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

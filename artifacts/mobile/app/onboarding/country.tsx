@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 28,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#1A1A1A',
     lineHeight: 36,
     marginBottom: 28,
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   countryName: {
     fontSize: 13,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
     flex: 1,
   },

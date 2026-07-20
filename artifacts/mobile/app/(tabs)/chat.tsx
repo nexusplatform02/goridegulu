@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#1A1A1A',
   },
 
@@ -169,12 +169,12 @@ const styles = StyleSheet.create({
   },
   segText: {
     fontSize: 14,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: '#8A8A8A',
   },
   segTextActive: {
     color: '#FFFFFF',
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
   },
 
   emptyWrap: {
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     fontSize: 16,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#1A1A1A',
     textAlign: 'center',
     lineHeight: 24,
@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
   },
   emptyBody: {
     fontSize: 13,
-    fontFamily: 'PlusJakartaSans_400Regular',
+    fontFamily: 'Aeonik-Regular',
     color: '#8A8A8A',
     textAlign: 'center',
   },
   helpLink: {
     fontSize: 14,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     color: '#00B14F',
     marginTop: 2,
   },
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
   },
   notifBody: { flex: 1, gap: 4 },
   notifTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  notifTitle: { flex: 1, fontSize: 14, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A', marginRight: 8 },
-  notifTime: { fontSize: 11, fontFamily: 'PlusJakartaSans_400Regular', color: '#BBBBBB' },
-  notifText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', lineHeight: 18 },
+  notifTitle: { flex: 1, fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A', marginRight: 8 },
+  notifTime: { fontSize: 11, fontFamily: 'Aeonik-Regular', color: '#BBBBBB' },
+  notifText: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#8A8A8A', lineHeight: 18 },
 });

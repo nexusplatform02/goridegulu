@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFFFFF',
   },
   userPinLabel: {
-    fontSize: 10, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F',
+    fontSize: 10, fontFamily: 'Aeonik-Bold', color: '#00B14F',
     backgroundColor: '#FFFFFF', borderRadius: 4,
     paddingHorizontal: 4, paddingVertical: 1, marginTop: 3,
     shadowColor: '#000', shadowOpacity: 0.08, shadowRadius: 3, elevation: 2,
@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A', borderRadius: 28,
     paddingHorizontal: 6, paddingVertical: 3, marginTop: 4,
   },
-  riderDistText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  riderDistText: { fontSize: 11, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 
   // Searching animation (center dot)
   searchCenter: {
@@ -348,8 +348,8 @@ const styles = StyleSheet.create({
     position: 'absolute', left: 0, right: 0,
     alignItems: 'center', top: '56%',
   },
-  statusText: { fontSize: 18, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  statusSub: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B', marginTop: 4 },
+  statusText: { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  statusSub: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#6B6B6B', marginTop: 4 },
 
   // Sheets
   sheet: {
@@ -366,24 +366,24 @@ const styles = StyleSheet.create({
   },
 
   // Searching sheet
-  sheetTitle: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A', marginBottom: 12 },
+  sheetTitle: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A', marginBottom: 12 },
   nearbyRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 },
   nearbyDot: {
     width: 28, height: 28, borderRadius: 22, backgroundColor: '#E0F5EA',
     alignItems: 'center', justifyContent: 'center',
   },
-  nearbyText: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B' },
+  nearbyText: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#6B6B6B' },
   distRow: {
     flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: '#F0FCF5', borderRadius: 28, padding: 12, marginBottom: 16,
   },
-  distLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
-  distValue: { fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F' },
+  distLabel: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#5A5A5A' },
+  distValue: { fontFamily: 'Aeonik-Bold', color: '#00B14F' },
   cancelBtn: {
     borderWidth: 1.5, borderColor: '#E0E0E0', borderRadius: 30,
     paddingVertical: 14, alignItems: 'center',
   },
-  cancelText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#5A5A5A' },
+  cancelText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
 
   // Found sheet
   liveDistRow: {
@@ -391,10 +391,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF7F4', borderRadius: 28, padding: 12, marginBottom: 14,
   },
   liveDot: { width: 8, height: 8, borderRadius: 4 },
-  liveDistText: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
-  liveDistVal: { fontFamily: 'PlusJakartaSans_700Bold', color: '#FF6B35' },
+  liveDistText: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#5A5A5A' },
+  liveDistVal: { fontFamily: 'Aeonik-Bold', color: '#FF6B35' },
   etaBadge: {
-    fontSize: 12, fontFamily: 'PlusJakartaSans_700Bold', color: '#00B14F',
+    fontSize: 12, fontFamily: 'Aeonik-Bold', color: '#00B14F',
     backgroundColor: '#E0F5EA', borderRadius: 28,
     paddingHorizontal: 8, paddingVertical: 4,
   },
@@ -405,10 +405,10 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   riderInfo: { flex: 1 },
-  riderName: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  riderSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#8A8A8A', marginTop: 2 },
+  riderName: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  riderSub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#8A8A8A', marginTop: 2 },
   ratingRow: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 3 },
-  ratingText: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#6B6B6B' },
+  ratingText: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#6B6B6B' },
   actionBtn: {
     width: 40, height: 40, borderRadius: 28, backgroundColor: '#E0F5EA',
     alignItems: 'center', justifyContent: 'center',
@@ -418,5 +418,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 30,
     paddingVertical: 15, alignItems: 'center',
   },
-  trackBtnText: { fontSize: 15, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  trackBtnText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 });

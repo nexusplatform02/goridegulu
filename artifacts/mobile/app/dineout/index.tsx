@@ -210,11 +210,11 @@ const styles = StyleSheet.create({
     flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: '#F5F5F5', borderRadius: 22, paddingHorizontal: 14, height: 42,
   },
-  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'PlusJakartaSans_400Regular' },
+  searchInput: { flex: 1, fontSize: 13, color: '#1A1A1A', fontFamily: 'Aeonik-Regular' },
 
   titleBlock: { paddingHorizontal: 16, marginBottom: 12 },
-  pageTitle: { fontSize: 22, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  pageSubtitle: { fontSize: 13, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular', marginTop: 2 },
+  pageTitle: { fontSize: 22, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  pageSubtitle: { fontSize: 13, color: '#8A8A8A', fontFamily: 'Aeonik-Regular', marginTop: 2 },
 
   filterRow: {
     paddingHorizontal: 16,
@@ -227,8 +227,8 @@ const styles = StyleSheet.create({
     borderRadius: 28, backgroundColor: '#F2F2F2',
   },
   chipActive: { backgroundColor: '#00B14F' },
-  chipText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#5A5A5A' },
-  chipTextActive: { color: '#FFFFFF', fontFamily: 'PlusJakartaSans_600SemiBold' },
+  chipText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
+  chipTextActive: { color: '#FFFFFF', fontFamily: 'Aeonik-Medium' },
 
   /* ── List ── */
   scroll: { flex: 1 },
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     position: 'absolute', top: 10, left: 10,
     borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4,
   },
-  badgeText: { fontSize: 11, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  badgeText: { fontSize: 11, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 
   ratingPill: {
     position: 'absolute', top: 10, right: 10,
@@ -255,13 +255,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 22,
     paddingHorizontal: 8, paddingVertical: 4,
   },
-  ratingText: { fontSize: 12, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFA000' },
+  ratingText: { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#FFA000' },
 
   cardBody: { padding: 14, gap: 6 },
-  cardName: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  cardName: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
   metaRow: { flexDirection: 'row', alignItems: 'center' },
-  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'PlusJakartaSans_400Regular' },
+  metaText: { fontSize: 12, color: '#8A8A8A', fontFamily: 'Aeonik-Regular' },
 
   footerRow: {
     flexDirection: 'row', alignItems: 'flex-end',
@@ -273,5 +273,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 28,
     paddingHorizontal: 20, paddingVertical: 9,
   },
-  bookBtnText: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#FFFFFF' },
+  bookBtnText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 });

@@ -15,7 +15,7 @@ function GXSLogo({ size = 38 }: { size?: number }) {
     <View style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: '#1A1A2E', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
       <LinearGradient colors={['#7B2FF7', '#00C6A2']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
         style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFF', fontSize: size * 0.32, fontFamily: 'PlusJakartaSans_700Bold', letterSpacing: -0.5 }}>GXS</Text>
+        <Text style={{ color: '#FFF', fontSize: size * 0.32, fontFamily: 'Aeonik-Bold', letterSpacing: -0.5 }}>GXS</Text>
       </LinearGradient>
     </View>
   );
@@ -27,7 +27,7 @@ function Web3Logo({ size = 38 }: { size?: number }) {
     <View style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden' }}>
       <LinearGradient colors={['#3B0087', '#7B2FF7']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
         style={{ width: size, height: size, borderRadius: size / 2, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ color: '#FFF', fontSize: size * 0.38, fontFamily: 'PlusJakartaSans_700Bold' }}>W3</Text>
+        <Text style={{ color: '#FFF', fontSize: size * 0.38, fontFamily: 'Aeonik-Bold' }}>W3</Text>
       </LinearGradient>
     </View>
   );
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#1A1A1A',
   },
   settingsBtn: {
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   },
   sectionLabel: {
     fontSize: 16,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
   },
   addBtn: {
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   },
   addText: {
     fontSize: 14,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
   },
 
@@ -211,12 +211,12 @@ const styles = StyleSheet.create({
   },
   walletLabel: {
     fontSize: 13,
-    fontFamily: 'PlusJakartaSans_400Regular',
+    fontFamily: 'Aeonik-Regular',
     color: 'rgba(255,255,255,0.8)',
   },
   walletAmount: {
     fontSize: 32,
-    fontFamily: 'PlusJakartaSans_700Bold',
+    fontFamily: 'Aeonik-Bold',
     color: '#FFFFFF',
     marginTop: 6,
   },
@@ -228,12 +228,12 @@ const styles = StyleSheet.create({
   },
   grabCardText: {
     fontSize: 13,
-    fontFamily: 'PlusJakartaSans_400Regular',
+    fontFamily: 'Aeonik-Regular',
     color: 'rgba(255,255,255,0.85)',
   },
   cardExpiry: {
     fontSize: 13,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: 'rgba(255,255,255,0.85)',
   },
 
@@ -264,14 +264,14 @@ const styles = StyleSheet.create({
   },
   actionLabel: {
     fontSize: 12,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
     textAlign: 'center',
   },
 
   fsLabel: {
     fontSize: 16,
-    fontFamily: 'PlusJakartaSans_600SemiBold',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
     marginBottom: 12,
   },
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   fsName: {
     flex: 1,
     fontSize: 15,
-    fontFamily: 'PlusJakartaSans_500Medium',
+    fontFamily: 'Aeonik-Medium',
     color: '#1A1A1A',
   },
   fsDivider: {

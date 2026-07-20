@@ -129,9 +129,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12,
     backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   scroll: { flex: 1 },
-  sectionLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 10, marginTop: 16 },
+  sectionLabel: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 10, marginTop: 16 },
 
   addressCard: {
     flexDirection: 'row', alignItems: 'center', gap: 12,
@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
   },
   addressBody: { flex: 1 },
   addressTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 2 },
-  addressTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  addressTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   defaultPill: { backgroundColor: '#E8F5EE', borderRadius: 22, paddingHorizontal: 6, paddingVertical: 2 },
-  defaultText: { fontSize: 10, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#00B14F' },
-  addressSub: { fontSize: 12, color: '#9A9A9A', fontFamily: 'PlusJakartaSans_400Regular', lineHeight: 18 },
+  defaultText: { fontSize: 10, fontFamily: 'Aeonik-Medium', color: '#00B14F' },
+  addressSub: { fontSize: 12, color: '#9A9A9A', fontFamily: 'Aeonik-Regular', lineHeight: 18 },
   addAddressRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 12, paddingHorizontal: 4 },
-  addAddressText: { fontSize: 13, fontFamily: 'PlusJakartaSans_500Medium', color: '#00B14F' },
+  addAddressText: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#00B14F' },
 
   deliveryCard: {
     flexDirection: 'row', alignItems: 'center', gap: 12,
@@ -164,9 +164,9 @@ const styles = StyleSheet.create({
   },
   deliveryIconActive: { backgroundColor: '#00B14F' },
   deliveryText: { flex: 1 },
-  deliveryLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  deliverySub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
-  deliveryPrice: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginRight: 8 },
+  deliveryLabel: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  deliverySub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 2 },
+  deliveryPrice: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginRight: 8 },
   radio: {
     width: 20, height: 20, borderRadius: 22,
     borderWidth: 2, borderColor: '#CCCCCC',
@@ -180,18 +180,18 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
   itemRow: { flexDirection: 'row', justifyContent: 'space-between' },
-  itemName: { flex: 1, fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#5A5A5A' },
-  itemPrice: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#1A1A1A' },
+  itemName: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#5A5A5A' },
+  itemPrice: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
 
   billCard: {
     backgroundColor: '#FFFFFF', borderRadius: 22, padding: 16, marginTop: 10,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
   billRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  billKey: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
-  billVal: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
-  billKeyBold: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  billValBold: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  billKey: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
+  billVal: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
+  billKeyBold: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  billValBold: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 6 },
 
   bottomBar: {
@@ -204,5 +204,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  continueBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  continueBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, paddingBottom: 12,
     backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#F0F0F0',
   },
-  headerTitle: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  headerTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   scroll: { flex: 1 },
 
   summaryStrip: {
@@ -115,11 +115,11 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
   summaryLeft: { flex: 1 },
-  summaryTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  summarySub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
-  summaryTotal: { fontSize: 20, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  summaryTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  summarySub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 2 },
+  summaryTotal: { fontSize: 20, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
 
-  sectionLabel: { fontSize: 13, fontFamily: 'PlusJakartaSans_600SemiBold', color: '#9A9A9A', marginTop: 18, marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 },
+  sectionLabel: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#9A9A9A', marginTop: 18, marginBottom: 10, textTransform: 'uppercase', letterSpacing: 0.5 },
 
   methodCard: {
     flexDirection: 'row', alignItems: 'center',
@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
   },
   methodIconActive: { backgroundColor: '#00B14F' },
   methodText: { flex: 1 },
-  methodLabel: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  methodSub: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A', marginTop: 2 },
+  methodLabel: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  methodSub: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A', marginTop: 2 },
   radio: {
     width: 20, height: 20, borderRadius: 22,
     borderWidth: 2, borderColor: '#CCCCCC',
@@ -148,16 +148,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF', borderRadius: 22, padding: 16,
     shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 5, elevation: 2,
   },
-  billTitle: { fontSize: 14, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A', marginBottom: 12 },
+  billTitle: { fontSize: 14, fontFamily: 'Aeonik-Bold', color: '#1A1A1A', marginBottom: 12 },
   billRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
-  billKey: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
-  billVal: { fontSize: 13, fontFamily: 'PlusJakartaSans_400Regular', color: '#1A1A1A' },
-  billKeyBold: { fontSize: 15, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
-  billValBold: { fontSize: 17, fontFamily: 'PlusJakartaSans_700Bold', color: '#1A1A1A' },
+  billKey: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
+  billVal: { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
+  billKeyBold: { fontSize: 15, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  billValBold: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 6 },
 
   secureRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 16 },
-  secureText: { fontSize: 12, fontFamily: 'PlusJakartaSans_400Regular', color: '#9A9A9A' },
+  secureText: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#9A9A9A' },
 
   bottomBar: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
@@ -169,5 +169,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#00B14F', borderRadius: 22,
     alignItems: 'center', paddingVertical: 16,
   },
-  payBtnText: { fontSize: 16, fontFamily: 'PlusJakartaSans_700Bold', color: '#FFFFFF' },
+  payBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });
