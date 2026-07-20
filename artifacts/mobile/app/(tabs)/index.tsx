@@ -166,7 +166,7 @@ export default function HomeScreen() {
 
         {/* Payment & Rewards */}
         <View style={styles.infoRow}>
-          <TouchableOpacity style={styles.infoCard} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.infoCard} activeOpacity={0.8} onPress={() => router.push('/payment')}>
             <View style={styles.infoTextBlock}>
               <Text style={styles.infoTitle}>Payment</Text>
               <Text style={styles.infoValue}>Add a Card</Text>
