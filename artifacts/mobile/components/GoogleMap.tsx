@@ -5,7 +5,8 @@
  * Props:
  *   lat / lng        — centre point (required)
  *   destLat/destLng  — if provided, shows a route from lat,lng → destLat,destLng
- *   zoom             — zoom level (default 15)
+ *   zoom             — zoom level (default 17)
+ *   satellite        — use hybrid satellite+labels view (default true)
  *   style            — additional View/WebView style
  */
 import React, { useMemo } from 'react';
@@ -17,15 +18,19 @@ interface Props {
   destLat?: number;
   destLng?: number;
   zoom?: number;
+  satellite?: boolean;
   style?: object;
 }
 
 function buildUrl(props: Props): string {
-  const { lat, lng, destLat, destLng, zoom = 15 } = props;
+  const { lat, lng, destLat, destLng, zoom = 17, satellite = true } = props;
+  // t=h → hybrid (satellite imagery + road/label overlay)
+  // t=k → pure satellite (no labels)
+  const tileType = satellite ? 't=h&' : '';
   if (destLat != null && destLng != null) {
-    return `https://maps.google.com/maps?saddr=${lat},${lng}&daddr=${destLat},${destLng}&output=embed`;
+    return `https://maps.google.com/maps?${tileType}saddr=${lat},${lng}&daddr=${destLat},${destLng}&output=embed`;
   }
-  return `https://maps.google.com/maps?q=${lat},${lng}&z=${zoom}&output=embed`;
+  return `https://maps.google.com/maps?${tileType}q=${lat},${lng}&z=${zoom}&output=embed`;
 }
 
 // ─── Web platform: plain iframe ────────────────────────────────────────────

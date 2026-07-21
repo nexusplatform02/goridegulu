@@ -22,7 +22,9 @@ export function useLocation() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let sub: Location.LocationSubscription | null = null;
     let cancelled = false;
+
     (async () => {
       try {
         const { status } = await Location.requestForegroundPermissionsAsync();
@@ -31,19 +33,44 @@ export function useLocation() {
           setLoading(false);
           return;
         }
-        const loc = await Location.getCurrentPositionAsync({
-          accuracy: Location.Accuracy.Balanced,
-        });
-        if (!cancelled) {
-          setCoords({ lat: loc.coords.latitude, lng: loc.coords.longitude });
-        }
+
+        // Fast first fix — low accuracy so we get something immediately
+        try {
+          const quick = await Location.getCurrentPositionAsync({
+            accuracy: Location.Accuracy.Low,
+          });
+          if (!cancelled) {
+            setCoords({ lat: quick.coords.latitude, lng: quick.coords.longitude });
+            setLoading(false);
+          }
+        } catch (_) { /* fall through to watch */ }
+
+        // Continuous high-accuracy watch — refines position as GPS locks in
+        sub = await Location.watchPositionAsync(
+          {
+            accuracy: Location.Accuracy.BestForNavigation,
+            distanceInterval: 5,          // update every 5 m of movement
+            timeInterval: 3000,           // or every 3 s
+          },
+          (loc) => {
+            if (!cancelled) {
+              setCoords({ lat: loc.coords.latitude, lng: loc.coords.longitude });
+              setLoading(false);
+            }
+          },
+        );
       } catch (e) {
-        if (!cancelled) setError('Could not get location');
-      } finally {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setError('Could not get location');
+          setLoading(false);
+        }
       }
     })();
-    return () => { cancelled = true; };
+
+    return () => {
+      cancelled = true;
+      sub?.remove();
+    };
   }, []);
 
   return { coords, loading, error };
