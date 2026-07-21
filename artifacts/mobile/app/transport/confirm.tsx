@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, Platform,
   Modal, TextInput, Pressable, Animated, KeyboardAvoidingView,
-  PanResponder,
+  PanResponder, useWindowDimensions,
 } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -81,8 +81,43 @@ export default function ConfirmScreen() {
 
   const distM = haversineM(originLat, originLng, destLat, destLng);
 
-  const [selected, setSelected] = useState('moto');
-  const [payment, setPayment]   = useState('cash');
+  const { height: SCREEN_H } = useWindowDimensions();
+
+  const [selected, setSelected]     = useState('moto');
+  const [payment, setPayment]       = useState('cash');
+  const [sheetCollapsed, setSheetCollapsed] = useState(false);
+
+  // Animated sheet Y (0 = expanded, PEEK_OFFSET = collapsed)
+  const sheetAnim  = useRef(new Animated.Value(0)).current;
+  const PEEK_OFFSET = SCREEN_H * 0.48; // how far to slide down when collapsed
+
+  function expandSheet() {
+    Animated.spring(sheetAnim, { toValue: 0, useNativeDriver: true, tension: 70, friction: 12 }).start();
+    setSheetCollapsed(false);
+  }
+  function collapseSheet() {
+    Animated.spring(sheetAnim, { toValue: PEEK_OFFSET, useNativeDriver: true, tension: 70, friction: 12 }).start();
+    setSheetCollapsed(true);
+  }
+
+  // Pan on the booking sheet handle
+  const sheetPan = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dy) > 6,
+      onPanResponderMove: (_, g) => {
+        const base = sheetCollapsed ? PEEK_OFFSET : 0;
+        const next = Math.max(0, Math.min(PEEK_OFFSET, base + g.dy));
+        sheetAnim.setValue(next);
+      },
+      onPanResponderRelease: (_, g) => {
+        const base = sheetCollapsed ? PEEK_OFFSET : 0;
+        const projected = base + g.dy;
+        if (projected > PEEK_OFFSET * 0.5) collapseSheet();
+        else expandSheet();
+      },
+    })
+  ).current;
 
   // Mobile Money modal
   const [momoVisible, setMomoVisible] = useState(false);
@@ -90,26 +125,6 @@ export default function ConfirmScreen() {
   const [payStep, setPayStep]         = useState<PayStep>('idle');
   const spinAnim = useRef(new Animated.Value(0)).current;
   const sheetY   = useRef(new Animated.Value(0)).current;
-
-  // Vehicle swipe
-  const vehicleSlide = useRef(new Animated.Value(0)).current;
-  const vehiclePan = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => false,
-      onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dy) > 8 && Math.abs(g.dy) > Math.abs(g.dx),
-      onPanResponderMove: (_, g) => { vehicleSlide.setValue(g.dy); },
-      onPanResponderRelease: (_, g) => {
-        const ids = VEHICLES.map(v => v.id);
-        setSelected(prev => {
-          const idx = ids.indexOf(prev);
-          if (g.dy < -40 && idx < ids.length - 1) return ids[idx + 1];
-          if (g.dy >  40 && idx > 0)               return ids[idx - 1];
-          return prev;
-        });
-        Animated.spring(vehicleSlide, { toValue: 0, useNativeDriver: true, tension: 80, friction: 10 }).start();
-      },
-    })
-  ).current;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -220,9 +235,26 @@ export default function ConfirmScreen() {
         </View>
       </View>
 
-      {/* Bottom sheet */}
-      <View style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, 20) + 8 }]}>
-        <View style={styles.handle} />
+      {/* Bottom sheet — slides down to reveal map */}
+      <Animated.View
+        style={[styles.sheet, { paddingBottom: Math.max(insets.bottom, 20) + 8 }, { transform: [{ translateY: sheetAnim }] }]}
+      >
+        {/* Draggable handle — tap or drag to collapse/expand */}
+        <TouchableOpacity
+          style={styles.handleWrap}
+          activeOpacity={0.7}
+          onPress={sheetCollapsed ? expandSheet : collapseSheet}
+          hitSlop={{ top: 10, bottom: 10, left: 80, right: 80 }}
+          {...sheetPan.panHandlers}
+        >
+          <View style={styles.handle} />
+          <Ionicons
+            name={sheetCollapsed ? 'chevron-up' : 'chevron-down'}
+            size={14}
+            color="#C0C0C0"
+            style={{ marginTop: 2 }}
+          />
+        </TouchableOpacity>
 
         {/* Route summary */}
         <View style={styles.routeSummary}>
@@ -246,8 +278,8 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        {/* Vehicle options */}
-        <Animated.View style={{ transform: [{ translateY: vehicleSlide }] }} {...vehiclePan.panHandlers}>
+        {/* Vehicle options — tap only, no drag */}
+        <View>
           {VEHICLES.map((v) => (
             <TouchableOpacity
               key={v.id}
@@ -276,7 +308,7 @@ export default function ConfirmScreen() {
               </View>
             </TouchableOpacity>
           ))}
-        </Animated.View>
+        </View>
 
         <View style={styles.divider} />
 
@@ -311,7 +343,7 @@ export default function ConfirmScreen() {
           )}
           <Text style={styles.bookBtnText}>{mainBtnLabel}</Text>
         </TouchableOpacity>
-      </View>
+      </Animated.View>
 
       {/* Mobile Money Modal */}
       <Modal visible={momoVisible} transparent animationType="slide" onRequestClose={() => setMomoVisible(false)}>
@@ -409,7 +441,8 @@ const styles = StyleSheet.create({
     shadowColor: '#000', shadowOpacity: 0.18, shadowRadius: 24, elevation: 14,
     zIndex: 30,
   },
-  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 14 },
+  handleWrap: { alignItems: 'center', paddingBottom: 8 },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 2 },
   routeSummary:  { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 14 },
   routeItem:     { flexDirection: 'row', alignItems: 'center', gap: 5 },
   routeText:     { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
