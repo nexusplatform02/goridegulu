@@ -58,14 +58,14 @@ export default function LocationScreen() {
   const handleSearch = useCallback((text: string) => {
     setQuery(text);
     if (searchTimer.current) clearTimeout(searchTimer.current);
-    if (text.trim().length < 3) { setResults([]); return; }
+    if (text.trim().length < 2) { setResults([]); return; }
     setSearching(true);
     searchTimer.current = setTimeout(async () => {
-      const r = await geocodeAddress(text);
+      const r = await geocodeAddress(text, userCoords.lat, userCoords.lng);
       setResults(r);
       setSearching(false);
-    }, 500);
-  }, []);
+    }, 400);
+  }, [userCoords]);
 
   function pickResult(r: Result) {
     setSelected(r);
@@ -114,7 +114,7 @@ export default function LocationScreen() {
   return (
     <View style={styles.root}>
       {/* ── Real Google Map ───────────────────────────────────── */}
-      <GoogleMap lat={mapLat} lng={mapLng} zoom={15} style={StyleSheet.absoluteFill} />
+      <GoogleMap lat={mapLat} lng={mapLng} zoom={17} style={StyleSheet.absoluteFill} />
 
       {/* ── Top bar ─────────────────────────────────────────── */}
       <View style={[styles.topBar, { paddingTop: topPad + 8 }]}>
