@@ -22,7 +22,7 @@ export default function MartTrackingScreen() {
   return (
     <View style={styles.root}>
       <View style={[styles.header, { paddingTop: topPad + 8 }]}>
-        <TouchableOpacity onPress={() => router.push('/mart')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+        <TouchableOpacity onPress={() => router.back()} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
           <Ionicons name="chevron-back" size={22} color="#1A1A1A" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Order Tracking</Text>

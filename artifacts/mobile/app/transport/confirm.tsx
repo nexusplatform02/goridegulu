@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Image, Platform,
-  Modal, TextInput, Pressable, Animated, KeyboardAvoidingView, ScrollView,
+  Modal, TextInput, Pressable, Animated, KeyboardAvoidingView,
   PanResponder,
 } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { GoogleMap } from '@/components/GoogleMap';
+import { useLocation } from '@/hooks/useLocation';
 
 const MTN_LOGO    = require('../../assets/images/mtn-momo-real.png');
 const AIRTEL_LOGO = require('../../assets/images/airtel-money_2.png');
-import { router } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapBackground } from '@/components/MapBackground';
 
 const VEHICLES = [
   {
@@ -19,7 +20,6 @@ const VEHICLES = [
     seats: '1 seat',
     luggage: 'Small bag only',
     priceUGX: 13000,
-    baseDistM: 2400,
     fast: true,
     image: require('../../assets/images/vehicle-moto.png'),
   },
@@ -29,26 +29,33 @@ const VEHICLES = [
     seats: '3 seats',
     luggage: '2 large bags',
     priceUGX: 19000,
-    baseDistM: 2400,
     fast: false,
     image: require('../../assets/images/vehicle-tuktuk.png'),
   },
 ];
 
 const PAYMENT_METHODS = [
-  { id: 'cash',    label: 'Cash',         icon: 'cash-outline'             },
-  { id: 'momo',    label: 'Mobile Money', icon: 'phone-portrait-outline'   },
-  { id: 'rewards', label: 'Rewards',      icon: 'gift-outline'             },
+  { id: 'cash',    label: 'Cash',         icon: 'cash-outline'           },
+  { id: 'momo',    label: 'Mobile Money', icon: 'phone-portrait-outline' },
+  { id: 'rewards', label: 'Rewards',      icon: 'gift-outline'           },
 ];
 
 const REWARDS_BALANCE = 4000;
 
-function fmtDist(m: number) {
-  return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`;
+function fmtUGX(n: number) { return `UGX ${n.toLocaleString()}`; }
+
+/** Haversine distance in metres between two lat/lng pairs */
+function haversineM(lat1: number, lng1: number, lat2: number, lng2: number) {
+  const R = 6371000;
+  const dLat = (lat2 - lat1) * (Math.PI / 180);
+  const dLng = (lng2 - lng1) * (Math.PI / 180);
+  const a = Math.sin(dLat / 2) ** 2
+    + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-function fmtUGX(n: number) {
-  return `UGX ${n.toLocaleString()}`;
+function fmtDist(m: number) {
+  return m < 1000 ? `${Math.round(m)} m` : `${(m / 1000).toFixed(1)} km`;
 }
 
 type PayStep = 'idle' | 'processing' | 'done';
@@ -57,6 +64,23 @@ export default function ConfirmScreen() {
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === 'web' ? 60 : insets.top;
 
+  // Params from location screen
+  const params = useLocalSearchParams<{
+    destLat?: string; destLng?: string; destName?: string;
+    originLat?: string; originLng?: string;
+  }>();
+
+  // Real GPS fallback
+  const { coords: gps } = useLocation();
+
+  const originLat = params.originLat ? parseFloat(params.originLat) : gps.lat;
+  const originLng = params.originLng ? parseFloat(params.originLng) : gps.lng;
+  const destLat   = params.destLat   ? parseFloat(params.destLat)   : gps.lat + 0.02;
+  const destLng   = params.destLng   ? parseFloat(params.destLng)   : gps.lng + 0.02;
+  const destName  = params.destName  ?? 'Your Destination';
+
+  const distM = haversineM(originLat, originLng, destLat, destLng);
+
   const [selected, setSelected] = useState('moto');
   const [payment, setPayment]   = useState('cash');
 
@@ -64,25 +88,22 @@ export default function ConfirmScreen() {
   const [momoVisible, setMomoVisible] = useState(false);
   const [phone, setPhone]             = useState('');
   const [payStep, setPayStep]         = useState<PayStep>('idle');
-  const spinAnim                      = useRef(new Animated.Value(0)).current;
-  const sheetY                        = useRef(new Animated.Value(0)).current;
+  const spinAnim = useRef(new Animated.Value(0)).current;
+  const sheetY   = useRef(new Animated.Value(0)).current;
 
   // Vehicle swipe
   const vehicleSlide = useRef(new Animated.Value(0)).current;
-
   const vehiclePan = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => false,
       onMoveShouldSetPanResponder: (_, g) => Math.abs(g.dy) > 8 && Math.abs(g.dy) > Math.abs(g.dx),
-      onPanResponderMove: (_, g) => {
-        vehicleSlide.setValue(g.dy);
-      },
+      onPanResponderMove: (_, g) => { vehicleSlide.setValue(g.dy); },
       onPanResponderRelease: (_, g) => {
         const ids = VEHICLES.map(v => v.id);
         setSelected(prev => {
           const idx = ids.indexOf(prev);
           if (g.dy < -40 && idx < ids.length - 1) return ids[idx + 1];
-          if (g.dy >  40 && idx > 0)              return ids[idx - 1];
+          if (g.dy >  40 && idx > 0)               return ids[idx - 1];
           return prev;
         });
         Animated.spring(vehicleSlide, { toValue: 0, useNativeDriver: true, tension: 80, friction: 10 }).start();
@@ -94,9 +115,7 @@ export default function ConfirmScreen() {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (_, g) => g.dy > 5,
-      onPanResponderMove: (_, g) => {
-        if (g.dy > 0) sheetY.setValue(g.dy);
-      },
+      onPanResponderMove: (_, g) => { if (g.dy > 0) sheetY.setValue(g.dy); },
       onPanResponderRelease: (_, g) => {
         if (g.dy > 100 || g.vy > 0.5) {
           Animated.timing(sheetY, { toValue: 600, duration: 250, useNativeDriver: true }).start(() => {
@@ -110,10 +129,9 @@ export default function ConfirmScreen() {
     })
   ).current;
 
-  // Live rider distance
+  // Simulated rider approach distance (starts at 1820m, counts down)
   const [riderDistM, setRiderDistM] = useState(1820);
   const etaMin = Math.max(1, Math.round(riderDistM / 250));
-
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -131,26 +149,35 @@ export default function ConfirmScreen() {
       sheetY.setValue(0);
       setMomoVisible(true);
     } else {
-      router.push('/transport/searching');
+      router.push({
+        pathname: '/transport/searching',
+        params: {
+          destLat: String(destLat), destLng: String(destLng),
+          destName, originLat: String(originLat), originLng: String(originLng),
+        },
+      });
     }
   }
 
   function handlePay() {
     if (phone.length < 9) return;
     setPayStep('processing');
-
-    // Spin animation
     Animated.loop(
       Animated.timing(spinAnim, { toValue: 1, duration: 900, useNativeDriver: true })
     ).start();
-
     setTimeout(() => {
       spinAnim.stopAnimation();
       spinAnim.setValue(0);
       setPayStep('done');
       setTimeout(() => {
         setMomoVisible(false);
-        router.push('/transport/searching');
+        router.push({
+          pathname: '/transport/searching',
+          params: {
+            destLat: String(destLat), destLng: String(destLng),
+            destName, originLat: String(originLat), originLng: String(originLng),
+          },
+        });
       }, 1200);
     }, 2500);
   }
@@ -165,7 +192,12 @@ export default function ConfirmScreen() {
 
   return (
     <View style={styles.root}>
-      <MapBackground showRoute />
+      {/* Real Google Maps showing the route */}
+      <GoogleMap
+        lat={originLat} lng={originLng}
+        destLat={destLat} destLng={destLng}
+        style={StyleSheet.absoluteFill}
+      />
 
       {/* Back */}
       <TouchableOpacity style={[styles.backBtn, { top: topPad + 8 }]} onPress={() => router.back()}>
@@ -181,10 +213,10 @@ export default function ConfirmScreen() {
         </View>
         <View style={styles.dropoffTexts}>
           <Text style={styles.dropoffFrom}>Your Location</Text>
-          <Text style={styles.dropoffTo}>Central Market, Town Square</Text>
+          <Text style={styles.dropoffTo} numberOfLines={1}>{destName}</Text>
         </View>
         <View style={styles.distBadge}>
-          <Text style={styles.distText}>{fmtDist(vehicle.baseDistM)}</Text>
+          <Text style={styles.distText}>{fmtDist(distM)}</Text>
         </View>
       </View>
 
@@ -214,7 +246,7 @@ export default function ConfirmScreen() {
 
         <View style={styles.divider} />
 
-        {/* Vehicle options — swipe up/down to switch */}
+        {/* Vehicle options */}
         <Animated.View style={{ transform: [{ translateY: vehicleSlide }] }} {...vehiclePan.panHandlers}>
           {VEHICLES.map((v) => (
             <TouchableOpacity
@@ -239,7 +271,7 @@ export default function ConfirmScreen() {
               <View style={styles.vehiclePriceCol}>
                 <Text style={styles.vehiclePrice}>{fmtUGX(v.priceUGX)}</Text>
                 <Text style={styles.vehicleEta}>
-                  {v.id === selected ? `${etaMin} min` : (v.id === 'moto' ? `${etaMin} min` : `${etaMin + 4} min`)}
+                  {v.id === selected ? `${etaMin} min` : `${etaMin + 4} min`}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -262,11 +294,7 @@ export default function ConfirmScreen() {
                 activeOpacity={0.8}
                 onPress={() => setPayment(m.id)}
               >
-                <Ionicons
-                  name={m.icon as any}
-                  size={14}
-                  color={payment === m.id ? '#FFFFFF' : '#5A5A5A'}
-                />
+                <Ionicons name={m.icon as any} size={14} color={payment === m.id ? '#FFFFFF' : '#5A5A5A'} />
                 <Text style={[styles.paymentChipText, payment === m.id && styles.paymentChipTextActive]}>
                   {m.label}
                 </Text>
@@ -285,31 +313,20 @@ export default function ConfirmScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* ── Mobile Money Modal ─────────────────────────────────── */}
+      {/* Mobile Money Modal */}
       <Modal visible={momoVisible} transparent animationType="slide" onRequestClose={() => setMomoVisible(false)}>
-        <KeyboardAvoidingView
-          style={styles.modalWrap}
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        >
+        <KeyboardAvoidingView style={styles.modalWrap} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <Pressable style={styles.modalOverlay} onPress={() => payStep === 'idle' && setMomoVisible(false)} />
-
-          <Animated.View
-            style={[styles.momoSheet, { paddingBottom: Math.max(insets.bottom, 24) }, { transform: [{ translateY: sheetY }] }]}
-          >
-            {/* Handle — drag down to dismiss */}
+          <Animated.View style={[styles.momoSheet, { paddingBottom: Math.max(insets.bottom, 24) }, { transform: [{ translateY: sheetY }] }]}>
             <View style={{ alignItems: 'center' }} {...panResponder.panHandlers}>
               <View style={styles.momoHandle} />
             </View>
-
-            {/* Header */}
             <View style={styles.momoHeader}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.momoTitle}>Mobile Money</Text>
                 <Text style={styles.momoSub}>Enter your number to pay</Text>
               </View>
             </View>
-
-            {/* Network logos — MTN first */}
             <View style={styles.networkLogos}>
               <View style={styles.networkLogoCard}>
                 <Image source={MTN_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
@@ -318,14 +335,10 @@ export default function ConfirmScreen() {
                 <Image source={AIRTEL_LOGO} style={styles.networkLogoImg} resizeMode="contain" />
               </View>
             </View>
-
-            {/* Amount */}
             <View style={styles.amountRow}>
               <Text style={styles.amountLabel}>Amount</Text>
               <Text style={styles.amountValue}>{fmtUGX(vehicle.priceUGX)}</Text>
             </View>
-
-            {/* Phone input */}
             <Text style={styles.inputLabel}>Phone Number</Text>
             <View style={styles.inputWrap}>
               <View style={styles.countryCode}>
@@ -342,10 +355,7 @@ export default function ConfirmScreen() {
                 editable={payStep === 'idle'}
               />
             </View>
-
             <Text style={styles.networkHint}>MTN · Airtel · Africel supported</Text>
-
-            {/* Pay button */}
             <TouchableOpacity
               style={[styles.payBtn, (phone.length < 9 || payStep !== 'idle') && styles.payBtnDisabled]}
               activeOpacity={0.85}
@@ -357,13 +367,9 @@ export default function ConfirmScreen() {
                   <Ionicons name="reload-outline" size={18} color="#FFFFFF" />
                 </Animated.View>
               )}
-              {payStep === 'done' && (
-                <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={{ marginRight: 6 }} />
-              )}
+              {payStep === 'done' && <Ionicons name="checkmark-circle" size={20} color="#FFFFFF" style={{ marginRight: 6 }} />}
               <Text style={styles.payBtnText}>
-                {payStep === 'processing' ? 'Processing…'
-                  : payStep === 'done' ? 'Payment Confirmed!'
-                  : `Pay ${fmtUGX(vehicle.priceUGX)}`}
+                {payStep === 'processing' ? 'Processing…' : payStep === 'done' ? 'Payment Confirmed!' : `Pay ${fmtUGX(vehicle.priceUGX)}`}
               </Text>
             </TouchableOpacity>
           </Animated.View>
@@ -375,14 +381,12 @@ export default function ConfirmScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1 },
-
   backBtn: {
     position: 'absolute', left: 16, zIndex: 20,
     width: 40, height: 40, borderRadius: 28, backgroundColor: '#FFFFFF',
     alignItems: 'center', justifyContent: 'center',
     shadowColor: '#000', shadowOpacity: 0.07, shadowRadius: 6, elevation: 4,
   },
-
   dropoffCard: {
     position: 'absolute', left: 68, right: 16, zIndex: 20,
     backgroundColor: '#FFFFFF', borderRadius: 28, padding: 14,
@@ -398,7 +402,6 @@ const styles = StyleSheet.create({
   dropoffTo:       { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#1A1A1A', marginTop: 4 },
   distBadge:       { backgroundColor: '#F0F0F0', borderRadius: 28, paddingHorizontal: 8, paddingVertical: 4 },
   distText:        { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
-
   sheet: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', borderTopLeftRadius: 24, borderTopRightRadius: 24,
@@ -407,14 +410,11 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 14 },
-
   routeSummary:  { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 14 },
   routeItem:     { flexDirection: 'row', alignItems: 'center', gap: 5 },
   routeText:     { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
   routeDividerV: { width: 1, height: 16, backgroundColor: '#E0E0E0' },
-
   divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 8 },
-
   vehicleRow:       { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, paddingHorizontal: 10, borderRadius: 22, marginBottom: 4 },
   vehicleRowActive: { backgroundColor: '#F0FCF5', borderWidth: 1.5, borderColor: '#00B14F' },
   vehicleImg:       { width: 72, height: 48 },
@@ -427,69 +427,36 @@ const styles = StyleSheet.create({
   vehiclePriceCol:  { alignItems: 'flex-end' },
   vehiclePrice:     { fontSize: 18, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
   vehicleEta:       { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#8A8A8A', marginTop: 2 },
-
-  // Payment — two-row layout so all chips fit
-  paymentSection:  { paddingVertical: 10 },
-  paymentLabelRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 },
-  paymentTitle:    { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#6B6B6B' },
-  paymentChips:    { flexDirection: 'row', gap: 8 },
-  paymentChip: {
-    flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5,
-    borderRadius: 28, paddingVertical: 9,
-    backgroundColor: '#F2F2F2',
-  },
+  paymentSection:   { paddingVertical: 10 },
+  paymentLabelRow:  { flexDirection: 'row', alignItems: 'center', gap: 6, marginBottom: 10 },
+  paymentTitle:     { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#6B6B6B' },
+  paymentChips:     { flexDirection: 'row', gap: 8 },
+  paymentChip:      { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, borderRadius: 28, paddingVertical: 9, backgroundColor: '#F2F2F2' },
   paymentChipActive:     { backgroundColor: '#00B14F' },
   paymentChipText:       { fontSize: 12, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
-  paymentChipTextActive: { color: '#FFFFFF', fontFamily: 'Aeonik-Medium' },
-
-  bookBtn: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#00B14F', borderRadius: 30,
-    paddingVertical: 15, marginTop: 8,
-  },
-  bookBtnText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
-
-  // ── Mobile Money modal ────────────────────────────────────────
+  paymentChipTextActive: { color: '#FFFFFF' },
+  bookBtn:      { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#00B14F', borderRadius: 30, paddingVertical: 15, marginTop: 8 },
+  bookBtnText:  { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
   modalWrap:    { flex: 1, justifyContent: 'flex-end' },
   modalOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0,0,0,0.45)' },
-
-  momoSheet: {
-    backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 28, borderTopRightRadius: 28,
-    paddingHorizontal: 20, paddingTop: 12,
-    shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 24, elevation: 20,
-  },
-  momoHandle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 20 },
-
-  momoHeader:  { flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 16 },
-  momoTitle: { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
-  momoSub:   { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#8A8A8A', marginTop: 2 },
-
+  momoSheet:    { backgroundColor: '#FFFFFF', borderTopLeftRadius: 28, borderTopRightRadius: 28, paddingHorizontal: 20, paddingTop: 12, shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 24, elevation: 20 },
+  momoHandle:   { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', alignSelf: 'center', marginBottom: 20 },
+  momoHeader:   { flexDirection: 'row', alignItems: 'center', gap: 14, marginBottom: 16 },
+  momoTitle:    { fontSize: 17, fontFamily: 'Aeonik-Bold', color: '#1A1A1A' },
+  momoSub:      { fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#8A8A8A', marginTop: 2 },
   networkLogos: { flexDirection: 'row', gap: 10, marginBottom: 20 },
-  networkLogoCard: {
-    flex: 1, backgroundColor: '#F7F7F7', borderRadius: 22,
-    paddingVertical: 0, paddingHorizontal: 2,
-    alignItems: 'center', justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  networkLogoImg: { width: '100%', height: 100 },
-
-  amountRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 22, padding: 16, marginBottom: 20 },
-  amountLabel: { fontSize: 14, fontFamily: 'Aeonik-Regular', color: '#6B6B6B' },
-  amountValue: { fontSize: 22, fontFamily: 'Aeonik-Bold', color: '#00B14F' },
-
-  inputLabel: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#6B6B6B', marginBottom: 8 },
-  inputWrap:  { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: '#E8E8E8', borderRadius: 22, overflow: 'hidden', marginBottom: 8 },
-  countryCode: { backgroundColor: '#F5F5F5', paddingHorizontal: 14, paddingVertical: 14, borderRightWidth: 1, borderRightColor: '#E8E8E8' },
+  networkLogoCard: { flex: 1, backgroundColor: '#F7F7F7', borderRadius: 22, paddingVertical: 0, paddingHorizontal: 2, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+  networkLogoImg:  { width: '100%', height: 100 },
+  amountRow:    { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F7FDF9', borderRadius: 22, padding: 16, marginBottom: 20 },
+  amountLabel:  { fontSize: 14, fontFamily: 'Aeonik-Regular', color: '#6B6B6B' },
+  amountValue:  { fontSize: 22, fontFamily: 'Aeonik-Bold', color: '#00B14F' },
+  inputLabel:   { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#6B6B6B', marginBottom: 8 },
+  inputWrap:    { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: '#E8E8E8', borderRadius: 22, overflow: 'hidden', marginBottom: 8 },
+  countryCode:  { backgroundColor: '#F5F5F5', paddingHorizontal: 14, paddingVertical: 14, borderRightWidth: 1, borderRightColor: '#E8E8E8' },
   countryCodeText: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
-  phoneInput: { flex: 1, paddingHorizontal: 14, fontSize: 16, fontFamily: 'Aeonik-Regular', color: '#1A1A1A', paddingVertical: 14 },
-
-  networkHint: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA', marginBottom: 24 },
-
-  payBtn: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-    backgroundColor: '#00B14F', borderRadius: 30, paddingVertical: 16,
-  },
+  phoneInput:   { flex: 1, paddingHorizontal: 14, fontSize: 16, fontFamily: 'Aeonik-Regular', color: '#1A1A1A', paddingVertical: 14 },
+  networkHint:  { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA', marginBottom: 24 },
+  payBtn:       { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#00B14F', borderRadius: 30, paddingVertical: 16 },
   payBtnDisabled: { backgroundColor: '#A8DFC0' },
-  payBtnText: { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
+  payBtnText:   { fontSize: 16, fontFamily: 'Aeonik-Bold', color: '#FFFFFF' },
 });

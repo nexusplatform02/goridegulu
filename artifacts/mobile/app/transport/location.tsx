@@ -1,51 +1,48 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, TouchableOpacity, Platform, TextInput,
-  Modal, Animated, Pressable, GestureResponderEvent, useWindowDimensions,
+  Modal, Animated, Pressable, ActivityIndicator, FlatList,
 } from 'react-native';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { MapBackground } from '@/components/MapBackground';
+import { GoogleMap } from '@/components/GoogleMap';
+import { useLocation, geocodeAddress } from '@/hooks/useLocation';
 
-const DESTINATIONS = [
-  { id: '1', name: 'Central Market / Town Square', sub: '12 Market St, City Center', dist: '0.0 km' },
-  { id: '2', name: 'Bus Terminal 1',               sub: '5 Terminal Rd, Downtown',  dist: '0.8 km' },
-  { id: '3', name: 'Shopping Mall Main Entrance',  sub: '88 Commerce Ave, Midtown', dist: '1.1 km' },
-];
+const SHEET_PEEK = 64;
 
-// Derive a human-ish label from tap position relative to screen
-function labelFromTap(x: number, y: number, W: number, H: number): string {
-  const col = x < W * 0.33 ? 'West' : x < W * 0.66 ? 'Central' : 'East';
-  const row = y < H * 0.33 ? 'North' : y < H * 0.66 ? 'Mid' : 'South';
-  const streets = ['Market St', 'Commerce Ave', 'Terminal Rd', 'Park Blvd', 'Main Rd'];
-  const pick = streets[Math.floor(((x + y) / (W + H)) * streets.length)];
-  return `${col} ${row} — ${pick}`;
-}
+type Result = { lat: number; lng: number; name: string };
 
 type PlaceAction = 'workplace' | 'home' | 'favorite' | null;
 
-const SHEET_PEEK = 64; // how many px of sheet remain visible when collapsed
+const QUICK_PLACES = [
+  { id: 'home',   icon: 'home-outline' as const,      label: 'Home',       sub: 'Set home location' },
+  { id: 'work',   icon: 'briefcase-outline' as const, label: 'Work',       sub: 'Set work location' },
+];
 
 export default function LocationScreen() {
-  const { width: W, height: H } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const topPad = Platform.OS === 'web' ? 60 : insets.top;
+  const { coords: userCoords } = useLocation();
 
-  const [selected, setSelected]           = useState('1');
-  const [query, setQuery]                 = useState('');
-  const [sheetCollapsed, setCollapsed]    = useState(false);
-  const [sheetHeight, setSheetHeight]     = useState(0);
-  const [tapPin, setTapPin]               = useState<{ x: number; y: number } | null>(null);
-  const [tapLabel, setTapLabel]           = useState('');
+  const [query, setQuery]               = useState('');
+  const [searching, setSearching]       = useState(false);
+  const [results, setResults]           = useState<Result[]>([]);
+  const [selected, setSelected]         = useState<Result | null>(null);
+  const [sheetCollapsed, setCollapsed]  = useState(false);
+  const [sheetHeight, setSheetHeight]   = useState(0);
 
-  // Context menu
-  const [menuVisible, setMenuVisible]     = useState(false);
-  const [menuTarget, setMenuTarget]       = useState<{ id: string; name: string } | null>(null);
-  const [savedActions, setSavedActions]   = useState<Record<string, PlaceAction>>({});
-  const [toast, setToast]                 = useState('');
-  const toastOpacity                      = useRef(new Animated.Value(0)).current;
-  const sheetSlide                        = useRef(new Animated.Value(0)).current;
+  const [menuVisible, setMenuVisible]   = useState(false);
+  const [menuTarget, setMenuTarget]     = useState<Result | null>(null);
+  const [savedActions, setSavedActions] = useState<Record<string, PlaceAction>>({});
+  const [toast, setToast]               = useState('');
+  const toastOpacity                    = useRef(new Animated.Value(0)).current;
+  const sheetSlide                      = useRef(new Animated.Value(0)).current;
+  const searchTimer                     = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Map shows user location until they pick a destination
+  const mapLat = selected?.lat ?? userCoords.lat;
+  const mapLng = selected?.lng ?? userCoords.lng;
 
   function collapseSheet() {
     const offset = sheetHeight - SHEET_PEEK;
@@ -56,29 +53,48 @@ export default function LocationScreen() {
   function expandSheet() {
     Animated.spring(sheetSlide, { toValue: 0, useNativeDriver: true, tension: 68, friction: 12 }).start();
     setCollapsed(false);
-    setTapPin(null);
-    setTapLabel('');
   }
 
-  function handleMapTap(e: GestureResponderEvent) {
-    if (!sheetCollapsed) return;
-    const { locationX, locationY } = e.nativeEvent;
-    setTapPin({ x: locationX, y: locationY });
-    setTapLabel(labelFromTap(locationX, locationY, W, H));
+  const handleSearch = useCallback((text: string) => {
+    setQuery(text);
+    if (searchTimer.current) clearTimeout(searchTimer.current);
+    if (text.trim().length < 3) { setResults([]); return; }
+    setSearching(true);
+    searchTimer.current = setTimeout(async () => {
+      const r = await geocodeAddress(text);
+      setResults(r);
+      setSearching(false);
+    }, 500);
+  }, []);
+
+  function pickResult(r: Result) {
+    setSelected(r);
+    setResults([]);
+    setQuery(r.name.split(',')[0]);
   }
 
-  function confirmTapLocation() {
-    router.push('/transport/confirm');
+  function confirmDestination() {
+    if (!selected) return;
+    router.push({
+      pathname: '/transport/confirm',
+      params: {
+        destLat:  String(selected.lat),
+        destLng:  String(selected.lng),
+        destName: selected.name.split(',').slice(0, 2).join(','),
+        originLat: String(userCoords.lat),
+        originLng: String(userCoords.lng),
+      },
+    });
   }
 
-  function openMenu(id: string, name: string) {
-    setMenuTarget({ id, name });
+  function openMenu(r: Result) {
+    setMenuTarget(r);
     setMenuVisible(true);
   }
 
   function applyAction(action: PlaceAction) {
     if (!menuTarget) return;
-    setSavedActions(prev => ({ ...prev, [menuTarget.id]: action }));
+    setSavedActions(prev => ({ ...prev, [menuTarget.name]: action }));
     setMenuVisible(false);
     const labels: Record<NonNullable<PlaceAction>, string> = {
       workplace: '🏢 Saved as Workplace',
@@ -95,51 +111,12 @@ export default function LocationScreen() {
     }
   }
 
-  function savedIcon(id: string) {
-    const a = savedActions[id];
-    if (a === 'home')      return 'home';
-    if (a === 'workplace') return 'briefcase';
-    if (a === 'favorite')  return 'star';
-    return null;
-  }
-
-  const activeDestName = tapPin
-    ? tapLabel
-    : (DESTINATIONS.find(d => d.id === selected)?.name ?? '–');
-
   return (
     <View style={styles.root}>
-      {/* ── Map (tappable when collapsed) ──────────────────────── */}
-      <Pressable style={StyleSheet.absoluteFill} onPress={handleMapTap}>
-        <MapBackground showRoute={false} />
-      </Pressable>
+      {/* ── Real Google Map ───────────────────────────────────── */}
+      <GoogleMap lat={mapLat} lng={mapLng} zoom={15} style={StyleSheet.absoluteFill} />
 
-      {/* ── Tapped pin ─────────────────────────────────────────── */}
-      {tapPin && (
-        <View
-          style={[styles.tapPinWrap, { left: tapPin.x - 20, top: tapPin.y - 44 }]}
-          pointerEvents="none"
-        >
-          <Ionicons name="location" size={44} color="#00B14F" />
-          <View style={styles.tapPinDot} />
-        </View>
-      )}
-
-      {/* ── Centre crosshair (shows when collapsed, no tap pin) ── */}
-      {sheetCollapsed && !tapPin && (
-        <View style={styles.centerPinWrap} pointerEvents="none">
-          <Ionicons name="add-circle-outline" size={36} color="#00B14F" />
-        </View>
-      )}
-
-      {/* ── Hint label when collapsed ───────────────────────────── */}
-      {sheetCollapsed && !tapPin && (
-        <View style={styles.hintBubble} pointerEvents="none">
-          <Text style={styles.hintText}>Tap map to set destination</Text>
-        </View>
-      )}
-
-      {/* ── Top bar ─────────────────────────────────────────────── */}
+      {/* ── Top bar ─────────────────────────────────────────── */}
       <View style={[styles.topBar, { paddingTop: topPad + 8 }]}>
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Ionicons name="chevron-back" size={22} color="#1A1A1A" />
@@ -152,29 +129,53 @@ export default function LocationScreen() {
             placeholder="Where to?"
             placeholderTextColor="#AAAAAA"
             value={query}
-            onChangeText={setQuery}
-            autoFocus={false}
+            onChangeText={handleSearch}
+            returnKeyType="search"
+            onSubmitEditing={() => handleSearch(query)}
           />
-          {query.length > 0 && (
-            <TouchableOpacity onPress={() => setQuery('')}>
-              <Ionicons name="close-circle" size={18} color="#CCCCCC" />
-            </TouchableOpacity>
-          )}
+          {searching
+            ? <ActivityIndicator size="small" color="#00B14F" />
+            : query.length > 0
+              ? <TouchableOpacity onPress={() => { setQuery(''); setResults([]); setSelected(null); }}>
+                  <Ionicons name="close-circle" size={18} color="#CCCCCC" />
+                </TouchableOpacity>
+              : null}
         </View>
       </View>
 
-      {/* ── Floating confirm bar (shown when pin is dropped) ─────── */}
-      {tapPin && (
+      {/* ── Search results dropdown ──────────────────────────── */}
+      {results.length > 0 && (
+        <View style={[styles.resultsDropdown, { top: topPad + 68 }]}>
+          <FlatList
+            data={results}
+            keyExtractor={(_, i) => String(i)}
+            keyboardShouldPersistTaps="always"
+            renderItem={({ item }) => (
+              <TouchableOpacity style={styles.resultRow} onPress={() => pickResult(item)}>
+                <View style={styles.resultIconWrap}>
+                  <Ionicons name="location-outline" size={18} color="#00B14F" />
+                </View>
+                <Text style={styles.resultText} numberOfLines={2}>{item.name}</Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      )}
+
+      {/* ── Floating confirm bar (when destination selected) ─ */}
+      {selected && (
         <View style={[styles.floatingBar, { bottom: SHEET_PEEK + 16 }]}>
           <Ionicons name="location" size={18} color="#00B14F" />
-          <Text style={styles.floatingLabel} numberOfLines={1}>{tapLabel}</Text>
-          <TouchableOpacity style={styles.floatingBtn} onPress={confirmTapLocation}>
+          <Text style={styles.floatingLabel} numberOfLines={1}>
+            {selected.name.split(',')[0]}
+          </Text>
+          <TouchableOpacity style={styles.floatingBtn} onPress={confirmDestination}>
             <Text style={styles.floatingBtnText}>Go</Text>
           </TouchableOpacity>
         </View>
       )}
 
-      {/* ── Bottom sheet ─────────────────────────────────────────── */}
+      {/* ── Bottom sheet ──────────────────────────────────── */}
       <Animated.View
         style={[
           styles.sheet,
@@ -183,7 +184,6 @@ export default function LocationScreen() {
         ]}
         onLayout={e => setSheetHeight(e.nativeEvent.layout.height)}
       >
-        {/* Handle — tap to toggle */}
         <TouchableOpacity
           style={styles.handleWrap}
           onPress={sheetCollapsed ? expandSheet : collapseSheet}
@@ -193,99 +193,64 @@ export default function LocationScreen() {
           <View style={styles.handle} />
         </TouchableOpacity>
 
-        {/* Selected destination header */}
-        <View style={styles.sheetHeader}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.mainDestTitle} numberOfLines={1}>{activeDestName}</Text>
-            {!tapPin && (
-              <Text style={styles.mainDestSub}>
-                {DESTINATIONS.find(d => d.id === selected)?.sub ?? ''}
-              </Text>
-            )}
-          </View>
-          <TouchableOpacity style={styles.iconBtn}>
-            <Ionicons name="pencil-outline" size={18} color="#5A5A5A" />
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.sheetTitle}>Recent & Saved Places</Text>
 
-        <View style={styles.divider} />
-
-        {/* Destination rows */}
-        {DESTINATIONS.map((dest) => {
-          const icon = savedIcon(dest.id);
-          return (
-            <TouchableOpacity
-              key={dest.id}
-              style={styles.destRow}
-              activeOpacity={0.75}
-              onPress={() => {
-                setSelected(dest.id);
-                setTapPin(null);
-                setTapLabel('');
-              }}
-            >
-              <View style={[styles.destDot, selected === dest.id && !tapPin && styles.destDotActive]}>
-                {selected === dest.id && !tapPin
-                  ? <View style={styles.destDotInner} />
-                  : <Ionicons name="location-outline" size={14} color="#AAAAAA" />
-                }
-              </View>
-
-              <View style={styles.destInfo}>
-                <View style={styles.destNameRow}>
-                  <Text style={[styles.destName, selected === dest.id && !tapPin && styles.destNameActive]}>
-                    {dest.name}
-                  </Text>
-                  {icon && (
-                    <Ionicons
-                      name={icon as any}
-                      size={13}
-                      color={icon === 'star' ? '#FFC107' : '#00B14F'}
-                      style={{ marginLeft: 4 }}
-                    />
-                  )}
-                </View>
-                <Text style={styles.destDist}>{dest.dist}</Text>
-              </View>
-
-              <TouchableOpacity
-                style={styles.iconBtn}
-                onPress={() => openMenu(dest.id, dest.name)}
-                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-              >
-                <Ionicons name="ellipsis-vertical" size={18} color="#C0C0C0" />
-              </TouchableOpacity>
+        {QUICK_PLACES.map((p) => (
+          <TouchableOpacity
+            key={p.id}
+            style={styles.destRow}
+            activeOpacity={0.75}
+            onPress={() => handleSearch(p.label)}
+          >
+            <View style={styles.destDot}>
+              <Ionicons name={p.icon} size={16} color="#6B6B6B" />
+            </View>
+            <View style={styles.destInfo}>
+              <Text style={styles.destName}>{p.label}</Text>
+              <Text style={styles.destDist}>{p.sub}</Text>
+            </View>
+            <TouchableOpacity style={styles.iconBtn} onPress={() => handleSearch(p.label)}>
+              <Ionicons name="arrow-forward" size={16} color="#C0C0C0" />
             </TouchableOpacity>
-          );
-        })}
+          </TouchableOpacity>
+        ))}
 
-        {/* CTA */}
+        {selected && (
+          <>
+            <View style={styles.divider} />
+            <View style={styles.selectedRow}>
+              <Ionicons name="location" size={18} color="#00B14F" />
+              <Text style={styles.selectedText} numberOfLines={2}>
+                {selected.name.split(',').slice(0, 2).join(',')}
+              </Text>
+            </View>
+          </>
+        )}
+
         <TouchableOpacity
-          style={styles.chooseBtn}
+          style={[styles.chooseBtn, !selected && styles.chooseBtnDisabled]}
           activeOpacity={0.88}
-          onPress={() => router.push('/transport/confirm')}
+          onPress={confirmDestination}
+          disabled={!selected}
         >
-          <Text style={styles.chooseBtnText}>Choose This Destination</Text>
+          <Text style={styles.chooseBtnText}>
+            {selected ? 'Confirm Destination' : 'Search for a destination above'}
+          </Text>
         </TouchableOpacity>
       </Animated.View>
 
-      {/* ── Context menu modal ───────────────────────────────── */}
-      <Modal
-        visible={menuVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setMenuVisible(false)}
-      >
+      {/* ── Context menu ──────────────────────────────────── */}
+      <Modal visible={menuVisible} transparent animationType="fade" onRequestClose={() => setMenuVisible(false)}>
         <Pressable style={styles.modalOverlay} onPress={() => setMenuVisible(false)}>
           <Pressable style={styles.menuCard} onPress={e => e.stopPropagation()}>
-            <Text style={styles.menuHeader} numberOfLines={1}>{menuTarget?.name}</Text>
+            <Text style={styles.menuHeader} numberOfLines={1}>{menuTarget?.name.split(',')[0]}</Text>
             <View style={styles.menuDivider} />
             {[
               { action: 'workplace' as PlaceAction, icon: 'briefcase-outline', label: 'Set as Workplace' },
               { action: 'home'      as PlaceAction, icon: 'home-outline',      label: 'Set as Home'      },
               { action: 'favorite'  as PlaceAction, icon: 'star-outline',      label: 'Add to Favourites' },
             ].map(({ action, icon, label }) => {
-              const isActive = menuTarget ? savedActions[menuTarget.id] === action : false;
+              const isActive = menuTarget ? savedActions[menuTarget.name] === action : false;
               return (
                 <TouchableOpacity
                   key={action}
@@ -308,7 +273,7 @@ export default function LocationScreen() {
         </Pressable>
       </Modal>
 
-      {/* ── Toast ─────────────────────────────────────────────── */}
+      {/* ── Toast ──────────────────────────────────────────── */}
       <Animated.View style={[styles.toast, { opacity: toastOpacity }]} pointerEvents="none">
         <Text style={styles.toastText}>{toast}</Text>
       </Animated.View>
@@ -338,25 +303,23 @@ const styles = StyleSheet.create({
   dotGreen: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
   searchInput: { flex: 1, fontSize: 15, fontFamily: 'Aeonik-Regular', color: '#1A1A1A' },
 
-  // Pin dropped on map
-  tapPinWrap: { position: 'absolute', zIndex: 25, alignItems: 'center' },
-  tapPinDot:  { width: 8, height: 8, borderRadius: 4, backgroundColor: '#00B14F', marginTop: -4 },
-
-  // Crosshair when collapsed but no pin yet
-  centerPinWrap: {
-    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-    alignItems: 'center', justifyContent: 'center', zIndex: 10,
+  resultsDropdown: {
+    position: 'absolute', left: 66, right: 16, zIndex: 50,
+    backgroundColor: '#FFFFFF', borderRadius: 18, maxHeight: 240,
+    shadowColor: '#000', shadowOpacity: 0.14, shadowRadius: 12, elevation: 8,
+    overflow: 'hidden',
   },
-
-  // Hint
-  hintBubble: {
-    position: 'absolute', top: '45%', alignSelf: 'center',
-    backgroundColor: 'rgba(0,0,0,0.55)', borderRadius: 28,
-    paddingHorizontal: 16, paddingVertical: 8, zIndex: 15,
+  resultRow: {
+    flexDirection: 'row', alignItems: 'center', gap: 12,
+    paddingHorizontal: 14, paddingVertical: 12,
+    borderBottomWidth: 1, borderBottomColor: '#F4F4F4',
   },
-  hintText: { color: '#FFFFFF', fontSize: 13, fontFamily: 'Aeonik-Medium' },
+  resultIconWrap: {
+    width: 32, height: 32, borderRadius: 16, backgroundColor: '#E8F5EE',
+    alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+  },
+  resultText: { flex: 1, fontSize: 13, fontFamily: 'Aeonik-Regular', color: '#1A1A1A', lineHeight: 18 },
 
-  // Floating confirm bar
   floatingBar: {
     position: 'absolute', left: 20, right: 20, zIndex: 40,
     flexDirection: 'row', alignItems: 'center', gap: 10,
@@ -371,7 +334,6 @@ const styles = StyleSheet.create({
   },
   floatingBtnText: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 
-  // Bottom sheet
   sheet: {
     position: 'absolute', bottom: 0, left: 0, right: 0,
     backgroundColor: '#FFFFFF', borderTopLeftRadius: 24, borderTopRightRadius: 24,
@@ -380,65 +342,43 @@ const styles = StyleSheet.create({
     zIndex: 30,
   },
   handleWrap: { alignItems: 'center', paddingBottom: 10 },
-  handle: {
-    width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', marginBottom: 4,
-  },
-
-  sheetHeader: { flexDirection: 'row', alignItems: 'flex-start', gap: 8, marginBottom: 14 },
-  mainDestTitle: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
-  mainDestSub:   { fontSize: 12, fontFamily: 'Aeonik-Regular',  color: '#8A8A8A', marginTop: 2 },
-  divider: { height: 1, backgroundColor: '#F0F0F0', marginBottom: 8 },
-  iconBtn: { padding: 4 },
+  handle: { width: 40, height: 4, borderRadius: 2, backgroundColor: '#E0E0E0', marginBottom: 4 },
+  sheetTitle: { fontSize: 13, fontFamily: 'Aeonik-Medium', color: '#9A9A9A', marginBottom: 12 },
 
   destRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 12 },
   destDot: {
     width: 30, height: 30, borderRadius: 15, backgroundColor: '#F5F5F5',
     alignItems: 'center', justifyContent: 'center',
   },
-  destDotActive:  { backgroundColor: '#E0F5EA' },
-  destDotInner:   { width: 10, height: 10, borderRadius: 5, backgroundColor: '#00B14F' },
-  destInfo:       { flex: 1 },
-  destNameRow:    { flexDirection: 'row', alignItems: 'center' },
-  destName:       { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#5A5A5A' },
-  destNameActive: { color: '#1A1A1A', fontFamily: 'Aeonik-Medium' },
-  destDist:       { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA', marginTop: 2 },
+  destInfo: { flex: 1 },
+  destName: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  destDist: { fontSize: 12, fontFamily: 'Aeonik-Regular', color: '#AAAAAA', marginTop: 2 },
+  iconBtn: { padding: 4 },
+  divider: { height: 1, backgroundColor: '#F0F0F0', marginVertical: 10 },
+
+  selectedRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 10, marginBottom: 12 },
+  selectedText: { flex: 1, fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#1A1A1A', lineHeight: 20 },
 
   chooseBtn: {
     backgroundColor: '#00B14F', borderRadius: 30,
-    paddingVertical: 15, alignItems: 'center', marginTop: 16,
+    paddingVertical: 15, alignItems: 'center', marginTop: 8,
   },
+  chooseBtnDisabled: { backgroundColor: '#C8E8C5' },
   chooseBtnText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FFFFFF' },
 
-  // Modal
-  modalOverlay: {
-    flex: 1, backgroundColor: 'rgba(0,0,0,0.45)',
-    justifyContent: 'flex-end', padding: 16,
-  },
-  menuCard: {
-    backgroundColor: '#FFFFFF', borderRadius: 28,
-    paddingTop: 16, paddingBottom: 8, overflow: 'hidden',
-  },
-  menuHeader: {
-    fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#8A8A8A',
-    paddingHorizontal: 20, paddingBottom: 12,
-  },
+  modalOverlay: { flex: 1, backgroundColor: 'rgba(0,0,0,0.45)', justifyContent: 'flex-end', padding: 16 },
+  menuCard: { backgroundColor: '#FFFFFF', borderRadius: 28, paddingTop: 16, paddingBottom: 8, overflow: 'hidden' },
+  menuHeader: { fontSize: 14, fontFamily: 'Aeonik-Medium', color: '#8A8A8A', paddingHorizontal: 20, paddingBottom: 12 },
   menuDivider: { height: 1, backgroundColor: '#F0F0F0' },
-  menuItem: {
-    flexDirection: 'row', alignItems: 'center', gap: 14,
-    paddingHorizontal: 20, paddingVertical: 16,
-  },
+  menuItem: { flexDirection: 'row', alignItems: 'center', gap: 14, paddingHorizontal: 20, paddingVertical: 16 },
   menuItemActive: { backgroundColor: '#F0FCF5' },
-  menuIconWrap: {
-    width: 40, height: 40, borderRadius: 28, backgroundColor: '#F5F5F5',
-    alignItems: 'center', justifyContent: 'center',
-  },
+  menuIconWrap: { width: 40, height: 40, borderRadius: 28, backgroundColor: '#F5F5F5', alignItems: 'center', justifyContent: 'center' },
   menuIconWrapActive: { backgroundColor: '#E0F5EA' },
-  menuLabel:       { flex: 1, fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
-  menuLabelActive: { color: '#00B14F', fontFamily: 'Aeonik-Medium' },
-  menuCancelBtn:   { paddingVertical: 16, alignItems: 'center' },
-  menuCancelText:  { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FF3B30' },
+  menuLabel: { flex: 1, fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#1A1A1A' },
+  menuLabelActive: { color: '#00B14F' },
+  menuCancelBtn: { paddingVertical: 16, alignItems: 'center' },
+  menuCancelText: { fontSize: 15, fontFamily: 'Aeonik-Medium', color: '#FF3B30' },
 
-  // Toast
   toast: {
     position: 'absolute', bottom: '42%', left: 40, right: 40,
     backgroundColor: '#1A1A1A', borderRadius: 28,

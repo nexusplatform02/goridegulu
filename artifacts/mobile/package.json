@@ -58,6 +58,7 @@
   "dependencies": {
     "@expo-google-fonts/plus-jakarta-sans": "^0.4.2",
     "leaflet": "^1.9.4",
-    "react-native-maps": "^1.29.0"
+    "react-native-maps": "^1.29.0",
+    "react-native-webview": "^14.0.1"
   }
 }
